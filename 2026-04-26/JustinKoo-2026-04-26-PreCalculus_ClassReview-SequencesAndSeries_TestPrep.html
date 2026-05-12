@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sequences &amp; Series Test Prep — Justin Koo (2026-04-26)</title>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']] }, startup: { ready: () => { MathJax.startup.defaultReady(); } } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; height: 100%; font-family: 'Segoe UI', 'Source Serif Pro', Georgia, serif; color: #222; background: #f5f7fa; }
+
+/* ============ TOP BAR ============ */
+.topbar { background: linear-gradient(135deg, #1565c0, #1976d2); color: white; padding: 14px 28px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.topbar h1 { font-size: 18pt; margin: 0; font-weight: 600; }
+.topbar .info { font-size: 10pt; opacity: 0.9; }
+.topbar .info strong { font-weight: 600; }
+
+/* ============ LAYOUT ============ */
+.layout { display: flex; min-height: calc(100vh - 60px); }
+
+/* ============ SIDEBAR ============ */
+.sidebar { width: 260px; background: white; padding: 20px 0; border-right: 1px solid #e0e4e8; flex-shrink: 0; }
+.sidebar h3 { font-size: 9.5pt; letter-spacing: 2px; color: #888; padding: 0 24px; margin: 16px 0 8px; text-transform: uppercase; }
+.sidebar h3:first-child { margin-top: 0; }
+.menu-item { display: block; padding: 11px 24px; color: #333; text-decoration: none; border-left: 3px solid transparent; cursor: pointer; transition: all 0.15s; font-size: 10.5pt; }
+.menu-item:hover { background: #f5f9ff; color: #1565c0; }
+.menu-item.active { background: #e3f2fd; color: #1565c0; border-left-color: #1565c0; font-weight: 600; }
+.menu-item .icon { margin-right: 8px; }
+.menu-item .badge { float: right; background: #ff9800; color: white; font-size: 8pt; padding: 1px 6px; border-radius: 10px; font-weight: bold; }
+
+/* ============ MAIN ============ */
+.main { flex: 1; padding: 32px 48px; overflow-y: auto; max-width: 880px; }
+.page-section { display: none; }
+.page-section.active { display: block; }
+.page-section h2 { color: #1565c0; border-bottom: 2px solid #1565c0; padding-bottom: 8px; font-size: 18pt; margin: 0 0 16px; }
+.page-section h3 { color: #0d47a1; margin: 22px 0 8px; font-size: 13pt; }
+.page-section p { line-height: 1.65; }
+
+/* ============ COMPONENTS ============ */
+.formula-box { background: white; border: 1.5px solid #1565c0; border-left-width: 5px; padding: 14px 18px; margin: 14px 0; border-radius: 6px; font-size: 11pt; }
+.formula-box .title { font-weight: bold; color: #1565c0; margin-bottom: 6px; }
+
+.warning-box { background: #fff3cd; border-left: 4px solid #ff9800; padding: 14px 18px; margin: 14px 0; border-radius: 6px; }
+.warning-box .title { font-weight: bold; color: #e65100; margin-bottom: 6px; }
+
+.tip-box { background: #f0f7ff; border-left: 4px solid #1565c0; padding: 12px 16px; margin: 12px 0; border-radius: 4px; font-size: 10.5pt; }
+
+.example { background: white; border: 2px solid #2e7d32; border-radius: 8px; padding: 16px 20px; margin: 18px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.example .ex-title { font-weight: bold; color: #2e7d32; font-size: 11.5pt; margin-bottom: 6px; }
+.example .ex-prob { font-style: italic; color: #333; padding: 8px 0; border-bottom: 1px dashed #ccc; }
+.example .toggle-btn { display: inline-block; margin-top: 10px; padding: 6px 14px; background: #2e7d32; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 10pt; font-family: inherit; transition: background 0.15s; }
+.example .toggle-btn:hover { background: #1b5e20; }
+.example .toggle-btn.shown { background: #757575; }
+.example .solution { display: none; padding: 12px 0 0; border-top: 1px solid #c8e6c9; margin-top: 10px; }
+.example .solution.shown { display: block; }
+.example .solution p { margin: 6px 0; font-size: 10.5pt; }
+.example .solution .step { background: #f1f8e9; padding: 4px 8px; border-radius: 3px; margin: 4px 0; }
+.example .solution .ans { display: inline-block; background: #2e7d32; color: white; font-weight: bold; padding: 4px 12px; border-radius: 4px; margin-top: 6px; }
+
+table.formulas { width: 100%; border-collapse: collapse; margin: 12px 0; }
+table.formulas th { background: #1565c0; color: white; padding: 10px; text-align: left; font-size: 10pt; }
+table.formulas td { padding: 10px; border-bottom: 1px solid #e0e4e8; }
+table.formulas tr:nth-child(even) { background: #f8f9fa; }
+table.formulas tr.highlight { background: #fff3cd !important; }
+
+ul.checklist { line-height: 2.1; list-style: none; padding-left: 0; }
+ul.checklist li { padding: 4px 12px; border-bottom: 1px dashed #e0e4e8; }
+ul.checklist li::before { content: "☐ "; color: #1565c0; font-weight: bold; margin-right: 8px; }
+ul.checklist li.star { background: #fff3cd; padding-left: 12px; border-radius: 4px; }
+ul.checklist li.star::before { content: "⭐ "; }
+
+.nav-bottom { display: flex; justify-content: space-between; margin-top: 32px; padding-top: 16px; border-top: 1px solid #e0e4e8; }
+.nav-btn { padding: 8px 18px; background: #1565c0; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 10pt; font-family: inherit; transition: background 0.15s; }
+.nav-btn:hover { background: #0d47a1; }
+.nav-btn.disabled { background: #ccc; cursor: default; }
+.nav-btn.disabled:hover { background: #ccc; }
+
+.hero { background: linear-gradient(135deg, #e3f2fd, #ffffff); padding: 28px 32px; border-radius: 10px; margin-bottom: 20px; border-left: 6px solid #1565c0; }
+.hero h2 { border: none !important; padding: 0 !important; margin-bottom: 8px !important; }
+.topic-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 16px; }
+.topic-card { background: white; border: 1px solid #e0e4e8; border-radius: 8px; padding: 14px 16px; cursor: pointer; transition: all 0.15s; }
+.topic-card:hover { border-color: #1565c0; box-shadow: 0 2px 8px rgba(21,101,192,0.15); transform: translateY(-1px); }
+.topic-card .num { font-size: 9pt; color: #888; font-weight: bold; letter-spacing: 1px; }
+.topic-card .ttl { font-size: 12pt; color: #1565c0; font-weight: 600; margin: 4px 0; }
+.topic-card .desc { font-size: 9.5pt; color: #555; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+    <h1>📘 Sequences &amp; Series — Test Prep</h1>
+    <div class="info"><strong>Justin Koo</strong> · Horace Mann · 2026-04-26 · Pre-Calculus</div>
+</div>
+
+<div class="layout">
+
+<!-- ============ SIDEBAR ============ -->
+<nav class="sidebar">
+    <h3>Navigation</h3>
+    <a class="menu-item active" data-page="home"><span class="icon">🏠</span>Home / Overview</a>
+    <a class="menu-item" data-page="phase1"><span class="icon">📐</span>Phase 1 · Series Basics</a>
+    <a class="menu-item" data-page="phase2"><span class="icon">🔄</span>Phase 2 · Recursion</a>
+    <a class="menu-item" data-page="phase3"><span class="icon">⭐</span>Phase 3 · Char. Eqn<span class="badge">CORE</span></a>
+    <a class="menu-item" data-page="phase4"><span class="icon">🌶️</span>Phase 4 · Non-Homog.</a>
+    <h3>Quick Reference</h3>
+    <a class="menu-item" data-page="formulas"><span class="icon">🎯</span>Key Formulas</a>
+    <a class="menu-item" data-page="checklist"><span class="icon">✅</span>Test Checklist</a>
+</nav>
+
+<!-- ============ MAIN ============ -->
+<main class="main">
+
+<!-- ============ HOME ============ -->
+<section class="page-section active" id="home">
+    <div class="hero">
+        <h2>오늘의 시험 대비 흐름</h2>
+        <p style="margin: 0; font-size: 11pt;">Sequences &amp; Series 의 핵심 5개 주제. 사이드 메뉴에서 골라 들어가도 되고, 아래 카드에서 시작해도 OK. 각 페이지마다 <strong>예제 + 답안 토글</strong> 있음.</p>
+    </div>
+
+    <h3>학습 흐름 (한눈에)</h3>
+    <div class="topic-grid">
+        <div class="topic-card" data-jump="phase1">
+            <div class="num">PHASE 1</div>
+            <div class="ttl">Series Basics</div>
+            <div class="desc">Arithmetic·Geometric series 공식, S<sub>n</sub> 유도</div>
+        </div>
+        <div class="topic-card" data-jump="phase2">
+            <div class="num">PHASE 2</div>
+            <div class="ttl">Recursion Problems</div>
+            <div class="desc">Lego (Fibonacci), Hanoi, Walkway 패턴</div>
+        </div>
+        <div class="topic-card" data-jump="phase3">
+            <div class="num">PHASE 3 ⭐</div>
+            <div class="ttl">Characteristic Equation</div>
+            <div class="desc">Recursive → Explicit 변환 (시험 핵심)</div>
+        </div>
+        <div class="topic-card" data-jump="phase4">
+            <div class="num">PHASE 4</div>
+            <div class="ttl">Non-homogeneous</div>
+            <div class="desc">Hanoi의 +1 같은 상수항 처리</div>
+        </div>
+    </div>
+
+    <div class="tip-box" style="margin-top: 20px;">
+        <strong>💡 한 줄 정리:</strong> 점화식은 <strong>만드는 것 (Phase 2)</strong> → <strong>닫힌 형태로 바꾸는 것 (Phase 3)</strong>. 그 사이를 잇는 가교가 <strong>특성방정식</strong>. 비동차일 때만 한 단계 변환 추가.
+    </div>
+
+    <div class="nav-bottom">
+        <button class="nav-btn disabled">← 이전</button>
+        <button class="nav-btn" data-jump="phase1">다음 → Phase 1: Series Basics</button>
+    </div>
+</section>
+
+<!-- ============ PHASE 1 ============ -->
+<section class="page-section" id="phase1">
+    <h2>📐 Phase 1 — Arithmetic &amp; Geometric Series</h2>
+
+    <h3>1. Arithmetic Sequence (등차수열)</h3>
+    <p>각 항이 앞 항보다 일정한 차이 \(d\) 만큼 더해지는 수열.</p>
+    <div class="formula-box">
+        <div class="title">Arithmetic — Explicit &amp; Sum</div>
+        <p style="margin: 4px 0;">Explicit: \(a_n = a_1 + (n-1)d\)</p>
+        <p style="margin: 4px 0;">Sum: \(S_n = \dfrac{n(a_1 + a_n)}{2}\)</p>
+    </div>
+
+    <h3>2. Geometric Sequence (등비수열)</h3>
+    <p>각 항이 앞 항에 일정한 비율 \(r\) 만큼 곱해지는 수열.</p>
+    <div class="formula-box">
+        <div class="title">Geometric — Explicit &amp; Sum</div>
+        <p style="margin: 4px 0;">Explicit: \(g_n = g_0 \cdot r^{n}\) &nbsp; (또는 \(a_n = a_1 \cdot r^{\,n-1}\))</p>
+        <p style="margin: 4px 0;">Sum: \(S_n = g_0 \cdot \dfrac{r^{n} - 1}{r - 1}\) &nbsp; (단 \(r \neq 1\))</p>
+    </div>
+
+    <div class="example">
+        <div class="ex-title">Example 1 — Arithmetic Sum</div>
+        <div class="ex-prob">Find \(\sum_{i=1}^{20}(3i + 5)\).</div>
+        <button class="toggle-btn">답안 보기 ▾</button>
+        <div class="solution">
+            <p class="step"><strong>Step 1.</strong> 첫 항 \(a_1 = 3(1)+5 = 8\), 마지막 항 \(a_{20} = 3(20)+5 = 65\).</p>
+            <p class="step"><strong>Step 2.</strong> 등차수열의 합 공식: \(S_{20} = \dfrac{20(8 + 65)}{2} = 10 \cdot 73 = 730\).</p>
+            <p class="ans">\(S_{20} = 730\)</p>
+        </div>
+    </div>
+
+    <div class="example">
+        <div class="ex-title">Example 2 — Geometric Sum</div>
+        <div class="ex-prob">Find \(\sum_{k=1}^{6} 3 \cdot 2^{k-1}\).</div>
+        <button class="toggle-btn">답안 보기 ▾</button>
+        <div class="solution">
+            <p class="step"><strong>Step 1.</strong> Identify: \(g_0 = 3,\; r = 2,\; n = 6\).</p>
+            <p class="step"><strong>Step 2.</strong> 공식 적용: \(S_6 = 3 \cdot \dfrac{2^{6} - 1}{2 - 1} = 3 \cdot \dfrac{63}{1} = 189\).</p>
+            <p class="step"><strong>검산:</strong> \(3 + 6 + 12 + 24 + 48 + 96 = 189\). ✓</p>
+            <p class="ans">\(S_6 = 189\)</p>
+        </div>
+    </div>
+
+    <div class="nav-bottom">
+        <button class="nav-btn" data-jump="home">← Home</button>
+        <button class="nav-btn" data-jump="phase2">다음 → Phase 2: Recursion</button>
+    </div>
+</section>
+
+<!-- ============ PHASE 2 ============ -->
+<section class="page-section" id="phase2">
+    <h2>🔄 Phase 2 — Recursion Problems</h2>
+    <p>점화식 (recursive definition) 으로 정의된 문제를 알아보고 패턴을 찾는다. 이게 <strong>Phase 3 (특성방정식)</strong> 의 입력이 된다.</p>
+
+    <h3>1. Lego / Fibonacci 패턴</h3>
+    <p>1 또는 2 길이의 블록으로 길이 \(n\) 의 길을 만드는 가짓수.</p>
+    <div class="formula-box">
+        <div class="title">Lego (Fibonacci)</div>
+        <p style="margin: 4px 0;">\(L_n = L_{n-1} + L_{n-2}\), &nbsp; \(L_1 = 1,\; L_2 = 2\)</p>
+        <p style="margin: 4px 0; font-size: 9.5pt; color: #555;">시퀀스: 1, 2, 3, 5, 8, 13, 21, ...</p>
+    </div>
+
+    <h3>2. Tower of Hanoi</h3>
+    <p>\(n\) 개 디스크를 옮기는 데 필요한 최소 이동 횟수.</p>
+    <div class="formula-box">
+        <div class="title">Hanoi — 비동차 점화식</div>
+        <p style="margin: 4px 0;">\(T_n = 2T_{n-1} + 1\), &nbsp; \(T_1 = 1\)</p>
+        <p style="margin: 4px 0;">닫힌 형태: \(T_n = 2^{n} - 1\)</p>
+        <p style="margin: 4px 0; font-size: 9.5pt; color: #d84315;"><strong>주의:</strong> "+1" 때문에 비동차. Phase 4 에서 해결.</p>
+    </div>
+
+    <h3>3. Walkway / No-Adjacent-AA 패턴</h3>
+    <p>두 글자 (A, B) 로 길이 \(n\) 짜리 문자열을 만들 때 "AA" 가 안 나오게 하는 가짓수.</p>
+    <div class="formula-box">
+        <div class="title">Walkway</div>
+        <p style="margin: 4px 0;">\(W_n = W_{n-1} + W_{n-2}\) &nbsp; (Lego 와 같은 구조)</p>
+    </div>
+
+    <div class="example">
+        <div class="ex-title">Example 3 — Lego 직접 계산</div>
+        <div class="ex-prob">길이 7 의 길을 1, 2 길이 블록으로 만드는 가짓수 \(L_7\) 은?</div>
+        <button class="toggle-btn">답안 보기 ▾</button>
+        <div class="solution">
+            <p class="step"><strong>Step 1.</strong> 점화식: \(L_n = L_{n-1} + L_{n-2}\), \(L_1 = 1, L_2 = 2\).</p>
+            <p class="step"><strong>Step 2.</strong> 차근차근 계산:</p>
+            <p style="margin-left: 16px;">\(L_3 = L_2 + L_1 = 2 + 1 = 3\)<br>
+            \(L_4 = L_3 + L_2 = 3 + 2 = 5\)<br>
+            \(L_5 = L_4 + L_3 = 5 + 3 = 8\)<br>
+            \(L_6 = L_5 + L_4 = 8 + 5 = 13\)<br>
+            \(L_7 = L_6 + L_5 = 13 + 8 = 21\)</p>
+            <p class="ans">\(L_7 = 21\)</p>
+        </div>
+    </div>
+
+    <div class="example">
+        <div class="ex-title">Example 4 — Hanoi 직접 계산</div>
+        <div class="ex-prob">디스크 5개의 Hanoi 이동 횟수 \(T_5\) 는?</div>
+        <button class="toggle-btn">답안 보기 ▾</button>
+        <div class="solution">
+            <p class="step"><strong>방법 A (점화식):</strong> \(T_1 = 1,\; T_n = 2T_{n-1}+1\).</p>
+            <p style="margin-left: 16px;">\(T_2 = 2(1)+1 = 3\)<br>
+            \(T_3 = 2(3)+1 = 7\)<br>
+            \(T_4 = 2(7)+1 = 15\)<br>
+            \(T_5 = 2(15)+1 = 31\)</p>
+            <p class="step"><strong>방법 B (닫힌 형태):</strong> \(T_5 = 2^{5} - 1 = 32 - 1 = 31\). ✓</p>
+            <p class="ans">\(T_5 = 31\)</p>
+        </div>
+    </div>
+
+    <div class="nav-bottom">
+        <button class="nav-btn" data-jump="phase1">← Phase 1</button>
+        <button class="nav-btn" data-jump="phase3">다음 → Phase 3: Char. Eqn ⭐</button>
+    </div>
+</section>
+
+<!-- ============ PHASE 3 ============ -->
+<section class="page-section" id="phase3">
+    <h2>⭐ Phase 3 — Characteristic Equation (시험 핵심)</h2>
+    <p style="font-size: 11pt;">Recursive 정의를 <strong>Explicit (닫힌 형태)</strong> 로 변환하는 표준 절차. 시험에 100% 나옴.</p>
+
+    <div class="warning-box">
+        <div class="title">⭐ 5단계 절차 — 외워야 함</div>
+        <ol style="line-height: 2; margin: 6px 0 0 18px;">
+            <li>점화식 \(T_n = a_1 T_{n-1} + a_2 T_{n-2}\) 형태 확인 (동차 only).</li>
+            <li>특성방정식 \(x^{2} - a_1 x - a_2 = 0\) 풀어 두 근 \(r_1, r_2\) 구함.</li>
+            <li>두 근 다름: \(T_n = c_1 r_1^{n} + c_2 r_2^{n}\).<br>중근: \(T_n = (c_1 + c_2 n) \cdot r^{n}\) ⚠️ <strong>n 곱하는 거 함정</strong>.</li>
+            <li>\(n=0,\; n=1\) 대입한 2×2 시스템 풀어 \(c_1, c_2\) 결정.</li>
+            <li>닫힌 형태 + 검산 (예: \(T_2\) 점화식 vs 닫힌 형태 비교).</li>
+        </ol>
+    </div>
+
+    <div class="example">
+        <div class="ex-title">Example 5 — Fibonacci 닫힌 형태</div>
+        <div class="ex-prob">\(F_n = F_{n-1} + F_{n-2}\), \(F_0 = 0, F_1 = 1\). \(F_n\) 의 닫힌 형태를 구하라. (Binet's formula)</div>
+        <button class="toggle-btn">답안 보기 ▾</button>
+        <div class="solution">
+            <p class="step"><strong>Step 1.</strong> 형태 확인: \(a_1 = 1, a_2 = 1\).</p>
+            <p class="step"><strong>Step 2.</strong> 특성방정식: \(x^{2} - x - 1 = 0\).</p>
+            <p>근: \(x = \dfrac{1 \pm \sqrt{1 + 4}}{2} = \dfrac{1 \pm \sqrt{5}}{2}\).</p>
+            <p>\(r_1 = \varphi = \dfrac{1 + \sqrt{5}}{2}\), \(r_2 = \psi = \dfrac{1 - \sqrt{5}}{2}\).</p>
+            <p class="step"><strong>Step 3.</strong> 두 근 다름: \(F_n = c_1 \varphi^{n} + c_2 \psi^{n}\).</p>
+            <p class="step"><strong>Step 4.</strong> 초기조건 대입:</p>
+            <p>\(n=0\): \(c_1 + c_2 = 0\) → \(c_2 = -c_1\).</p>
+            <p>\(n=1\): \(c_1 \varphi + c_2 \psi = 1\) → \(c_1(\varphi - \psi) = 1\) → \(c_1 = \dfrac{1}{\sqrt{5}}\).</p>
+            <p class="step"><strong>Step 5.</strong> 닫힌 형태:</p>
+            <p class="ans">\(F_n = \dfrac{1}{\sqrt{5}}\!\left(\varphi^{n} - \psi^{n}\right)\)</p>
+        </div>
+    </div>
+
+    <div class="example">
+        <div class="ex-title">Example 6 — 중근 케이스 (n 곱하는 함정)</div>
+        <div class="ex-prob">\(T_n = 4T_{n-1} - 4T_{n-2}\), \(T_0 = 1, T_1 = 6\). \(T_n\) 닫힌 형태?</div>
+        <button class="toggle-btn">답안 보기 ▾</button>
+        <div class="solution">
+            <p class="step"><strong>Step 1.</strong> \(a_1 = 4, a_2 = -4\).</p>
+            <p class="step"><strong>Step 2.</strong> 특성방정식: \(x^{2} - 4x + 4 = 0\) → \((x-2)^{2} = 0\) → 중근 \(r = 2\).</p>
+            <p class="step"><strong>Step 3.</strong> 중근 형태: \(T_n = (c_1 + c_2 n) \cdot 2^{n}\).</p>
+            <p class="step"><strong>Step 4.</strong> 초기조건:</p>
+            <p>\(n=0\): \(T_0 = c_1 \cdot 1 = 1\) → \(c_1 = 1\).</p>
+            <p>\(n=1\): \(T_1 = (1 + c_2)(2) = 6\) → \(1 + c_2 = 3\) → \(c_2 = 2\).</p>
+            <p class="step"><strong>Step 5.</strong> 닫힌 형태:</p>
+            <p class="ans">\(T_n = (1 + 2n) \cdot 2^{n}\)</p>
+            <p class="step"><strong>검산</strong> \(T_2 = (1 + 4)(4) = 20\). 점화식: \(T_2 = 4(6) - 4(1) = 24 - 4 = 20\). ✓</p>
+        </div>
+    </div>
+
+    <div class="nav-bottom">
+        <button class="nav-btn" data-jump="phase2">← Phase 2</button>
+        <button class="nav-btn" data-jump="phase4">다음 → Phase 4: Non-Homog.</button>
+    </div>
+</section>
+
+<!-- ============ PHASE 4 ============ -->
+<section class="page-section" id="phase4">
+    <h2>🌶️ Phase 4 — Non-homogeneous Recursion</h2>
+    <p>표준 특성방정식 절차는 <strong>동차 (homogeneous)</strong> 점화식 전용 — 모든 항이 \(T_*\) 들로만 구성. <strong>+1 같은 상수항</strong> 이 끼면 비동차이고, 한 단계 <em>변환</em> 이 필요하다.</p>
+
+    <h3>핵심 아이디어 — 특해 빼서 동차화</h3>
+    <p>비동차 점화식의 <strong>특수해</strong> (particular solution) 를 찾고, 그걸 빼서 새 변수를 만들면 동차가 된다.</p>
+
+    <div class="formula-box">
+        <div class="title">Hanoi 의 비동차 처리</div>
+        <p style="margin: 4px 0;">원래 점화식: \(H_n = 2H_{n-1} + 1\)</p>
+        <p style="margin: 4px 0;"><strong>변환:</strong> 양변에 \(+1\) 더하면 \(H_n + 1 = 2(H_{n-1} + 1)\).</p>
+        <p style="margin: 4px 0;">\(U_n := H_n + 1\) 로 두면 → \(U_n = 2U_{n-1}\) (동차!).</p>
+        <p style="margin: 4px 0;">초기조건 \(U_1 = H_1 + 1 = 1 + 1 = 2\) → \(U_n = 2^{n}\).</p>
+        <p style="margin: 4px 0;">되돌리면 → \(\boxed{H_n = 2^{n} - 1}\)</p>
+    </div>
+
+    <div class="example">
+        <div class="ex-title">Example 7 — 비동차 절차 직접</div>
+        <div class="ex-prob">\(a_n = 3a_{n-1} + 2\), \(a_0 = 1\) 의 닫힌 형태를 구하라.</div>
+        <button class="toggle-btn">답안 보기 ▾</button>
+        <div class="solution">
+            <p class="step"><strong>Step 1.</strong> 특해 찾기: \(a_n\) 이 어떤 상수 \(K\) 라고 가정 → \(K = 3K + 2\) → \(K = -1\).</p>
+            <p class="step"><strong>Step 2.</strong> 변환: \(b_n := a_n - (-1) = a_n + 1\). 그러면:</p>
+            <p>\(b_n = a_n + 1 = 3a_{n-1} + 2 + 1 = 3(a_{n-1} + 1) = 3 b_{n-1}\) (동차!).</p>
+            <p class="step"><strong>Step 3.</strong> 초기: \(b_0 = a_0 + 1 = 2\). → \(b_n = 2 \cdot 3^{n}\).</p>
+            <p class="step"><strong>Step 4.</strong> 되돌리기: \(a_n = b_n - 1 = 2 \cdot 3^{n} - 1\).</p>
+            <p class="ans">\(a_n = 2 \cdot 3^{n} - 1\)</p>
+            <p class="step"><strong>검산</strong> \(a_1 = 2(3) - 1 = 5\). 점화식: \(a_1 = 3(1) + 2 = 5\). ✓</p>
+        </div>
+    </div>
+
+    <div class="nav-bottom">
+        <button class="nav-btn" data-jump="phase3">← Phase 3</button>
+        <button class="nav-btn" data-jump="formulas">다음 → Key Formulas</button>
+    </div>
+</section>
+
+<!-- ============ FORMULAS ============ -->
+<section class="page-section" id="formulas">
+    <h2>🎯 Key Formulas — 한눈에</h2>
+    <p>시험장 들어가기 직전 마지막으로 훑을 것. 머리에 새겨져 있어야 함.</p>
+
+    <table class="formulas">
+        <tr><th style="width:34%">단원</th><th>공식</th></tr>
+        <tr><td>Arithmetic Series</td><td>\(S_n = \dfrac{n(a_1 + a_n)}{2}\)</td></tr>
+        <tr><td>Geometric Series</td><td>\(S_n = g_0 \cdot \dfrac{r^{n} - 1}{r - 1}\) &nbsp; (단 \(r \neq 1\))</td></tr>
+        <tr><td>Lego / Fibonacci</td><td>\(L_n = L_{n-1} + L_{n-2}\)</td></tr>
+        <tr><td>Hanoi</td><td>\(T_n = 2T_{n-1} + 1\) → \(\;T_n = 2^{n} - 1\)</td></tr>
+        <tr class="highlight"><td><strong>특성방정식 ⭐</strong></td><td>\(x^{2} - a_1 x - a_2 = 0\)</td></tr>
+        <tr><td>두 근 다를 때</td><td>\(T_n = c_1 r_1^{\,n} + c_2 r_2^{\,n}\)</td></tr>
+        <tr><td>중근일 때 ⚠️</td><td>\(T_n = (c_1 + c_2 n) \cdot r^{n}\) &nbsp; <strong>n 곱하는 거</strong></td></tr>
+        <tr><td>비동차 처리</td><td>특해 \(K\) 찾고 \(b_n = a_n - K\) 로 동차화</td></tr>
+    </table>
+
+    <div class="nav-bottom">
+        <button class="nav-btn" data-jump="phase4">← Phase 4</button>
+        <button class="nav-btn" data-jump="checklist">다음 → Checklist</button>
+    </div>
+</section>
+
+<!-- ============ CHECKLIST ============ -->
+<section class="page-section" id="checklist">
+    <h2>✅ 시험 직전 체크리스트</h2>
+    <p>각 항목 머릿속으로 답할 수 있으면 ✓. 못 하면 그 phase 로 돌아가서 복습.</p>
+
+    <ul class="checklist">
+        <li>Arithmetic 와 Geometric 시퀀스 — explicit, recursive 둘 다 쓸 수 있는가?</li>
+        <li>\(S_n\) 공식 두 개 (arithmetic, geometric) 외웠는가?</li>
+        <li>Difference table — Δ가 상수가 되는 단계 = 차수, 안다.</li>
+        <li>Lego = Fibonacci, Hanoi = \(2^{n}-1\) 즉답 가능한가?</li>
+        <li class="star"><strong>특성방정식 5단계</strong> 막힘없이 적용 가능한가?</li>
+        <li class="star">중근일 때 \((c_1 + c_2 n) r^{n}\) 형태 — \(n\) 곱하는 거 잊지 않는다.</li>
+        <li class="star"><strong>비동차 점화식</strong> — 특해 빼서 동차화하는 절차 안다.</li>
+        <li>검산 — 닫힌 형태에 \(n=2\) 넣은 값과 점화식 결과 일치하는지 확인하는 습관.</li>
+    </ul>
+
+    <div class="tip-box" style="margin-top: 24px;">
+        <strong>💡 마지막 팁:</strong> 점화식 보면 자동으로 "동차인가? 비동차인가?" 묻는 습관. 비동차면 특해부터, 동차면 곧장 특성방정식.
+    </div>
+
+    <div class="nav-bottom">
+        <button class="nav-btn" data-jump="formulas">← Formulas</button>
+        <button class="nav-btn" data-jump="home">처음으로 (Home)</button>
+    </div>
+</section>
+
+</main>
+</div>
+
+<script>
+// ============ PAGE NAVIGATION ============
+document.querySelectorAll('.menu-item').forEach(item => {
+    item.addEventListener('click', () => switchPage(item.dataset.page));
+});
+document.querySelectorAll('[data-jump]').forEach(el => {
+    el.addEventListener('click', () => switchPage(el.dataset.jump));
+});
+
+function switchPage(pageId) {
+    document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+    document.querySelector(`.menu-item[data-page="${pageId}"]`)?.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Re-trigger MathJax if already loaded
+    if (window.MathJax?.typesetPromise) MathJax.typesetPromise();
+}
+
+// ============ ANSWER TOGGLE ============
+document.querySelectorAll('.toggle-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const sol = btn.nextElementSibling;
+        const isShown = sol.classList.toggle('shown');
+        btn.classList.toggle('shown', isShown);
+        btn.textContent = isShown ? '답안 숨기기 ▴' : '답안 보기 ▾';
+        if (isShown && window.MathJax?.typesetPromise) MathJax.typesetPromise([sol]);
+    });
+});
+</script>
+
+</body>
+</html>

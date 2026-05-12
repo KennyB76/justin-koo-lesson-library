@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pre-Calculus Lecture Notes: Sums and the Dimension Jump</title>
+
+<!-- MathJax -->
+<script>
+window.MathJax = {
+    tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']]
+    },
+    startup: { ready: () => { MathJax.startup.defaultReady(); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+<!-- JSXGraph -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css">
+<script src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
+
+<style>
+/* =========================================================================
+   base-print.css
+   ========================================================================= */
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Century Schoolbook', 'Times New Roman', serif; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+    html, body { background: #fff; }
+    .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+    .problem, .answer-block, .reminder, .parent-note, .example, .word-problem {
+        page-break-inside: avoid; break-inside: avoid;
+    }
+    .part-header, .directions, .problem-header, h1, h2, h3 {
+        page-break-after: avoid; break-after: avoid;
+    }
+    .page-break { page-break-before: always; break-before: page; }
+    * { background: transparent !important; }
+}
+
+/* =========================================================================
+   theme-boy.css
+   ========================================================================= */
+:root {
+    --color-primary:        #1565c0;
+    --color-primary-dark:   #0d47a1;
+    --color-accent:         #00838f;
+    --color-header-border:  #1565c0;
+    --color-final-answer:   #2e7d32;
+    --color-warning:        #c62828;
+    --color-parent-note:    #283593;
+    --color-insight:        #6a1b9a;
+    --color-tag-bg:         transparent;
+    --color-tag-border:     #1565c0;
+    --color-tag-text:       #1565c0;
+    --color-muted:          #555;
+    --color-rule:           #ccc;
+    --color-dim1:           #1565c0;
+    --color-dim2:           #00838f;
+    --color-dim3:           #2e7d32;
+    --color-dim4:           #6a1b9a;
+}
+
+/* =========================================================================
+   level-high.css
+   ========================================================================= */
+body { font-family: 'Source Serif Pro', 'Georgia', 'Times New Roman', serif; font-size: 10.5pt; line-height: 1.55; }
+h1, h2, h3, .part-header { font-family: 'Libre Baskerville', 'Georgia', serif; }
+
+.header { text-align: center; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid var(--color-header-border); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 7px 3px; font-weight: bold; border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+h1 { font-size: 15pt; margin: 6px 0 8px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 4px; color: var(--color-muted); }
+
+.part-header { font-size: 13pt; font-weight: bold; color: var(--color-primary); margin: 22px 0 6px 0; padding-bottom: 3px; border-bottom: 1.5px solid var(--color-primary); }
+.directions { font-size: 10pt; font-style: italic; color: #333; margin-bottom: 12px; line-height: 1.5; }
+
+/* Problems */
+.problem { margin: 14px 0; font-size: 10.5pt; line-height: 1.6; padding-left: 8px; border-left: 3px solid var(--color-primary); }
+.q-num { display: inline-block; min-width: 26px; font-weight: bold; color: var(--color-primary); }
+.work-space { min-height: 120px; margin-left: 24px; margin-top: 6px; }
+
+/* Concept box */
+.concept-box { border: 1.5px solid var(--color-accent); background: transparent; padding: 10px 14px; margin: 12px 0; font-size: 10pt; border-left-width: 4px; }
+.concept-box .title { font-weight: bold; color: var(--color-accent); margin-bottom: 4px; font-size: 11pt; }
+.concept-box ul { margin: 6px 0 6px 20px; padding: 0; }
+.concept-box li { margin: 4px 0; }
+.concept-box p { margin: 5px 0; }
+
+/* Insight box */
+.insight-box { border: 2px solid var(--color-insight); border-left: 5px solid var(--color-insight); padding: 12px 16px; margin: 16px 0; background: transparent; }
+.insight-box .title { font-weight: bold; color: var(--color-insight); margin-bottom: 8px; font-size: 11pt; letter-spacing: 0.5px; }
+.insight-box p { margin: 5px 0; }
+
+/* Example */
+.example { border: 2px solid var(--color-final-answer); padding: 12px 16px; margin: 14px 0; }
+.example-title { font-weight: bold; color: var(--color-final-answer); margin-bottom: 6px; font-size: 11pt; }
+.example-solution { border-left: 3px solid var(--color-final-answer); padding-left: 12px; margin-top: 8px; font-size: 10pt; }
+.example-solution p { margin: 6px 0; line-height: 1.6; }
+.example-solution .final { font-weight: bold; color: var(--color-final-answer); margin-top: 8px; }
+
+/* Reminder */
+.reminder { border: 1.5px solid var(--color-warning); padding: 8px 14px; margin: 14px 0; font-size: 10pt; }
+.reminder .rem-title { font-weight: bold; color: var(--color-warning); margin-bottom: 4px; }
+
+/* Dimension table */
+.dim-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 10pt; }
+.dim-table th { color: #fff; padding: 7px 10px; text-align: center; font-weight: bold; font-size: 9.5pt; }
+.dim-table td { border: 1px solid #ccc; padding: 8px 12px; vertical-align: top; }
+.th-head  { background: #333; }
+.th-dim1  { background: var(--color-dim1); }
+.th-dim2  { background: var(--color-dim2); }
+.th-dim3  { background: var(--color-dim3); }
+.th-dim4  { background: var(--color-dim4); }
+
+/* Graph container */
+.graph-container { margin: 12px auto; page-break-inside: avoid; break-inside: avoid; text-align: center; }
+.jxgbox { max-width: 460px; height: 320px; margin: 0 auto; border: 1px solid #ccc; }
+.graph-caption { font-size: 9pt; color: var(--color-muted); font-style: italic; margin-top: 5px; }
+
+/* Geo pull-quote */
+.geo-pull { font-size: 11pt; font-style: italic; text-align: center; border-top: 1px solid var(--color-rule); border-bottom: 1px solid var(--color-rule); padding: 10px 0; margin: 16px 0; color: #333; }
+
+/* Proof scaffold */
+.proof-scaffold { margin: 14px 0; }
+.proof-step { display: flex; gap: 10px; margin: 8px 0; align-items: baseline; }
+.proof-label { font-weight: bold; color: var(--color-primary); min-width: 155px; font-size: 10pt; }
+.proof-body { font-size: 10.5pt; line-height: 1.6; flex: 1; }
+
+/* Footer */
+.footer { font-size: 7.5pt; color: var(--color-muted); text-align: center; margin-top: 30px; padding-top: 6px; border-top: 1px solid var(--color-rule); }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">PRE-CALCULUS &nbsp;|&nbsp; LECTURE NOTES</div>
+    <h1>Sums and the Dimension Jump</h1>
+    <div class="info">
+        <span><strong>Student:</strong> Justin Koo</span>
+        <span><strong>Date:</strong> May 10, 2026</span>
+    </div>
+    <div class="standard">
+        <strong>Standard:</strong> CCSS.MATH.CONTENT.HSF-BF.A.1 &mdash;
+        Build a function that models a relationship between two quantities; recognize patterns in power sums
+        and their connection to integration (calculus preview). <br>
+        <strong>Big Idea:</strong> The sum of $d$-dimensional terms always produces a $(d+1)$-dimensional quantity &mdash;
+        a pattern that secretly <em>is</em> calculus.
+    </div>
+</div>
+
+<!-- ============================================================
+     SECTION 1 — The Big Pattern
+     ============================================================ -->
+<div class="part-header">1. Something Surprising About Sums</div>
+
+<p>
+    You have been summing integers, squares, and cubes all semester.
+    Today we step back and notice something most textbooks never point out plainly:
+    <strong>every one of those formulas jumps up exactly one dimension.</strong>
+</p>
+
+<p>Look at the three formulas side by side:</p>
+
+<table class="dim-table">
+    <thead>
+        <tr>
+            <th class="th-head" style="text-align:left; padding:7px 12px;">What you sum</th>
+            <th class="th-head">Exact formula</th>
+            <th class="th-head">Leading term</th>
+            <th class="th-head">Dimension</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="border-left:4px solid var(--color-dim1);">
+                $\displaystyle\sum_{k=1}^{n} k = 1+2+\cdots+n$
+            </td>
+            <td style="text-align:center;">$\dfrac{n(n+1)}{2}$</td>
+            <td style="text-align:center; color:var(--color-dim2); font-weight:bold;">$\approx \dfrac{n^2}{2}$</td>
+            <td style="text-align:center;"><strong style="color:var(--color-dim2);">2D</strong></td>
+        </tr>
+        <tr>
+            <td style="border-left:4px solid var(--color-dim2);">
+                $\displaystyle\sum_{k=1}^{n} k^2 = 1^2+2^2+\cdots+n^2$
+            </td>
+            <td style="text-align:center;">$\dfrac{n(n+1)(2n+1)}{6}$</td>
+            <td style="text-align:center; color:var(--color-dim3); font-weight:bold;">$\approx \dfrac{n^3}{3}$</td>
+            <td style="text-align:center;"><strong style="color:var(--color-dim3);">3D</strong></td>
+        </tr>
+        <tr>
+            <td style="border-left:4px solid var(--color-dim3);">
+                $\displaystyle\sum_{k=1}^{n} k^3 = 1^3+2^3+\cdots+n^3$
+            </td>
+            <td style="text-align:center;">$\left(\dfrac{n(n+1)}{2}\right)^{\!2}$</td>
+            <td style="text-align:center; color:var(--color-dim4); font-weight:bold;">$\approx \dfrac{n^4}{4}$</td>
+            <td style="text-align:center;"><strong style="color:var(--color-dim4);">4D</strong></td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="insight-box">
+    <div class="title">The Dimension-Jump Rule</div>
+    <p>Summing $n$ terms of size $k^d$ produces a result whose dominant term is $n^{d+1}$:</p>
+    $$\boxed{\sum_{k=1}^{n} k^d \;\approx\; \frac{n^{\,d+1}}{d+1} \quad \text{as } n \to \infty}$$
+    <p>One extra dimension appears every time you add everything up.</p>
+</div>
+
+<!-- ============================================================
+     SECTION 2 — Geometric Story + JSXGraph
+     ============================================================ -->
+<div class="part-header">2. Geometric Story &mdash; Stacking Slabs</div>
+
+<p>Why does adding 1D sticks produce 2D area? Picture it physically.</p>
+
+<div class="example">
+    <div class="example-title">Visual A: $1 + 2 + \cdots + n$ as a Staircase</div>
+    <p>Draw $n$ horizontal bars with lengths $1, 2, \ldots, n$ and stack them. You get a staircase triangle with base $n$ and height $n$.</p>
+    <div class="example-solution">
+        <p>Area of right triangle with legs $n$: $\quad \dfrac{1}{2}n \cdot n = \dfrac{n^2}{2}$.</p>
+        <p class="final">Exact formula $\dfrac{n(n+1)}{2}$ is slightly larger (the staircase "teeth"), but the dominant shape is the triangle.</p>
+    </div>
+</div>
+
+<div class="graph-container">
+    <div id="staircase-box" class="jxgbox" style="max-width:420px; height:300px;"></div>
+    <div class="graph-caption">Staircase graph: bars of height 1, widths 1 through $n$ (here $n=6$). Gray triangle = $\frac{1}{2}n^2$ approximation.</div>
+</div>
+<script>
+(function(){
+    var b = JXG.JSXGraph.initBoard('staircase-box', {
+        boundingbox: [-0.5, 8, 8, -1],
+        axis: true,
+        showNavigation: false,
+        showCopyright: false,
+        defaultAxes: {
+            x: { name: 'k', withLabel: true, label: { position: 'rt', offset: [-10, 15] } },
+            y: { name: '', withLabel: false }
+        }
+    });
+    var n = 6;
+    // draw staircase bars
+    var colors = ['#bbdefb','#90caf9','#64b5f6','#42a5f5','#2196f3','#1565c0'];
+    for (var k = 1; k <= n; k++) {
+        b.create('polygon', [
+            [k-1, 0], [k, 0], [k, k], [k-1, k]
+        ], {
+            fillColor: colors[k-1], fillOpacity: 0.6,
+            strokeColor: '#1565c0', strokeWidth: 1,
+            fixed: true, highlight: false
+        });
+    }
+    // triangle overlay
+    b.create('polygon', [[0,0],[n,0],[n,n]], {
+        fillColor: 'transparent', strokeColor: '#c62828',
+        strokeWidth: 2, dash: 2, fixed: true, highlight: false
+    });
+    b.create('text', [4.2, 3.5, 'Triangle\\n\\u00bd n\\u00b2'], {
+        fontSize: 12, strokeColor: '#c62828', fixed: true
+    });
+})();
+</script>
+
+<div class="example">
+    <div class="example-title">Visual B: $1^2 + 2^2 + \cdots + n^2$ as Stacking Squares</div>
+    <p>Each term $k^2$ is a $k \times k$ square (2D slab of thickness 1). Stack them &rarr; stepped pyramid.</p>
+    <div class="example-solution">
+        <p>Pyramid with base $n \times n$ and height $n$: volume $\approx \dfrac{1}{3}n^2 \cdot n = \dfrac{n^3}{3}$.</p>
+        <p class="final">Exact formula $\dfrac{n(n+1)(2n+1)}{6}$ has leading term $\dfrac{n^3}{3}$. Adding 2D slabs builds a 3D shape.</p>
+    </div>
+</div>
+
+<div class="graph-container">
+    <div id="growth-box" class="jxgbox" style="max-width:420px; height:280px;"></div>
+    <div class="graph-caption">Comparing $y = \sum_{k=1}^{x} k$ (blue, $\approx x^2/2$) vs $y = \sum_{k=1}^{x} k^2$ (teal, $\approx x^3/3$) for $x = 1 \ldots 8$.</div>
+</div>
+<script>
+(function(){
+    var b = JXG.JSXGraph.initBoard('growth-box', {
+        boundingbox: [-0.5, 220, 9, -10],
+        axis: true,
+        showNavigation: false,
+        showCopyright: false
+    });
+    var pts1 = [], pts2 = [];
+    var s1 = 0, s2 = 0;
+    for (var k = 1; k <= 8; k++) {
+        s1 += k;
+        s2 += k*k;
+        pts1.push([k, s1]);
+        pts2.push([k, s2]);
+    }
+    // sum-k curve
+    b.create('curve', [pts1.map(p=>p[0]), pts1.map(p=>p[1])], {
+        strokeColor: '#1565c0', strokeWidth: 2.5, fixed: true
+    });
+    for (var i = 0; i < pts1.length; i++) {
+        b.create('point', pts1[i], { size: 3, color: '#1565c0', fixed: true, name: '' });
+    }
+    // sum-k^2 curve
+    b.create('curve', [pts2.map(p=>p[0]), pts2.map(p=>p[1])], {
+        strokeColor: '#00838f', strokeWidth: 2.5, fixed: true
+    });
+    for (var i = 0; i < pts2.length; i++) {
+        b.create('point', pts2[i], { size: 3, color: '#00838f', fixed: true, name: '' });
+    }
+    b.create('text', [5, 42, '\\u03a3k (2D)'], { fontSize: 11, strokeColor: '#1565c0', fixed: true });
+    b.create('text', [5, 140, '\\u03a3k\\u00b2 (3D)'], { fontSize: 11, strokeColor: '#00838f', fixed: true });
+})();
+</script>
+
+<div class="geo-pull">
+    "Add $d$-dimensional objects together &rarr; you fill a $(d+1)$-dimensional container."
+</div>
+
+<!-- ============================================================
+     SECTION 3 — Nicomachus
+     ============================================================ -->
+<div class="part-header">3. The Cube-Sum Magic: $\displaystyle\sum k^3 = \!\left(\sum k\right)^{\!2}$</div>
+
+<div class="concept-box">
+    <div class="title">Nicomachus's Theorem (c. 100 AD)</div>
+    <p>$$1^3 + 2^3 + \cdots + n^3 \;=\; \left(1 + 2 + \cdots + n\right)^2 \;=\; \left[\frac{n(n+1)}{2}\right]^2$$</p>
+    <p>The sum of the first $n$ cubes equals the <em>square</em> of the sum of the first $n$ integers. This works <strong>only</strong> for cubes.</p>
+</div>
+
+<div class="example">
+    <div class="example-title">Quick Check: $n = 4$</div>
+    <div class="example-solution">
+        <p>Left: $\quad 1^3 + 2^3 + 3^3 + 4^3 = 1 + 8 + 27 + 64 = 100$.</p>
+        <p>Right: $\quad \left(\dfrac{4 \cdot 5}{2}\right)^2 = 10^2 = 100$. &nbsp; &#10003;</p>
+        <p class="final">Nicomachus verified for $n = 4$.</p>
+    </div>
+</div>
+
+<p>Leading term: $\dfrac{n^4}{4}$ &rarr; firmly 4D, consistent with the pattern.</p>
+
+<!-- PAGE BREAK before Section 4 -->
+<div class="page-break"></div>
+
+<!-- ============================================================
+     SECTION 4 — General Pattern
+     ============================================================ -->
+<div class="part-header">4. The General Pattern</div>
+
+<div class="concept-box">
+    <div class="title">Power-Sum Approximation (all positive integers $d$)</div>
+    <p>$$\sum_{k=1}^{n} k^d \;=\; \frac{n^{d+1}}{d+1} \;+\; \text{lower-order terms}$$</p>
+    <p>As $n$ grows large, lower-order terms become negligible. The dominant behavior is always $\dfrac{n^{d+1}}{d+1}$.</p>
+</div>
+
+<p>The exact formula for general $d$ uses <strong>Bernoulli numbers</strong> (Number Theory / Calculus topic), but the approximation above is the key takeaway.</p>
+
+<!-- ============================================================
+     SECTION 5 — Calculus Connection + JSXGraph
+     ============================================================ -->
+<div class="part-header">5. This Is Secretly Calculus</div>
+
+<p>The integral of $x^d$ from $0$ to $n$:</p>
+$$\int_0^n x^d \, dx \;=\; \frac{x^{d+1}}{d+1}\Bigg|_0^n \;=\; \frac{n^{d+1}}{d+1}$$
+
+<p>Compare:</p>
+$$\sum_{k=1}^{n} k^d \;\approx\; \frac{n^{d+1}}{d+1}$$
+
+<div class="insight-box">
+    <div class="title">Discrete Sums = Continuous Integrals (in the limit)</div>
+    <p>
+        The Riemann integral is literally defined as the limit of sums like these.
+        When you let $n \to \infty$ (shrinking each step to width $\tfrac{1}{n}$), the sum <em>becomes</em> the integral.
+    </p>
+    <p style="margin-top:10px;">
+        <strong>Punchline:</strong> The antiderivative rule $\displaystyle\int x^d\,dx = \frac{x^{d+1}}{d+1}$
+        is the continuous version of the dimension-jump pattern in finite sums.
+        <em>Pre-Calculus was previewing Calculus the whole time.</em>
+    </p>
+</div>
+
+<div class="graph-container">
+    <div id="riemann-box" class="jxgbox" style="max-width:440px; height:300px;"></div>
+    <div class="graph-caption">Riemann sum (rectangles, $d=1$, $n=8$) vs $y=x$ on $[0,4]$. As rectangles shrink, sum &rarr; integral $= \frac{1}{2}(4)^2 = 8$.</div>
+</div>
+<script>
+(function(){
+    var b = JXG.JSXGraph.initBoard('riemann-box', {
+        boundingbox: [-0.3, 5.5, 4.8, -0.3],
+        axis: true,
+        showNavigation: false,
+        showCopyright: false
+    });
+    var n = 8, a = 0, bv = 4;
+    var dx = (bv - a) / n;
+    // draw rectangles (right Riemann sum, f(x)=x)
+    for (var i = 0; i < n; i++) {
+        var xi = a + (i+1)*dx; // right endpoint
+        b.create('polygon', [
+            [a+i*dx, 0], [a+(i+1)*dx, 0],
+            [a+(i+1)*dx, xi], [a+i*dx, xi]
+        ], {
+            fillColor: '#bbdefb', fillOpacity: 0.7,
+            strokeColor: '#1565c0', strokeWidth: 1,
+            fixed: true, highlight: false
+        });
+    }
+    // y=x curve
+    b.create('functiongraph', [function(x){ return x; }, 0, 4.5], {
+        strokeColor: '#c62828', strokeWidth: 2.5, fixed: true
+    });
+    b.create('text', [2.8, 4.5, 'y = x'], { fontSize: 12, strokeColor: '#c62828', fixed: true });
+    b.create('text', [0.2, 3.8, 'rectangles \\u2192 integral'], { fontSize: 10, strokeColor: '#555', fixed: true });
+})();
+</script>
+
+<!-- ============================================================
+     SECTION 6 — Induction Proof
+     ============================================================ -->
+<div class="part-header">6. Induction Proof of Row 1</div>
+
+<p>The two-step induction machine proves the dimension-jump formula for Row 1. Here is the complete proof as a model.</p>
+
+<div class="concept-box">
+    <div class="title">Theorem: $\displaystyle\sum_{k=1}^{n} k = \dfrac{n(n+1)}{2}$</div>
+    <p><strong>Proof by Mathematical Induction.</strong></p>
+    <p>
+        <strong>Base Case ($n=1$):</strong> &nbsp;
+        LHS $= 1$. &nbsp; RHS $= \dfrac{1 \cdot 2}{2} = 1$. &nbsp; &#10003;
+    </p>
+    <p>
+        <strong>Inductive Hypothesis ($n = m$):</strong> &nbsp;
+        Assume $\displaystyle\sum_{j=1}^{m} j = \dfrac{m(m+1)}{2}$ for some $m \ge 1$.
+    </p>
+    <p><strong>Inductive Step ($n = m+1$):</strong></p>
+    <p style="margin-left:20px;">
+        $\displaystyle\sum_{j=1}^{m+1} j
+            = \underbrace{\sum_{j=1}^{m} j}_{\frac{m(m+1)}{2}} + (m+1)
+            = \frac{m(m+1)}{2} + (m+1)
+            = (m+1)\!\left(\frac{m}{2}+1\right)
+            = \frac{(m+1)(m+2)}{2}$
+    </p>
+    <p>This is the formula with $n = m+1$. By PMI, the formula holds for all $n \ge 1$. &nbsp; $\blacksquare$</p>
+</div>
+
+<div class="reminder">
+    <div class="rem-title">Dimension in the Proof</div>
+    <p>At the inductive step we added a 1D term $(m+1)$ to a formula that was already quadratic (2D). The result stayed quadratic. Induction and geometry are telling the same story.</p>
+</div>
+
+<!-- ============================================================
+     SECTION 7 — Summary
+     ============================================================ -->
+<div class="part-header">7. Summary &mdash; The Three Pillars</div>
+
+<table class="dim-table">
+    <thead>
+        <tr>
+            <th class="th-head" style="text-align:left; padding:7px 12px;">Pillar</th>
+            <th class="th-head">Key formula</th>
+            <th class="th-head">Geometric interpretation</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="border-left:4px solid var(--color-dim1);"><strong>1D Sums</strong></td>
+            <td style="text-align:center;">$\dfrac{n(n+1)}{2} \approx \dfrac{n^2}{2}$</td>
+            <td>Sticks &rarr; triangle (area, 2D)</td>
+        </tr>
+        <tr>
+            <td style="border-left:4px solid var(--color-dim2);"><strong>2D Sums</strong></td>
+            <td style="text-align:center;">$\dfrac{n(n+1)(2n+1)}{6} \approx \dfrac{n^3}{3}$</td>
+            <td>Squares &rarr; pyramid (volume, 3D)</td>
+        </tr>
+        <tr>
+            <td style="border-left:4px solid var(--color-dim3);"><strong>3D Sums</strong></td>
+            <td style="text-align:center;">$\left[\dfrac{n(n+1)}{2}\right]^2 \approx \dfrac{n^4}{4}$</td>
+            <td>Cubes &rarr; 4D hyper-volume; $= (\sum k)^2$</td>
+        </tr>
+        <tr>
+            <td style="border-left:4px solid var(--color-insight);"><strong>Calculus limit</strong></td>
+            <td style="text-align:center;">$\displaystyle\int_0^n x^d\,dx = \dfrac{n^{d+1}}{d+1}$</td>
+            <td>Continuous version of the same jump</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="insight-box">
+    <div class="title">One-Line Takeaway</div>
+    <p>
+        Summing $d$-dimensional things builds a $(d+1)$-dimensional thing &mdash;
+        whether discrete (sigma) or continuous (integral), the rule is always $\dfrac{n^{d+1}}{d+1}$.
+    </p>
+</div>
+
+<!-- ============================================================
+     PAGE BREAK — Practice Problems
+     ============================================================ -->
+<div class="page-break"></div>
+
+<!-- ============================================================
+     PRACTICE PROBLEMS
+     ============================================================ -->
+<div class="part-header">Practice Problems</div>
+<div class="directions">
+    <strong>Directions:</strong> Show all work. Leave answers in exact form unless otherwise stated.
+    Problems 1&ndash;4: Pattern Recognition &nbsp;|&nbsp; Problems 5&ndash;7: Nicomachus &amp; Algebra
+    &nbsp;|&nbsp; Problems 8&ndash;10: Calculus Connection &amp; Induction
+</div>
+
+<!-- ===== Part A ===== -->
+<p style="font-weight:bold; color:var(--color-accent); margin:10px 0 4px 0;">Part A &mdash; Pattern Recognition</p>
+
+<div class="problem">
+    <span class="q-num">1.</span>
+    Fill in the table below. For each sum, identify the leading term and the dimension of the result.
+    <table class="dim-table" style="margin-top:10px; font-size:10pt;">
+        <thead>
+            <tr>
+                <th class="th-head" style="text-align:left; padding:6px 10px;">Sum</th>
+                <th class="th-head">Exact value at $n=5$</th>
+                <th class="th-head">Leading term (general $n$)</th>
+                <th class="th-head">Dimension</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border-left:3px solid var(--color-dim1);">$\displaystyle\sum_{k=1}^{n} k$</td>
+                <td style="min-height:28px;">&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td style="border-left:3px solid var(--color-dim2);">$\displaystyle\sum_{k=1}^{n} k^2$</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td style="border-left:3px solid var(--color-dim3);">$\displaystyle\sum_{k=1}^{n} k^3$</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="work-space" style="min-height:40px;"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">2.</span>
+    Using the dimension-jump rule $\displaystyle\sum_{k=1}^{n} k^d \approx \dfrac{n^{d+1}}{d+1}$,
+    predict the leading term of $\displaystyle\sum_{k=1}^{n} k^4$. What dimension does the result live in?
+    <div class="work-space"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">3.</span>
+    Compute $\displaystyle\sum_{k=1}^{10} k$ and $\displaystyle\sum_{k=1}^{10} k^2$ using the exact formulas.
+    Then compare their ratio to the ratio of their leading terms. Are they close?
+    <div class="work-space"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">4.</span>
+    A student claims: &ldquo;The sum of the first $n$ fourth-powers has leading term $\dfrac{n^5}{5}$.&rdquo;
+    Verify this claim by checking the formula at $n = 2$ and $n = 3$ using
+    $1^4 + 2^4 + \cdots + n^4 = \dfrac{n(n+1)(2n+1)(3n^2+3n-1)}{30}$.
+    <div class="work-space"></div>
+</div>
+
+<!-- ===== Part B ===== -->
+<div class="page-break"></div>
+<p style="font-weight:bold; color:var(--color-accent); margin:10px 0 4px 0;">Part B &mdash; Nicomachus &amp; Algebraic Verification</p>
+
+<div class="problem">
+    <span class="q-num">5.</span>
+    Verify Nicomachus's Theorem for $n = 5$:
+    show that $1^3 + 2^3 + 3^3 + 4^3 + 5^3 = \left(\dfrac{5 \cdot 6}{2}\right)^2$.
+    <div class="work-space"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">6.</span>
+    Using Nicomachus's Theorem, simplify and evaluate:
+    $$\frac{1^3 + 2^3 + 3^3 + \cdots + n^3}{(1 + 2 + 3 + \cdots + n)^2}$$
+    What is the value of this expression for any $n \ge 1$? Explain why.
+    <div class="work-space"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">7.</span>
+    Find the value of $n$ such that $1^3 + 2^3 + \cdots + n^3 = 3025$.
+    <em>(Hint: use Nicomachus's Theorem and recognize a perfect square.)</em>
+    <div class="work-space"></div>
+</div>
+
+<!-- ===== Part C ===== -->
+<p style="font-weight:bold; color:var(--color-accent); margin:22px 0 4px 0;">Part C &mdash; Calculus Connection &amp; Induction</p>
+
+<div class="problem">
+    <span class="q-num">8.</span>
+    Evaluate the following integral and compare your answer to the sum formula:
+    $$\int_0^{10} x^2 \, dx$$
+    Then compute $\displaystyle\sum_{k=1}^{10} k^2$ exactly. Express the ratio $\dfrac{\sum_{k=1}^{10} k^2}{\int_0^{10} x^2\,dx}$ as a decimal rounded to 3 places. What do you notice as $n$ grows large?
+    <div class="work-space"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">9.</span>
+    The antiderivative rule says $\displaystyle\int x^3\,dx = \dfrac{x^4}{4} + C$.
+    Explain in one or two sentences how this rule is the &ldquo;continuous version&rdquo;
+    of the dimension-jump pattern $\displaystyle\sum_{k=1}^{n} k^3 \approx \dfrac{n^4}{4}$.
+    <div class="work-space" style="min-height:100px;"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">10.</span>
+    Prove by mathematical induction that $\displaystyle\sum_{k=1}^{n} k^2 = \dfrac{n(n+1)(2n+1)}{6}$.
+    Follow the three-step structure: <strong>(a)</strong> Base case $n=1$. &nbsp;
+    <strong>(b)</strong> State the inductive hypothesis. &nbsp;
+    <strong>(c)</strong> Prove the inductive step.
+    <div class="work-space" style="min-height:200px;"></div>
+</div>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<div class="footer">
+    Newton School &nbsp;&bull;&nbsp; 2175 Lemoine Ave Suite 304, Fort Lee, NJ 07024
+    &nbsp;&bull;&nbsp; (201) 252-7252 &nbsp;&bull;&nbsp; www.newtonschool.net
+    &nbsp;&bull;&nbsp; Kenny@newtonschool.net
+    &nbsp;&bull;&nbsp; Created 2026-05-10 &copy; Newton School
+</div>
+
+</div><!-- .page -->
+</body>
+</html>

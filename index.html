@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Justin Koo · Newton School Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --student: #1565c0;
+    --student-soft: #e3f2fd;
+    --student-deep: #0d47a1;
+    --ink: #1a1a1a;
+    --ink-soft: #555;
+    --paper: #ffffff;
+    --bg: #f5f9ff;
+    --line: #e8e8e8;
+    --serif: 'Playfair Display', 'Noto Serif KR', Georgia, serif;
+    --sans: 'Inter', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--sans); background: var(--bg); color: var(--ink); line-height: 1.6; }
+  body.modal-open { overflow: hidden; }
+  .container { max-width: 680px; margin: 0 auto; background: var(--paper); box-shadow: 0 1px 6px rgba(0,0,0,0.05); }
+  .masthead { text-align: center; padding: 48px 32px 24px; border-bottom: 3px double var(--student); }
+  .masthead .school { font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--student); font-weight: 600; margin-bottom: 12px; }
+  .masthead h1 { font-family: var(--serif); font-size: 42px; font-weight: 700; line-height: 1.1; margin-bottom: 6px; }
+  .masthead .subtitle { font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--ink-soft); }
+  .masthead .info { margin-top: 18px; font-size: 12px; color: var(--ink-soft); letter-spacing: 0.05em; }
+  .masthead .info span { margin: 0 8px; }
+  section { padding: 28px 32px; border-bottom: 1px solid var(--line); }
+  section .label { font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--student); font-weight: 600; margin-bottom: 8px; }
+  section h2 { font-family: var(--serif); font-size: 24px; font-weight: 700; margin-bottom: 12px; line-height: 1.2; }
+  section p { font-size: 14px; color: var(--ink-soft); margin-bottom: 12px; }
+
+  /* Timeline */
+  ul.timeline { list-style: none; padding-left: 16px; border-left: 2px solid var(--student); }
+  ul.timeline li { padding: 10px 0 10px 16px; position: relative; font-size: 13px; display: flex; align-items: baseline; gap: 0; flex-wrap: wrap; }
+  ul.timeline li::before { content: ""; position: absolute; left: -22px; top: 16px; width: 8px; height: 8px; border-radius: 50%; background: var(--student); }
+  ul.timeline .date { font-weight: 600; color: var(--student); margin-right: 8px; white-space: nowrap; flex-shrink: 0; }
+  .popup-link { font-weight: 500; color: var(--ink); text-decoration: none; border-bottom: 1px solid transparent; transition: all 0.15s; cursor: pointer; }
+  .popup-link:hover { color: var(--student); border-bottom-color: var(--student); }
+  .pdf-badge { display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; background: var(--student-soft); color: var(--student-deep); border-radius: 3px; padding: 1px 5px; vertical-align: middle; }
+  .notes-badge { display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; background: #e8f5e9; color: #2e7d32; border-radius: 3px; padding: 1px 5px; vertical-align: middle; }
+  .ak-badge { display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; background: #fff3e0; color: #e65100; border-radius: 3px; padding: 1px 5px; vertical-align: middle; }
+
+  /* Activity cards */
+  .kenny-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 16px; }
+  @media (max-width: 480px) { .kenny-cards { grid-template-columns: 1fr; } }
+  .kenny-card { display: block; padding: 18px 20px; border-radius: 10px; background: var(--paper); border: 1px solid var(--line); text-decoration: none; color: inherit; transition: all 0.2s; position: relative; overflow: hidden; cursor: pointer; }
+  .kenny-card:hover { border-color: var(--student); box-shadow: 0 4px 16px rgba(0,0,0,0.10); transform: translateY(-2px); }
+  .kenny-card .kc-icon { font-size: 28px; margin-bottom: 8px; }
+  .kenny-card .kc-title { font-family: var(--serif); font-size: 17px; font-weight: 600; margin-bottom: 4px; }
+  .kenny-card .kc-desc { font-size: 12px; color: var(--ink-soft); line-height: 1.5; }
+  .kenny-card .kc-arrow { position: absolute; top: 18px; right: 18px; color: var(--student); font-size: 14px; opacity: 0.4; transition: opacity 0.2s; }
+  .kenny-card:hover .kc-arrow { opacity: 1; }
+
+  .teacher-note { background: var(--bg); padding: 16px 20px; border-radius: 8px; border-left: 3px solid var(--student); margin-top: 12px; font-style: italic; color: var(--ink); font-size: 14px; line-height: 1.7; }
+
+  footer { text-align: center; padding: 32px; font-size: 11px; color: var(--ink-soft); }
+  footer .copyright { margin-top: 8px; font-style: italic; }
+
+  /* Modal overlay */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(15,25,45,0.78);
+    display: none; align-items: center; justify-content: center;
+    z-index: 1000; padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: #fff; border-radius: 12px; width: 92vw; max-width: 1100px;
+    height: 92vh; display: flex; flex-direction: column; overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+  .modal-header {
+    padding: 10px 16px; border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--serif); font-size: 14px; color: var(--ink-soft);
+    flex-shrink: 0;
+  }
+  .modal-header-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .modal-title { font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .modal-esc { font-size: 11px; color: var(--ink-soft); opacity: 0.6; white-space: nowrap; }
+  .modal-close {
+    background: transparent; border: none; font-size: 22px; cursor: pointer;
+    color: var(--ink-soft); padding: 0 6px; flex-shrink: 0; line-height: 1;
+  }
+  .modal-close:hover { color: var(--student); }
+  .modal-iframe { flex: 1; border: none; width: 100%; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="masthead">
+    <div class="school">Newton School Weekly</div>
+    <h1>Justin Koo</h1>
+    <div class="subtitle">Pre-Calculus Workshop</div>
+    <div class="info">
+      <span>May 12, 2026</span>
+      <span>&middot;</span>
+      <span>Mr. Kenny</span>
+      <span>&middot;</span>
+      <span>Pre-Calculus</span>
+    </div>
+  </header>
+
+  <section>
+    <div class="label">Recent Work</div>
+    <h2>This Month</h2>
+    <ul class="timeline">
+
+      <!-- 5/10 — Induction: Inequalities & Fibonacci -->
+      <li>
+        <span class="date">5/10</span>
+        <a class="popup-link"
+           data-src="2026-05-10/JustinKoo-2026-05-10-PreCalculus_InductionInequalityFibonacci_Homework.pdf"
+           data-fallback="2026-05-10/JustinKoo-2026-05-10-PreCalculus_InductionInequalityFibonacci_Homework.html">
+          Induction: Inequalities &amp; Fibonacci Homework
+        </a>
+        <span class="pdf-badge">PDF</span>
+      </li>
+      <li>
+        <span class="date">5/10</span>
+        <a class="popup-link"
+           data-src="2026-05-10/JustinKoo-2026-05-10-PreCalculus_InductionInequalityFibonacci_AnswerKey.pdf"
+           data-fallback="2026-05-10/JustinKoo-2026-05-10-PreCalculus_InductionInequalityFibonacci_AnswerKey.html">
+          Induction: Inequalities &amp; Fibonacci Answer Key
+        </a>
+        <span class="ak-badge">AK</span>
+        <span class="pdf-badge">PDF</span>
+      </li>
+
+      <!-- 5/10 — Sums Dimension Jump -->
+      <li>
+        <span class="date">5/10</span>
+        <a class="popup-link"
+           data-src="2026-05-10/JustinKoo-2026-05-10-PreCalculus_SumsDimensionJump_Homework.pdf"
+           data-fallback="2026-05-10/JustinKoo-2026-05-10-PreCalculus_SumsDimensionJump_Homework.html">
+          Sums Dimension Jump Homework
+        </a>
+        <span class="pdf-badge">PDF</span>
+      </li>
+      <li>
+        <span class="date">5/10</span>
+        <a class="popup-link"
+           data-src="2026-05-10/JustinKoo-2026-05-10-PreCalculus_SumsDimensionJump_AnswerKey_HW.pdf"
+           data-fallback="2026-05-10/JustinKoo-2026-05-10-PreCalculus_SumsDimensionJump_AnswerKey_HW.html">
+          Sums Dimension Jump Answer Key
+        </a>
+        <span class="ak-badge">AK</span>
+        <span class="pdf-badge">PDF</span>
+      </li>
+
+      <!-- 5/10 — Mathematical Induction (original) -->
+      <li>
+        <span class="date">5/10</span>
+        <a class="popup-link"
+           data-src="2026-05-10/JustinKoo-2026-05-10-PreCalculus_MathematicalInduction_Homework.pdf"
+           data-fallback="2026-05-10/JustinKoo-2026-05-10-PreCalculus_MathematicalInduction_Homework.html">
+          Mathematical Induction Homework
+        </a>
+        <span class="pdf-badge">PDF</span>
+      </li>
+      <li>
+        <span class="date">5/10</span>
+        <a class="popup-link"
+           data-src="2026-05-10/JustinKoo-2026-05-10-PreCalculus_MathematicalInduction_AnswerKey.pdf"
+           data-fallback="2026-05-10/JustinKoo-2026-05-10-PreCalculus_MathematicalInduction_AnswerKey.html">
+          Mathematical Induction Answer Key
+        </a>
+        <span class="ak-badge">AK</span>
+        <span class="pdf-badge">PDF</span>
+      </li>
+
+      <!-- 5/10 — Lecture Notes -->
+      <li>
+        <span class="date">5/10</span>
+        <a class="popup-link"
+           data-src="2026-05-10/JustinKoo-2026-05-10-PreCalculus_InductionInequality_Notes.pdf"
+           data-fallback="2026-05-10/JustinKoo-2026-05-10-PreCalculus_InductionInequality_Notes.html">
+          Induction: Inequality Proofs — Lecture Notes
+        </a>
+        <span class="notes-badge">Notes</span>
+        <span class="pdf-badge">PDF</span>
+      </li>
+      <li>
+        <span class="date">5/10</span>
+        <a class="popup-link"
+           data-src="2026-05-10/JustinKoo-2026-05-10-PreCalculus_SumsDimensionJump_LectureNote.pdf"
+           data-fallback="2026-05-10/JustinKoo-2026-05-10-PreCalculus_SumsDimensionJump_LectureNote.html">
+          Sums Dimension Jump — Lecture Note
+        </a>
+        <span class="notes-badge">Notes</span>
+        <span class="pdf-badge">PDF</span>
+      </li>
+
+      <!-- 5/3 -->
+      <li>
+        <span class="date">5/3</span>
+        <a class="popup-link"
+           data-src="2026-05-03/JustinKoo-2026-05-03-PreCalculus_Homework-PartialFractionsAndGeomTelescoping_Worksheet.pdf"
+           data-fallback="2026-05-03/JustinKoo-2026-05-03-PreCalculus_Homework-PartialFractionsAndGeomTelescoping_Worksheet.html">
+          Partial Fractions &amp; Geom Telescoping Homework
+        </a>
+        <span class="pdf-badge">PDF</span>
+      </li>
+      <li>
+        <span class="date">5/3</span>
+        <a class="popup-link"
+           data-src="2026-05-03/JustinKoo-2026-05-03-PreCalculus_Homework-PartialFractionsAndGeomTelescoping_AnswerKey.pdf"
+           data-fallback="2026-05-03/JustinKoo-2026-05-03-PreCalculus_Homework-PartialFractionsAndGeomTelescoping_AnswerKey.html">
+          Partial Fractions &amp; Geom Telescoping Answer Key
+        </a>
+        <span class="ak-badge">AK</span>
+        <span class="pdf-badge">PDF</span>
+      </li>
+      <li>
+        <span class="date">5/3</span>
+        <a class="popup-link"
+           data-src="2026-05-03/JustinKoo-2026-05-03-PreCalculus_PowerSeriesIoCAndTelescoping_Worksheet.pdf"
+           data-fallback="2026-05-03/JustinKoo-2026-05-03-PreCalculus_PowerSeriesIoCAndTelescoping_Worksheet.html">
+          Power Series, IoC &amp; Telescoping Homework
+        </a>
+        <span class="pdf-badge">PDF</span>
+      </li>
+      <li>
+        <span class="date">5/3</span>
+        <a class="popup-link"
+           data-src="2026-05-03/JustinKoo-2026-05-03-PreCalculus_PowerSeriesIoCAndTelescoping_AnswerKey.pdf"
+           data-fallback="2026-05-03/JustinKoo-2026-05-03-PreCalculus_PowerSeriesIoCAndTelescoping_AnswerKey.html">
+          Power Series, IoC &amp; Telescoping Answer Key
+        </a>
+        <span class="ak-badge">AK</span>
+        <span class="pdf-badge">PDF</span>
+      </li>
+
+      <!-- 4/26 -->
+      <li>
+        <span class="date">4/26</span>
+        <a class="popup-link"
+           data-src="2026-04-26/JustinKoo-2026-04-26-PreCalculus_Homework-SequencesAndSeriesTest_Worksheet.pdf"
+           data-fallback="2026-04-26/JustinKoo-2026-04-26-PreCalculus_Homework-SequencesAndSeriesTest_Worksheet.html">
+          Sequences &amp; Series Test Homework
+        </a>
+        <span class="pdf-badge">PDF</span>
+      </li>
+      <li>
+        <span class="date">4/26</span>
+        <a class="popup-link"
+           data-src="2026-04-26/JustinKoo-2026-04-26-PreCalculus_Homework-SequencesAndSeriesTest_AnswerKey.pdf"
+           data-fallback="2026-04-26/JustinKoo-2026-04-26-PreCalculus_Homework-SequencesAndSeriesTest_AnswerKey.html">
+          Sequences &amp; Series Test Answer Key
+        </a>
+        <span class="ak-badge">AK</span>
+        <span class="pdf-badge">PDF</span>
+      </li>
+
+    </ul>
+  </section>
+
+  <section>
+    <div class="label">From Mr. Kenny</div>
+    <h2>A note &amp; something just for you</h2>
+    <div class="teacher-note">
+      "Justin &mdash; You've been pushing hard through Mathematical Induction, Sums, and now Inequality proofs &mdash; all in one unit. Keep the Wider Scope Tactic in mind: when the direct step feels impossible, find the stronger bound that makes it obvious. That's real mathematical thinking. &mdash; Mr. K"
+    </div>
+
+    <div class="kenny-cards">
+
+      <a class="kenny-card popup-activity"
+         data-src="2026-05-10/sum-of-n-visualizer.html"
+         data-title="Sum of n / n&sup2; / n&sup3; Visualizer">
+        <span class="kc-arrow">&#8599;</span>
+        <div class="kc-icon">&#931;&#128202;</div>
+        <div class="kc-title">Σn / Σn² / Σn³ Visualizer</div>
+        <div class="kc-desc">See 1+2+&hellip;+n, 1²+2²+&hellip;, and 1³+2³+&hellip; build up before your eyes</div>
+      </a>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>Newton School &middot; Updated weekly</div>
+    <div class="copyright">&copy; 2026 &middot; Made with care for Justin Koo</div>
+  </footer>
+</div>
+
+<!-- Shared Modal (PDF lightbox + HTML activity iframe) -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <span class="modal-title" id="modalTitle"></span>
+        <span class="modal-esc">ESC to close</span>
+      </div>
+      <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+    </div>
+    <iframe class="modal-iframe" id="modalIframe" src="about:blank"></iframe>
+  </div>
+</div>
+
+<script>
+  const overlay = document.getElementById('modalOverlay');
+  const iframe  = document.getElementById('modalIframe');
+  const title   = document.getElementById('modalTitle');
+
+  const openModal = (src, label) => {
+    iframe.src = src;
+    title.textContent = label;
+    overlay.classList.add('open');
+    document.body.classList.add('modal-open');
+  };
+
+  const closeModal = () => {
+    overlay.classList.remove('open');
+    document.body.classList.remove('modal-open');
+    iframe.src = 'about:blank';
+  };
+
+  // PDF/HTML popup links (timeline)
+  document.querySelectorAll('.popup-link').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      openModal(a.dataset.src, a.textContent.trim());
+    });
+  });
+
+  // HTML iframe popup (activity cards)
+  document.querySelectorAll('.popup-activity').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      openModal(a.dataset.src, a.dataset.title || a.querySelector('.kc-title').textContent);
+    });
+  });
+
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>

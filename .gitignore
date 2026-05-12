@@ -1,0 +1,4 @@
+_live-server.bat
+*.bat
+.DS_Store
+Thumbs.db

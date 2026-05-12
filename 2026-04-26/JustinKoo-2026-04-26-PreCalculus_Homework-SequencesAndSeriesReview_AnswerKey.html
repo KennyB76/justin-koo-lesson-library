@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Justin Koo — Pre-Calculus Homework: Sequences & Series Review (2026-04-26) · Answer Key</title>
+<script>
+  window.MathJax = { tex: { inlineMath:[['$','$'],['\\(','\\)']], displayMath:[['$$','$$'],['\\[','\\]']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin:0; padding:0; background:#fafafa; }
+body { font-family:'Source Serif Pro','Libre Baskerville','Georgia','Times New Roman',serif; color:#000; }
+.page { max-width:740px; margin:0 auto; padding:60px 50px 40px 50px; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+  html,body{background:#fff}
+  .page{max-width:none; padding:.55in .55in .45in .55in; margin:0; box-shadow:none}
+  .problem,.example,.concept-box,.formula-box,.derivation,.final-answer{page-break-inside:avoid; break-inside:avoid}
+  .part-header,h1,h2,h3{page-break-after:avoid; break-after:avoid}
+  .page-break{page-break-before:always; break-before:page}
+}
+:root{
+  --color-primary:#1565c0; --color-primary-dark:#0d47a1; --color-accent:#00838f;
+  --color-header-border:#1565c0; --color-final-answer:#2e7d32; --color-warning:#c62828;
+  --color-tag-border:#1565c0; --color-tag-text:#1565c0; --color-muted:#555; --color-rule:#ccc;
+  --color-key:#c62828;
+}
+body{font-size:10.5pt; line-height:1.55}
+h1,h2,h3,.part-header{font-family:'Libre Baskerville','Georgia',serif}
+.header{text-align:center; padding-bottom:10px; margin-bottom:16px; border-bottom:2px solid var(--color-key)}
+.school-name{font-size:9pt; letter-spacing:4px; color:var(--color-key); font-weight:bold}
+.subject-tag,.key-tag{display:inline-block; padding:2px 10px; font-size:8pt; letter-spacing:2px; margin:5px 3px 7px 3px; font-weight:bold}
+.subject-tag{border:1.5px solid var(--color-primary); color:var(--color-primary)}
+.key-tag{border:1.5px solid var(--color-key); color:var(--color-key); background:rgba(198,40,40,.05)}
+h1{font-size:16pt; margin:6px 0 8px 0; font-weight:bold; line-height:1.3}
+.info{display:flex; justify-content:space-between; font-size:10pt; margin-top:6px; flex-wrap:wrap; gap:6px}
+.standard{font-size:8pt; font-style:italic; margin-top:4px; color:var(--color-muted)}
+.part-header{font-size:13pt; font-weight:bold; color:var(--color-key); margin:22px 0 6px 0; padding-bottom:3px; border-bottom:1.5px solid var(--color-key)}
+.problem{margin:14px 0; font-size:10.5pt; line-height:1.6; padding:8px 12px; border-left:3px solid var(--color-key)}
+.problem-stmt{font-style:italic; color:#555; margin-bottom:6px; font-size:10pt}
+.derivation{font-family:'Cambria Math','Cambria','Georgia',serif; background:rgba(0,0,0,.02); border:1px solid #e0e0e0; border-left:3px solid var(--color-accent); padding:8px 12px; margin:6px 0; font-size:10.5pt; line-height:1.75}
+.derivation .step{margin:3px 0}
+.derivation .label{font-weight:bold; color:var(--color-accent); margin-right:4px}
+.final-answer{background:rgba(46,125,50,.08); border:2px solid var(--color-final-answer); border-radius:6px; padding:8px 14px; margin:10px 0; font-weight:bold; color:var(--color-final-answer); font-size:11.5pt; text-align:center}
+.final-answer .label{font-size:9pt; letter-spacing:2px; color:var(--color-final-answer); display:block; margin-bottom:3px; font-weight:bold; opacity:.85}
+.sanity-check{background:rgba(0,131,143,.05); border-left:3px dashed var(--color-accent); padding:6px 12px; margin:8px 0; font-size:10pt; font-style:italic}
+.sanity-check strong{font-style:normal; color:var(--color-accent)}
+.recap-table{border-collapse:collapse; width:100%; margin:8px 0; font-size:10pt}
+.recap-table th,.recap-table td{border:1px solid #ccc; padding:5px 8px; text-align:left}
+.recap-table th{color:var(--color-primary); font-weight:bold; background:transparent}
+.concept-box{border:1.5px solid var(--color-accent); padding:10px 14px; margin:12px 0; font-size:10pt; border-left-width:4px}
+.concept-box .title{font-weight:bold; color:var(--color-accent); margin-bottom:4px}
+.formula-box{border:1.5px solid #888; padding:6px 12px; margin:6px 0; text-align:center; font-size:11pt; border-radius:4px}
+.footer{text-align:center; font-size:8pt; color:#666; border-top:1px solid var(--color-rule); margin-top:20px; padding-top:6px}
+
+/* === Visual -c Comment System === */
+mark.user-hl{background:linear-gradient(120deg,rgba(255,235,59,.5),rgba(255,235,59,.7)); padding:0 2px; border-radius:2px; cursor:pointer; position:relative; transition:background .15s ease}
+mark.user-hl:hover{background:linear-gradient(120deg,rgba(255,193,7,.6),rgba(255,193,7,.8))}
+mark.user-hl.has-comment{background:linear-gradient(120deg,rgba(56,189,248,.45),rgba(56,189,248,.65)); border-bottom:2px dashed #38bdf8}
+mark.user-hl.has-comment:hover{background:linear-gradient(120deg,rgba(14,165,233,.55),rgba(14,165,233,.75))}
+.hl-popup{position:absolute; z-index:9999; background:#1f2937; color:#f3f4f6; border:1px solid #374151; border-radius:8px; padding:6px; display:flex; gap:4px; box-shadow:0 4px 12px rgba(0,0,0,.4); font-size:13px; user-select:none; font-family:'Trebuchet MS',sans-serif}
+.hl-popup button{background:transparent; color:inherit; border:1px solid transparent; border-radius:5px; padding:5px 10px; cursor:pointer; font-size:13px; font-family:inherit}
+.hl-popup button:hover{background:#374151; border-color:#4b5563}
+.hl-comment-editor{position:absolute; z-index:9999; background:#1f2937; color:#f3f4f6; border:1px solid #374151; border-radius:8px; padding:10px; width:300px; box-shadow:0 4px 16px rgba(0,0,0,.5); font-family:'Trebuchet MS',sans-serif}
+.hl-comment-editor .quote{font-style:italic; opacity:.75; font-size:11.5px; margin-bottom:8px; max-height:60px; overflow:hidden}
+.hl-comment-editor textarea{width:100%; min-height:80px; background:#111827; color:#f3f4f6; border:1px solid #374151; border-radius:5px; padding:6px 8px; font-family:inherit; font-size:13px; resize:vertical; margin-bottom:8px; box-sizing:border-box; outline:none}
+.hl-comment-editor .actions{display:flex; gap:6px; justify-content:flex-end}
+.hl-comment-editor button{background:#374151; color:#f3f4f6; border:1px solid #4b5563; border-radius:5px; padding:5px 12px; cursor:pointer; font-size:12px; font-family:inherit}
+.hl-comment-editor button.primary{background:#2563eb; border-color:#1d4ed8}
+.hl-comment-editor button:hover{filter:brightness(1.15)}
+.tools-sidebar{position:fixed; top:14px; right:14px; width:300px; max-height:calc(100vh - 28px); overflow-y:auto; z-index:100; background:#1f2937; color:#f3f4f6; border:1px solid #374151; border-radius:12px; padding:34px 12px 10px; font-size:12px; font-family:'Trebuchet MS',sans-serif; box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.tools-sidebar.collapsed{width:44px; height:44px; padding:0; overflow:hidden; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:20px}
+.tools-sidebar.collapsed .ts-body,.tools-sidebar.collapsed .ts-title,.tools-sidebar.collapsed .ts-toggle,.tools-sidebar.collapsed .ts-actions,.tools-sidebar.collapsed #hlList{display:none}
+.tools-sidebar.collapsed::after{content:'💬'; font-size:22px}
+.ts-toggle{position:absolute; top:6px; right:8px; background:transparent; border:1px solid #4b5563; border-radius:4px; color:#f3f4f6; font-size:11px; padding:2px 8px; cursor:pointer; font-family:inherit}
+.ts-title{font-weight:bold; font-size:13px; color:#fbbf24; margin-bottom:6px; padding:0 2px}
+.ts-actions{display:flex; gap:4px; margin:6px 2px 8px}
+.ts-actions button{flex:1; background:#374151; color:#f3f4f6; border:1px solid #4b5563; border-radius:5px; padding:5px 8px; cursor:pointer; font-size:11px; font-family:inherit}
+.ts-actions button:hover{filter:brightness(1.15)}
+.ts-actions button.danger:hover{background:#7f1d1d; border-color:#991b1b}
+.ts-empty{text-align:center; opacity:.55; padding:20px 8px; font-style:italic; font-size:11px}
+.hl-panel-item{border-left:3px solid #fbbf24; padding:6px 8px; margin-bottom:6px; background:rgba(255,255,255,.03); border-radius:0 4px 4px 0; cursor:pointer; font-size:11px; line-height:1.4; position:relative}
+.hl-panel-item.has-comment{border-left-color:#38bdf8}
+.hl-panel-item.type-block{border-left-color:#a78bfa}
+.hl-panel-item:hover{background:rgba(255,255,255,.08)}
+.hl-panel-item .hl-quote{font-style:italic; opacity:.78; display:block; margin-bottom:3px; font-size:10.5px}
+.hl-panel-item .hl-comment{font-size:11px; opacity:.98; white-space:pre-wrap}
+.hl-panel-item .hl-num{font-weight:bold; color:#fbbf24; margin-right:4px}
+.hl-panel-item.has-comment .hl-num{color:#38bdf8}
+.hl-panel-item.type-block .hl-num{color:#a78bfa}
+.hl-panel-item .hl-del{position:absolute; top:4px; right:4px; background:transparent; border:none; color:#9ca3af; cursor:pointer; padding:2px 5px; font-size:11px; border-radius:3px; line-height:1}
+.hl-panel-item .hl-del:hover{background:#7f1d1d; color:#fff}
+.block-comment-host{position:relative}
+.block-comment-btn{position:absolute; left:-32px; top:6px; width:24px; height:24px; padding:0; border:1px solid #d0d8e8; background:#fff; border-radius:50%; cursor:pointer; opacity:0; transition:opacity .15s, transform .15s, background .15s; font-size:12px; line-height:1; display:flex; align-items:center; justify-content:center; z-index:10}
+.block-comment-host:hover .block-comment-btn,.block-comment-btn.has-comment{opacity:1}
+.block-comment-btn.has-comment{background:#0ea5e9; border-color:#0ea5e9; color:#fff}
+.block-comment-btn:hover{transform:scale(1.15)}
+.block-comment-host.has-block-comment{box-shadow:inset 3px 0 0 rgba(56,189,248,.55)}
+@media print{
+  .hl-popup,.hl-comment-editor,.tools-sidebar,.block-comment-btn{display:none !important}
+  mark.user-hl{background:rgba(255,235,59,.4) !important; color:#000}
+  mark.user-hl.has-comment{background:rgba(56,189,248,.3) !important; border-bottom:1px dashed #0ea5e9 !important}
+  .block-comment-host.has-block-comment{box-shadow:inset 3px 0 0 #0ea5e9 !important}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="header">
+  <div class="school-name">NEWTON SCHOOL · ANSWER KEY</div>
+  <span class="subject-tag">PRE-CALCULUS</span>
+  <span class="key-tag">🔑 ANSWER KEY</span>
+  <h1>Sequences &amp; Series: Arithmetic, Geometric &amp; Infinite</h1>
+  <div class="info">
+    <span><strong>Student:</strong> Justin Koo</span>
+    <span><strong>Date:</strong> 2026-04-26</span>
+    <span><strong>10 problems · full solutions</strong></span>
+  </div>
+  <div class="standard"><strong>Standards:</strong> CCSS.MATH.CONTENT.HSF-BF.A.2 · HSF-IF.A.3</div>
+</div>
+
+<div class="concept-box">
+  <div class="title">📐 Formulas Used</div>
+  <table class="recap-table">
+    <tr><th>Type</th><th>$n$th term</th><th>Sum</th></tr>
+    <tr><td><strong>Arithmetic</strong></td><td>$t_n = t_1 + (n-1) d$</td><td>$S_n = \dfrac{n}{2}(t_1 + t_n)$</td></tr>
+    <tr><td><strong>Geometric</strong></td><td>$t_n = t_1 \cdot r^{n-1}$</td><td>$S_n = t_1 \cdot \dfrac{1 - r^n}{1 - r}$</td></tr>
+    <tr><td><strong>Infinite Geom.</strong></td><td>—</td><td>$S_\infty = \dfrac{t_1}{1 - r} \;\; (\,|r| &lt; 1\,)$</td></tr>
+  </table>
+</div>
+
+<!-- ================================================================
+     PART A — Arithmetic Sequences
+     ================================================================ -->
+
+<div class="part-header">Part A · Arithmetic Sequences</div>
+
+<div class="problem">
+<div class="problem-stmt">Problem 1 — Given $t_1 = 12, t_2 = 18$, find $t_{20}$.</div>
+<div class="derivation">
+  <div class="step"><span class="label">Step 1.</span> $d = t_2 - t_1 = 18 - 12 = 6$.</div>
+  <div class="step"><span class="label">Step 2.</span> $t_{20} = t_1 + (20 - 1) d = 12 + 19(6) = 12 + 114 = 126$.</div>
+</div>
+<div class="final-answer">$\boxed{\; t_{20} = 126 \;}$</div>
+</div>
+
+<div class="problem">
+<div class="problem-stmt">Problem 2 — Given $t_3 = 10, t_5 = 18$, find $t_{40}$.</div>
+<div class="derivation">
+  <div class="step"><span class="label">Step 1.</span> Two unknowns ($t_1, d$). Use the gap between $t_3$ and $t_5$ — that's 2 steps:</div>
+  <div class="step">$t_5 - t_3 = 2d \;\Rightarrow\; 18 - 10 = 2d \;\Rightarrow\; d = 4$.</div>
+  <div class="step"><span class="label">Step 2.</span> Find $t_1$: $t_3 = t_1 + 2d \Rightarrow 10 = t_1 + 8 \Rightarrow t_1 = 2$.</div>
+  <div class="step"><span class="label">Step 3.</span> $t_{40} = t_1 + 39 d = 2 + 39(4) = 2 + 156 = 158$.</div>
+</div>
+<div class="final-answer">$\boxed{\; t_{40} = 158 \;}$</div>
+</div>
+
+<div class="problem">
+<div class="problem-stmt">Problem 3 — Given $t_1 = 88, t_3 = 80$, find $t_{50}$.</div>
+<div class="derivation">
+  <div class="step"><span class="label">Step 1.</span> Gap from $t_1$ to $t_3$ is 2 steps:</div>
+  <div class="step">$t_3 - t_1 = 2d \;\Rightarrow\; 80 - 88 = 2d \;\Rightarrow\; d = -4$.</div>
+  <div class="step"><span class="label">Step 2.</span> $t_{50} = t_1 + 49 d = 88 + 49(-4) = 88 - 196 = -108$.</div>
+</div>
+<div class="final-answer">$\boxed{\; t_{50} = -108 \;}$</div>
+<div class="sanity-check"><strong>Note:</strong> negative $d$ means the sequence decreases — and yes, $t_{50}$ comes out negative.</div>
+</div>
+
+<!-- ================================================================
+     PART B — Geometric Sequences
+     ================================================================ -->
+
+<div class="part-header page-break">Part B · Geometric Sequences</div>
+
+<div class="problem">
+<div class="problem-stmt">Problem 4 — Given $t_1 = 5, t_2 = 10$, find $t_{10}$.</div>
+<div class="derivation">
+  <div class="step"><span class="label">Step 1.</span> $r = t_2 / t_1 = 10 / 5 = 2$.</div>
+  <div class="step"><span class="label">Step 2.</span> $t_{10} = t_1 \cdot r^{10 - 1} = 5 \cdot 2^9 = 5 \cdot 512 = 2560$.</div>
+</div>
+<div class="final-answer">$\boxed{\; t_{10} = 2560 \;}$</div>
+</div>
+
+<div class="problem">
+<div class="problem-stmt">Problem 5 — Given $t_2 = 27, t_4 = 3$, find $t_8$.</div>
+<div class="derivation">
+  <div class="step"><span class="label">Step 1.</span> Two steps apart: $t_4 / t_2 = r^2 = 3 / 27 = 1/9$.</div>
+  <div class="step">$r = \pm \dfrac{1}{3}$ — both signs are valid; we'll see they give the same $t_8$.</div>
+  <div class="step"><span class="label">Step 2.</span> Find $t_1$ from $t_2 = t_1 \cdot r$:</div>
+  <div class="step" style="margin-left:18px"><em>Case</em> $r = \tfrac{1}{3}$: $t_1 = 27 / (1/3) = 81$.</div>
+  <div class="step" style="margin-left:18px"><em>Case</em> $r = -\tfrac{1}{3}$: $t_1 = 27 / (-1/3) = -81$.</div>
+  <div class="step"><span class="label">Step 3.</span> $t_8 = t_1 \cdot r^{7}$:</div>
+  <div class="step" style="margin-left:18px">$r = \tfrac{1}{3}$: $t_8 = 81 \cdot (1/3)^7 = 81 / 2187 = 1/27$.</div>
+  <div class="step" style="margin-left:18px">$r = -\tfrac{1}{3}$: $t_8 = -81 \cdot (-1/3)^7 = -81 \cdot (-1/2187) = 1/27$.</div>
+  <div class="step"><strong>Both cases give the same answer</strong> (because $r^{2k} = (r^2)^k$ doesn't depend on $r$'s sign for even-index gaps, and $t_8 = t_2 \cdot r^6 = 27 \cdot (1/9)^3 = 27/729 = 1/27$).</div>
+</div>
+<div class="final-answer">$\boxed{\; t_8 = \dfrac{1}{27} \;}$</div>
+</div>
+
+<div class="problem">
+<div class="problem-stmt">Problem 6 — Given $t_1 = 2, t_2 = 2^{3/2}$, find $t_{13}$.</div>
+<div class="derivation">
+  <div class="step"><span class="label">Step 1.</span> $r = t_2 / t_1 = 2^{3/2} / 2 = 2^{3/2 - 1} = 2^{1/2}$.</div>
+  <div class="step"><span class="label">Step 2.</span> $t_{13} = t_1 \cdot r^{12} = 2 \cdot (2^{1/2})^{12} = 2 \cdot 2^{6} = 2^{7} = 128$.</div>
+</div>
+<div class="final-answer">$\boxed{\; t_{13} = 128 \;}$</div>
+<div class="sanity-check"><strong>Why exponent rules win:</strong> $(2^{1/2})^{12} = 2^{(1/2)(12)} = 2^6$ — much faster than computing $\sqrt{2}^{12}$ as a decimal.</div>
+</div>
+
+<!-- ================================================================
+     PART C — Series and Sums
+     ================================================================ -->
+
+<div class="part-header page-break">Part C · Series and Sums</div>
+
+<div class="problem">
+<div class="problem-stmt">Problem 7 — Find $S_{10}$ of the arithmetic sequence: $5, 12, 19, 26, \ldots$</div>
+<div class="derivation">
+  <div class="step"><span class="label">Step 1.</span> Identify $t_1 = 5$, $d = 12 - 5 = 7$.</div>
+  <div class="step"><span class="label">Step 2.</span> Find $t_{10} = t_1 + 9 d = 5 + 9(7) = 5 + 63 = 68$.</div>
+  <div class="step"><span class="label">Step 3.</span> Apply the sum formula $S_n = \dfrac{n}{2}(t_1 + t_n)$:</div>
+  <div class="step">$S_{10} = \dfrac{10}{2}(5 + 68) = 5 \cdot 73 = 365$.</div>
+</div>
+<div class="final-answer">$\boxed{\; S_{10} = 365 \;}$</div>
+</div>
+
+<div class="problem">
+<div class="problem-stmt">Problem 8 — Find $S_8$ for the geometric sequence with $t_1 = 8, r = \frac{1}{2}$.</div>
+<div class="derivation">
+  <div class="step"><span class="label">Step 1.</span> Apply $S_n = t_1 \cdot \dfrac{1 - r^n}{1 - r}$:</div>
+  <div class="step">$S_8 = 8 \cdot \dfrac{1 - (1/2)^8}{1 - 1/2} = 8 \cdot \dfrac{1 - 1/256}{1/2}$</div>
+  <div class="step"><span class="label">Step 2.</span> Simplify:</div>
+  <div class="step">$= 8 \cdot \dfrac{255/256}{1/2} = 8 \cdot \dfrac{255}{256} \cdot 2 = \dfrac{16 \cdot 255}{256} = \dfrac{255}{16}$</div>
+  <div class="step"><span class="label">Step 3.</span> Decimal form: $255/16 = 15.9375$.</div>
+</div>
+<div class="final-answer">$\boxed{\; S_8 = \dfrac{255}{16} = 15.9375 \;}$</div>
+<div class="sanity-check"><strong>Sanity check:</strong> $|r| = 1/2 &lt; 1$, so the partial sums converge to $S_\infty = t_1/(1-r) = 8/(1/2) = 16$. After 8 terms we're at 15.9375 — within 0.0625 of the limit. ✓</div>
+</div>
+
+<!-- ================================================================
+     PART D — Infinite Geometric Series
+     ================================================================ -->
+
+<div class="part-header">Part D · Infinite Geometric Series</div>
+
+<div class="problem">
+<div class="problem-stmt">Problem 9 — $1 + \frac{1}{3} + \frac{1}{9} + \frac{1}{27} + \cdots$</div>
+<div class="derivation">
+  <div class="step"><span class="label">Step 1.</span> Identify $t_1 = 1$, $r = 1/3$.</div>
+  <div class="step"><span class="label">Step 2.</span> Check $|r| = 1/3 &lt; 1$ ✓ — series converges.</div>
+  <div class="step"><span class="label">Step 3.</span> Apply $S_\infty = \dfrac{t_1}{1 - r}$:</div>
+  <div class="step">$S_\infty = \dfrac{1}{1 - 1/3} = \dfrac{1}{2/3} = \dfrac{3}{2}$</div>
+</div>
+<div class="final-answer">$\boxed{\; S_\infty = \dfrac{3}{2} \;}$</div>
+</div>
+
+<div class="problem">
+<div class="problem-stmt">Problem 10 — Convert the repeating decimal $0.\overline{45}$ to a fraction using an infinite geometric series.</div>
+<div class="derivation">
+  <div class="step"><span class="label">Step 1.</span> Write the decimal as a sum:</div>
+  <div class="step">$0.\overline{45} = 0.45 + 0.0045 + 0.000045 + \cdots$</div>
+  <div class="step">$= \dfrac{45}{100} + \dfrac{45}{10000} + \dfrac{45}{1{,}000{,}000} + \cdots$</div>
+  <div class="step"><span class="label">Step 2.</span> Identify $t_1 = \dfrac{45}{100}$, $r = \dfrac{1}{100}$. Check $|r| &lt; 1$ ✓.</div>
+  <div class="step"><span class="label">Step 3.</span> Apply $S_\infty = \dfrac{t_1}{1 - r}$:</div>
+  <div class="step">$S_\infty = \dfrac{45/100}{1 - 1/100} = \dfrac{45/100}{99/100} = \dfrac{45}{99}$</div>
+  <div class="step"><span class="label">Step 4.</span> Simplify: $\dfrac{45}{99} = \dfrac{5}{11}$ (divide top &amp; bottom by 9).</div>
+</div>
+<div class="final-answer">$\boxed{\; 0.\overline{45} = \dfrac{5}{11} \;}$</div>
+<div class="sanity-check"><strong>Verify by long division:</strong> $5 \div 11 = 0.454545\ldots = 0.\overline{45}$ ✓</div>
+</div>
+
+<!-- ================================================================
+     SUMMARY
+     ================================================================ -->
+
+<div class="concept-box" style="border-color:var(--color-final-answer)">
+  <div class="title" style="color:var(--color-final-answer)">✅ All Boxed Answers</div>
+  <table class="recap-table" style="font-family:'Cambria Math','Georgia',serif">
+    <tr><th>#</th><th>Type</th><th>Answer</th></tr>
+    <tr><td>1</td><td>Arithmetic</td><td>$t_{20} = 126$</td></tr>
+    <tr><td>2</td><td>Arithmetic</td><td>$t_{40} = 158$</td></tr>
+    <tr><td>3</td><td>Arithmetic</td><td>$t_{50} = -108$</td></tr>
+    <tr><td>4</td><td>Geometric</td><td>$t_{10} = 2560$</td></tr>
+    <tr><td>5</td><td>Geometric</td><td>$t_8 = 1/27$</td></tr>
+    <tr><td>6</td><td>Geometric</td><td>$t_{13} = 128$</td></tr>
+    <tr><td>7</td><td>Arithmetic Sum</td><td>$S_{10} = 365$</td></tr>
+    <tr><td>8</td><td>Geometric Sum</td><td>$S_8 = 255/16 = 15.9375$</td></tr>
+    <tr><td>9</td><td>Infinite Geom.</td><td>$S_\infty = 3/2$</td></tr>
+    <tr><td>10</td><td>Repeating decimal</td><td>$0.\overline{45} = 5/11$</td></tr>
+  </table>
+</div>
+
+<div class="footer">Created by Newton School 2026-04-26 · Answer Key &copy; Copyright</div>
+
+</div>
+
+<script>
+/* ============================================================
+   Visual -c Comment System (mirrors Worksheet)
+   ============================================================ */
+(function(){
+  const PAGE_KEY = 'JustinKoo_2026-04-26_SequencesReview_AnswerKey';
+  const ANNOT_KEY = 'visual_annot_' + PAGE_KEY;
+  const BLOCK_KEY = 'visual_block_' + PAGE_KEY;
+
+  const root = document.querySelector('.page');
+  if(!root) return;
+
+  const load = (k) => { try { return JSON.parse(localStorage.getItem(k) || '[]'); } catch(e){ return []; } };
+  const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+
+  const sidebar = document.createElement('aside');
+  sidebar.className = 'tools-sidebar';
+  sidebar.innerHTML =
+    '<button class="ts-toggle" type="button">— hide</button>' +
+    '<div class="ts-title">💬 Comments <span id="hlCount" style="opacity:.7">(0)</span></div>' +
+    '<div class="ts-actions">' +
+      '<button id="hlExport" type="button">📋 Export</button>' +
+      '<button id="hlClear" class="danger" type="button">🗑 Clear</button>' +
+    '</div>' +
+    '<div id="hlList"></div>';
+  document.body.appendChild(sidebar);
+
+  sidebar.querySelector('.ts-toggle').addEventListener('click', (e) => { e.stopPropagation(); sidebar.classList.toggle('collapsed'); });
+  sidebar.addEventListener('click', () => { if(sidebar.classList.contains('collapsed')) sidebar.classList.remove('collapsed'); });
+
+  root.querySelectorAll('.problem, .concept-box, .part-header').forEach((el, i) => {
+    el.classList.add('block-comment-host');
+    el.setAttribute('data-block-id', 'b' + i);
+    const btn = document.createElement('button');
+    btn.className = 'block-comment-btn';
+    btn.type = 'button';
+    btn.title = 'Comment on this block';
+    btn.textContent = '💬';
+    btn.addEventListener('click', (e) => { e.stopPropagation(); openBlockEditor(el); });
+    el.appendChild(btn);
+  });
+
+  let popup = null, editor = null;
+  const removePopup = () => { if(popup){ popup.remove(); popup = null; } };
+  const removeEditor = () => { if(editor){ editor.remove(); editor = null; } };
+
+  document.addEventListener('mousedown', (e) => {
+    if(!e.target.closest('.hl-popup, .hl-comment-editor, .tools-sidebar, mark.user-hl, .block-comment-btn')) {
+      removePopup(); removeEditor();
+    }
+  });
+
+  document.addEventListener('mouseup', (e) => {
+    if(e.target.closest('.hl-popup, .hl-comment-editor, .tools-sidebar, .block-comment-btn')) return;
+    setTimeout(() => {
+      const sel = window.getSelection();
+      if(!sel || sel.isCollapsed || !sel.rangeCount) { removePopup(); return; }
+      const text = sel.toString().trim();
+      if(!text || text.length < 2) { removePopup(); return; }
+      const range = sel.getRangeAt(0);
+      const container = range.commonAncestorContainer;
+      const parent = container.nodeType === 1 ? container : container.parentElement;
+      if(!parent || !parent.closest('.page')) return;
+      if(parent.closest('mark.user-hl')) return;
+      const rect = range.getBoundingClientRect();
+      showPopup(rect, text);
+    }, 10);
+  });
+
+  function showPopup(rect, text){
+    removePopup();
+    const p = document.createElement('div');
+    p.className = 'hl-popup';
+    p.style.top = (window.scrollY + rect.bottom + 6) + 'px';
+    p.style.left = (window.scrollX + rect.left) + 'px';
+    p.innerHTML = '<button data-act="hl">✏️ Highlight</button><button data-act="cmt">💬 + Comment</button>';
+    document.body.appendChild(p);
+    popup = p;
+    p.querySelector('[data-act="hl"]').addEventListener('click', () => { createAnnotation(text, ''); removePopup(); window.getSelection().removeAllRanges(); render(); });
+    p.querySelector('[data-act="cmt"]').addEventListener('click', () => { removePopup(); openAnnotEditor(rect, text); });
+  }
+
+  function openAnnotEditor(rect, text){
+    removeEditor();
+    const ed = document.createElement('div');
+    ed.className = 'hl-comment-editor';
+    ed.style.top = (window.scrollY + rect.bottom + 6) + 'px';
+    ed.style.left = Math.min(window.scrollX + rect.left, window.scrollX + window.innerWidth - 320) + 'px';
+    const preview = text.length > 80 ? text.slice(0, 80) + '…' : text;
+    ed.innerHTML = '<div class="quote">📌 "' + escHTML(preview) + '"</div><textarea placeholder="Comment..."></textarea><div class="actions"><button data-act="cancel">Cancel</button><button class="primary" data-act="save">Save</button></div>';
+    document.body.appendChild(ed);
+    editor = ed;
+    const ta = ed.querySelector('textarea'); ta.focus();
+    ed.querySelector('[data-act="cancel"]').addEventListener('click', () => { removeEditor(); window.getSelection().removeAllRanges(); });
+    ed.querySelector('[data-act="save"]').addEventListener('click', () => { createAnnotation(text, ta.value.trim()); removeEditor(); window.getSelection().removeAllRanges(); render(); });
+  }
+
+  function createAnnotation(text, comment){
+    const id = 'a' + Date.now() + Math.random().toString(36).slice(2, 6);
+    const list = load(ANNOT_KEY);
+    list.push({ id, text, comment, ts: Date.now() });
+    save(ANNOT_KEY, list);
+    applyHighlight(id, text, comment);
+    return id;
+  }
+
+  function applyHighlight(id, text, comment){
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: (n) => n.parentElement.closest('mark.user-hl, script, style') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT
+    });
+    let node;
+    while(node = walker.nextNode()){
+      const idx = node.nodeValue.indexOf(text);
+      if(idx !== -1){
+        try {
+          const range = document.createRange();
+          range.setStart(node, idx);
+          range.setEnd(node, idx + text.length);
+          const mark = document.createElement('mark');
+          mark.className = 'user-hl' + (comment ? ' has-comment' : '');
+          mark.dataset.annotId = id;
+          if(comment) mark.title = comment;
+          range.surroundContents(mark);
+          mark.addEventListener('click', (e) => { e.stopPropagation(); scrollToSidebarItem(id); });
+        } catch(e){}
+        return;
+      }
+    }
+  }
+
+  function deleteAnnotation(id){
+    save(ANNOT_KEY, load(ANNOT_KEY).filter(a => a.id !== id));
+    const m = document.querySelector('mark.user-hl[data-annot-id="' + id + '"]');
+    if(m){ const parent = m.parentNode; while(m.firstChild) parent.insertBefore(m.firstChild, m); parent.removeChild(m); }
+    render();
+  }
+
+  function openBlockEditor(blockEl){
+    removeEditor();
+    const bid = blockEl.dataset.blockId;
+    const blocks = load(BLOCK_KEY);
+    const existing = blocks.find(b => b.id === bid);
+    const rect = blockEl.getBoundingClientRect();
+    const ed = document.createElement('div');
+    ed.className = 'hl-comment-editor';
+    ed.style.top = (window.scrollY + rect.top + 30) + 'px';
+    ed.style.left = Math.min(window.scrollX + rect.left + 40, window.scrollX + window.innerWidth - 320) + 'px';
+    const preview = (blockEl.textContent || '').trim().slice(0, 80);
+    ed.innerHTML = '<div class="quote">📎 Block: "' + escHTML(preview) + '…"</div><textarea placeholder="Comment on this block..."></textarea><div class="actions"><button data-act="cancel">Cancel</button><button class="primary" data-act="save">Save</button></div>';
+    document.body.appendChild(ed);
+    editor = ed;
+    const ta = ed.querySelector('textarea');
+    if(existing) ta.value = existing.comment;
+    ta.focus();
+    ed.querySelector('[data-act="cancel"]').addEventListener('click', removeEditor);
+    ed.querySelector('[data-act="save"]').addEventListener('click', () => {
+      const txt = ta.value.trim();
+      let list = load(BLOCK_KEY).filter(b => b.id !== bid);
+      const btn = blockEl.querySelector(':scope > .block-comment-btn');
+      if(txt){ list.push({ id: bid, comment: txt, preview, ts: Date.now() }); if(btn) btn.classList.add('has-comment'); blockEl.classList.add('has-block-comment'); }
+      else { if(btn) btn.classList.remove('has-comment'); blockEl.classList.remove('has-block-comment'); }
+      save(BLOCK_KEY, list); removeEditor(); render();
+    });
+  }
+
+  function render(){
+    const annots = load(ANNOT_KEY);
+    const blocks = load(BLOCK_KEY);
+    const all = [...annots.map(a => ({ kind:'annot', id:a.id, ctx:a.text, comment:a.comment, ts:a.ts })),
+                 ...blocks.map(b => ({ kind:'block', id:b.id, ctx:b.preview, comment:b.comment, ts:b.ts }))]
+                .sort((x,y) => x.ts - y.ts);
+    const listEl = sidebar.querySelector('#hlList');
+    sidebar.querySelector('#hlCount').textContent = '(' + all.length + ')';
+    if(all.length === 0){ listEl.innerHTML = '<div class="ts-empty">Drag-select text or hover a block → 💬</div>'; return; }
+    listEl.innerHTML = all.map((it, i) => {
+      const cls = it.kind === 'block' ? 'type-block' : (it.comment ? 'has-comment' : '');
+      const ctxShort = (it.ctx || '').length > 90 ? it.ctx.slice(0, 90) + '…' : it.ctx;
+      const cmt = it.comment ? '<div class="hl-comment">' + escHTML(it.comment) + '</div>' : '';
+      const tag = it.kind === 'block' ? '📎 Block' : (it.comment ? '💬' : '✏️');
+      return '<div class="hl-panel-item ' + cls + '" data-id="' + it.id + '" data-kind="' + it.kind + '"><button class="hl-del" data-id="' + it.id + '" data-kind="' + it.kind + '" title="Delete">×</button><span class="hl-num">' + tag + ' #' + (i+1) + '</span><span class="hl-quote">' + escHTML(ctxShort) + '</span>' + cmt + '</div>';
+    }).join('');
+    listEl.querySelectorAll('.hl-panel-item').forEach(el => {
+      el.addEventListener('click', (e) => {
+        if(e.target.closest('.hl-del')) return;
+        const id = el.dataset.id, kind = el.dataset.kind;
+        if(kind === 'annot'){ const m = document.querySelector('mark.user-hl[data-annot-id="' + id + '"]'); if(m){ m.scrollIntoView({behavior:'smooth', block:'center'}); flash(m); } }
+        else { const b = document.querySelector('.block-comment-host[data-block-id="' + id + '"]'); if(b){ b.scrollIntoView({behavior:'smooth', block:'center'}); flash(b); } }
+      });
+    });
+    listEl.querySelectorAll('.hl-del').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const id = btn.dataset.id, kind = btn.dataset.kind;
+        if(kind === 'annot') deleteAnnotation(id);
+        else {
+          save(BLOCK_KEY, load(BLOCK_KEY).filter(b => b.id !== id));
+          const blockEl = document.querySelector('.block-comment-host[data-block-id="' + id + '"]');
+          if(blockEl){ blockEl.classList.remove('has-block-comment'); const bb = blockEl.querySelector(':scope > .block-comment-btn'); if(bb) bb.classList.remove('has-comment'); }
+          render();
+        }
+      });
+    });
+  }
+
+  function flash(el){ const orig = el.style.outline; el.style.outline = '2px solid #f59e0b'; el.style.outlineOffset = '4px'; setTimeout(() => { el.style.outline = orig; el.style.outlineOffset = ''; }, 1200); }
+  function scrollToSidebarItem(id){ const it = sidebar.querySelector('.hl-panel-item[data-id="' + id + '"]'); if(it){ if(sidebar.classList.contains('collapsed')) sidebar.classList.remove('collapsed'); it.scrollIntoView({block:'nearest'}); flash(it); } }
+
+  sidebar.querySelector('#hlExport').addEventListener('click', () => {
+    const annots = load(ANNOT_KEY);
+    const blocks = load(BLOCK_KEY);
+    const items = [...annots.map(a => ({ kind:'선택', ctx:a.text, comment:a.comment, ts:a.ts })),
+                   ...blocks.map(b => ({ kind:'블록', ctx:b.preview, comment:b.comment, ts:b.ts }))]
+                  .sort((x,y) => x.ts - y.ts);
+    if(items.length === 0){ alert('저장된 코멘트가 없습니다.'); return; }
+    let out = '[코멘트 피드백] Justin Koo · 2026-04-26 · Sequences AnswerKey\n(총 ' + items.length + '건 · ' + new Date().toLocaleString() + ')\n\n';
+    items.forEach((it, i) => {
+      out += '═══ #' + (i+1) + ' [' + it.kind + '] ═══\n원문: ' + (it.ctx || '').replace(/\n+/g, ' / ') + '\n';
+      if(it.comment) out += '코멘트: ' + it.comment + '\n';
+      out += '\n';
+    });
+    out += '---\n위 피드백 반영해서 원본 파일 수정해줘.\n';
+    navigator.clipboard.writeText(out).then(() => alert(items.length + '건 클립보드 복사됨!')).catch(() => {
+      const ta = document.createElement('textarea'); ta.value = out; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+      alert(items.length + '건 복사됨!');
+    });
+  });
+
+  sidebar.querySelector('#hlClear').addEventListener('click', () => {
+    if(!confirm('모든 코멘트를 삭제할까요?')) return;
+    load(ANNOT_KEY).forEach(a => deleteAnnotation(a.id));
+    load(BLOCK_KEY).forEach(b => {
+      const blockEl = document.querySelector('.block-comment-host[data-block-id="' + b.id + '"]');
+      if(blockEl){ blockEl.classList.remove('has-block-comment'); const bb = blockEl.querySelector(':scope > .block-comment-btn'); if(bb) bb.classList.remove('has-comment'); }
+    });
+    save(BLOCK_KEY, []);
+    render();
+  });
+
+  load(ANNOT_KEY).forEach(a => applyHighlight(a.id, a.text, a.comment));
+  load(BLOCK_KEY).forEach(b => {
+    const blockEl = document.querySelector('.block-comment-host[data-block-id="' + b.id + '"]');
+    if(blockEl){ blockEl.classList.add('has-block-comment'); const bb = blockEl.querySelector(':scope > .block-comment-btn'); if(bb) bb.classList.add('has-comment'); }
+  });
+  render();
+
+  function escHTML(s){ return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+})();
+</script>
+</body>
+</html>

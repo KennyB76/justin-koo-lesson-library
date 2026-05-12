@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Answer Key — Pre-Calculus Homework: Sequences &amp; Series Test Prep — Justin Koo (2026-04-26)</title>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']] }, startup: { ready: () => { MathJax.startup.defaultReady(); } } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Source Serif Pro', 'Georgia', 'Times New Roman', serif; color: #000; font-size: 10pt; line-height: 1.55; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+    html, body { background: #fff; }
+    .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+    .answer-block { page-break-inside: avoid; break-inside: avoid; }
+    .part-header, h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+    .page-break { page-break-before: always; break-before: page; }
+}
+
+:root {
+    --color-primary: #1565c0;
+    --color-primary-dark: #0d47a1;
+    --color-final-answer: #2e7d32;
+    --color-warning: #d84315;
+    --color-tag-border: #1565c0;
+    --color-tag-text: #1565c0;
+    --color-muted: #555;
+    --color-rule: #ccc;
+}
+
+h1, h2, h3, .part-header { font-family: 'Libre Baskerville', 'Georgia', serif; }
+.header { text-align: center; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid var(--color-primary); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag, .key-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 7px 3px; font-weight: bold; }
+.subject-tag { border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+.key-tag { border: 1.5px solid var(--color-warning); color: var(--color-warning); }
+h1 { font-size: 15pt; margin: 6px 0 8px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 4px; color: var(--color-muted); }
+.part-header { font-size: 13pt; font-weight: bold; color: var(--color-primary); margin: 18px 0 6px 0; padding-bottom: 3px; border-bottom: 1.5px solid var(--color-primary); }
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid var(--color-rule); margin-top: 20px; padding-top: 6px; }
+
+.answer-block { margin: 12px 0; padding: 9px 13px; border: 1px solid #ddd; border-radius: 4px; }
+.problem-header { font-weight: bold; color: var(--color-primary); font-size: 11pt; margin-bottom: 5px; }
+.problem-text { font-size: 9.5pt; padding: 5px 9px; background: #f7f7f7; border-left: 3px solid #bbb; margin-bottom: 6px; line-height: 1.5; }
+.concept-tag { display: inline-block; font-size: 8pt; padding: 1px 7px; margin: 2px 3px 5px 0; border: 1px solid var(--color-tag-border); color: var(--color-tag-text); border-radius: 10px; }
+.solution { margin: 5px 0; padding-left: 8px; border-left: 3px solid var(--color-final-answer); }
+.solution-step { margin: 3px 0; font-size: 9.5pt; line-height: 1.55; }
+.final-answer { display: inline-block; border: 2px solid var(--color-final-answer); color: var(--color-final-answer); font-weight: bold; padding: 3px 11px; border-radius: 4px; margin-top: 5px; font-size: 10.5pt; }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">PRE-CALCULUS</div>
+    <span class="key-tag">ANSWER KEY</span>
+    <h1>Sequences &amp; Series Test Prep:<br>Series Sums, Recursion &amp; Characteristic Equation</h1>
+    <div class="info">
+        <span><strong>Student:</strong> Justin Koo</span>
+        <span><strong>Date:</strong> 2026-04-26</span>
+    </div>
+    <div class="standard"><strong>Standard:</strong> Pre-Calculus / Discrete Math — All 12 problems use the procedures from today's class review.</div>
+</div>
+
+<!-- ============================ PART A ============================ -->
+<div class="part-header">Part A — Series Sums &amp; Explicit Rules</div>
+
+<div class="answer-block">
+    <div class="problem-header">Problem 1</div>
+    <div class="problem-text">\(\displaystyle\sum_{i=1}^{15}(2i+1)\)</div>
+    <span class="concept-tag">Arithmetic Sum</span>
+    <div class="solution">
+        <div class="solution-step">First term: \(a_1 = 2(1)+1 = 3\). Last term: \(a_{15} = 2(15)+1 = 31\).</div>
+        <div class="solution-step">\(S_{15} = \dfrac{15(3+31)}{2} = \dfrac{15 \cdot 34}{2} = 15 \cdot 17 = 255\).</div>
+    </div>
+    <div class="final-answer">\(S_{15} = 255\)</div>
+</div>
+
+<div class="answer-block">
+    <div class="problem-header">Problem 2</div>
+    <div class="problem-text">\(\displaystyle\sum_{k=1}^{4} 5 \cdot 3^{\,k-1}\)</div>
+    <span class="concept-tag">Geometric Sum</span>
+    <div class="solution">
+        <div class="solution-step">Identify: \(g_0 = 5,\; r = 3,\; n = 4\).</div>
+        <div class="solution-step">\(S_4 = 5 \cdot \dfrac{3^{4} - 1}{3 - 1} = 5 \cdot \dfrac{81 - 1}{2} = 5 \cdot \dfrac{80}{2} = 5 \cdot 40 = 200\).</div>
+        <div class="solution-step"><em>Check by adding:</em> \(5 + 15 + 45 + 135 = 200\). ✓</div>
+    </div>
+    <div class="final-answer">\(S_4 = 200\)</div>
+</div>
+
+<div class="answer-block">
+    <div class="problem-header">Problem 3</div>
+    <div class="problem-text">Arithmetic with \(a_3 = 10,\; a_8 = 25\). Find \(a_n\).</div>
+    <span class="concept-tag">System of 2 Equations</span>
+    <div class="solution">
+        <div class="solution-step">Equations: \(a_1 + 2d = 10\) and \(a_1 + 7d = 25\).</div>
+        <div class="solution-step">Subtract: \(5d = 15 \Rightarrow d = 3\).</div>
+        <div class="solution-step">Plug back: \(a_1 = 10 - 2(3) = 4\).</div>
+        <div class="solution-step">\(a_n = 4 + 3(n-1) = 3n + 1\).</div>
+    </div>
+    <div class="final-answer">\(a_n = 3n + 1\)</div>
+</div>
+
+</div>
+
+<!-- ============================ PAGE 2 ============================ -->
+<div class="page page-break">
+
+<!-- ============================ PART B ============================ -->
+<div class="part-header">Part B — Recursion Problems</div>
+
+<div class="answer-block">
+    <div class="problem-header">Problem 4 — Lego</div>
+    <div class="problem-text">\(L_n = L_{n-1} + L_{n-2}\), \(L_1 = 1, L_2 = 2\). Find \(L_8\).</div>
+    <span class="concept-tag">Fibonacci-type</span>
+    <div class="solution">
+        <div class="solution-step">Iterate forward:</div>
+        <div class="solution-step">\(L_3 = 3,\;\; L_4 = 5,\;\; L_5 = 8,\;\; L_6 = 13,\;\; L_7 = 21,\;\; L_8 = 21 + 13 = 34\).</div>
+    </div>
+    <div class="final-answer">\(L_8 = 34\)</div>
+</div>
+
+<div class="answer-block">
+    <div class="problem-header">Problem 5 — Hanoi</div>
+    <div class="problem-text">\(T_6\) using \(T_n = 2^{n} - 1\)?</div>
+    <span class="concept-tag">Closed form</span>
+    <div class="solution">
+        <div class="solution-step">\(T_6 = 2^{6} - 1 = 64 - 1 = 63\).</div>
+    </div>
+    <div class="final-answer">\(T_6 = 63\)</div>
+</div>
+
+<div class="answer-block">
+    <div class="problem-header">Problem 6</div>
+    <div class="problem-text">\(a_n = a_{n-1} + a_{n-2}\), \(a_1 = 1, a_2 = 3\). Find \(a_6\).</div>
+    <span class="concept-tag">Iterate</span>
+    <div class="solution">
+        <div class="solution-step">\(a_3 = 3 + 1 = 4,\;\; a_4 = 4 + 3 = 7,\;\; a_5 = 7 + 4 = 11,\;\; a_6 = 11 + 7 = 18\).</div>
+    </div>
+    <div class="final-answer">\(a_6 = 18\)</div>
+</div>
+
+<!-- ============================ PART C ============================ -->
+<div class="part-header">Part C — Characteristic Equation ⭐</div>
+
+<div class="answer-block">
+    <div class="problem-header">Problem 7</div>
+    <div class="problem-text">\(T_n = 5T_{n-1} - 6T_{n-2}\), \(T_0 = 2, T_1 = 5\). Find \(T_n\).</div>
+    <span class="concept-tag">Two distinct roots</span>
+    <div class="solution">
+        <div class="solution-step"><strong>Step 2.</strong> Char. equation: \(x^{2} - 5x + 6 = 0 \Rightarrow (x-2)(x-3) = 0\). Roots: \(r_1 = 3,\; r_2 = 2\).</div>
+        <div class="solution-step"><strong>Step 3.</strong> \(T_n = c_1 \cdot 3^{n} + c_2 \cdot 2^{n}\).</div>
+        <div class="solution-step"><strong>Step 4.</strong> \(n=0\): \(c_1 + c_2 = 2\). \(\;n=1\): \(3c_1 + 2c_2 = 5\). Solve: \(c_1 = 1,\; c_2 = 1\).</div>
+        <div class="solution-step"><strong>Step 5 (check).</strong> \(T_2\) recurrence: \(5(5) - 6(2) = 13\). Closed form: \(9 + 4 = 13\). ✓</div>
+    </div>
+    <div class="final-answer">\(T_n = 3^{n} + 2^{n}\)</div>
+</div>
+
+</div>
+
+<!-- ============================ PAGE 3 ============================ -->
+<div class="page page-break">
+
+<div class="answer-block">
+    <div class="problem-header">Problem 8</div>
+    <div class="problem-text">\(a_n = 6a_{n-1} - 9a_{n-2}\), \(a_0 = 1, a_1 = 6\). Find \(a_n\).</div>
+    <span class="concept-tag">Repeated root</span>
+    <span class="concept-tag">⚠ \(n\) factor</span>
+    <div class="solution">
+        <div class="solution-step"><strong>Step 2.</strong> \(x^{2} - 6x + 9 = 0 \Rightarrow (x-3)^{2} = 0\). Repeated root \(r = 3\).</div>
+        <div class="solution-step"><strong>Step 3.</strong> Repeated form: \(a_n = (c_1 + c_2 n) \cdot 3^{n}\).</div>
+        <div class="solution-step"><strong>Step 4.</strong> \(n=0\): \(c_1 = 1\). \(\;n=1\): \((1 + c_2)(3) = 6 \Rightarrow c_2 = 1\).</div>
+        <div class="solution-step"><strong>Step 5 (check).</strong> \(a_2\) recurrence: \(6(6) - 9(1) = 27\). Closed form: \((1+2)(9) = 27\). ✓</div>
+    </div>
+    <div class="final-answer">\(a_n = (1 + n) \cdot 3^{n}\)</div>
+</div>
+
+<div class="answer-block">
+    <div class="problem-header">Problem 9</div>
+    <div class="problem-text">\(T_n = 3T_{n-1} - 2T_{n-2}\), \(T_0 = 0, T_1 = 1\). Find \(T_n\).</div>
+    <span class="concept-tag">Two distinct roots</span>
+    <span class="concept-tag">Root \(r=1\)</span>
+    <div class="solution">
+        <div class="solution-step"><strong>Step 2.</strong> \(x^{2} - 3x + 2 = 0 \Rightarrow (x-1)(x-2) = 0\). Roots: \(1, 2\).</div>
+        <div class="solution-step"><strong>Step 3.</strong> \(T_n = c_1 \cdot 1^{n} + c_2 \cdot 2^{n} = c_1 + c_2 \cdot 2^{n}\).</div>
+        <div class="solution-step"><strong>Step 4.</strong> \(n=0\): \(c_1 + c_2 = 0\). \(\;n=1\): \(c_1 + 2c_2 = 1\). Subtract: \(c_2 = 1,\; c_1 = -1\).</div>
+        <div class="solution-step"><strong>Step 5 (check).</strong> \(T_2\) recurrence: \(3(1) - 2(0) = 3\). Closed form: \(-1 + 4 = 3\). ✓</div>
+    </div>
+    <div class="final-answer">\(T_n = 2^{n} - 1\)</div>
+</div>
+
+<div class="answer-block">
+    <div class="problem-header">Problem 10</div>
+    <div class="problem-text">\(b_n = b_{n-1} + 2b_{n-2}\), \(b_0 = 0, b_1 = 1\). Find \(b_n\).</div>
+    <span class="concept-tag">Negative root</span>
+    <span class="concept-tag">Fractional \(c\)</span>
+    <div class="solution">
+        <div class="solution-step"><strong>Step 2.</strong> \(x^{2} - x - 2 = 0 \Rightarrow (x-2)(x+1) = 0\). Roots: \(2, -1\).</div>
+        <div class="solution-step"><strong>Step 3.</strong> \(b_n = c_1 \cdot 2^{n} + c_2 \cdot (-1)^{n}\).</div>
+        <div class="solution-step"><strong>Step 4.</strong> \(n=0\): \(c_1 + c_2 = 0\). \(\;n=1\): \(2c_1 - c_2 = 1\). Solve: \(c_1 = \tfrac{1}{3},\; c_2 = -\tfrac{1}{3}\).</div>
+        <div class="solution-step"><strong>Step 5 (check).</strong> \(b_2\) recurrence: \(1 + 2(0) = 1\). Closed form: \(\tfrac{1}{3}(4 - 1) = 1\). ✓</div>
+    </div>
+    <div class="final-answer">\(b_n = \dfrac{1}{3}\bigl(2^{n} - (-1)^{n}\bigr)\)</div>
+</div>
+
+</div>
+
+<!-- ============================ PAGE 4 ============================ -->
+<div class="page page-break">
+
+<!-- ============================ PART D ============================ -->
+<div class="part-header">Part D — Non-homogeneous Recursion</div>
+
+<div class="answer-block">
+    <div class="problem-header">Problem 11</div>
+    <div class="problem-text">\(a_n = 2a_{n-1} + 3\), \(a_0 = 0\). Find \(a_n\).</div>
+    <span class="concept-tag">Particular solution</span>
+    <span class="concept-tag">Substitution</span>
+    <div class="solution">
+        <div class="solution-step"><strong>Step 1 (particular).</strong> Assume \(a_n = K\) constant: \(K = 2K + 3 \Rightarrow K = -3\).</div>
+        <div class="solution-step"><strong>Step 2 (substitute).</strong> Let \(b_n = a_n - K = a_n + 3\). Then:</div>
+        <div class="solution-step">\(b_n = a_n + 3 = (2a_{n-1} + 3) + 3 = 2a_{n-1} + 6 = 2(a_{n-1} + 3) = 2 b_{n-1}\). Homogeneous!</div>
+        <div class="solution-step"><strong>Step 3.</strong> \(b_0 = a_0 + 3 = 3\), and \(b_n = 2 b_{n-1}\) gives \(b_n = 3 \cdot 2^{n}\).</div>
+        <div class="solution-step"><strong>Step 4 (back-substitute).</strong> \(a_n = b_n - 3 = 3 \cdot 2^{n} - 3\).</div>
+        <div class="solution-step"><strong>Check.</strong> \(a_1\) recurrence: \(2(0) + 3 = 3\). Closed form: \(6 - 3 = 3\). ✓</div>
+    </div>
+    <div class="final-answer">\(a_n = 3 \cdot 2^{n} - 3\)</div>
+</div>
+
+<div class="answer-block">
+    <div class="problem-header">Problem 12</div>
+    <div class="problem-text">\(T_n = 3T_{n-1} - 4\), \(T_0 = 5\). Find \(T_n\).</div>
+    <span class="concept-tag">Particular solution</span>
+    <span class="concept-tag">Substitution</span>
+    <div class="solution">
+        <div class="solution-step"><strong>Step 1 (particular).</strong> \(K = 3K - 4 \Rightarrow 2K = 4 \Rightarrow K = 2\).</div>
+        <div class="solution-step"><strong>Step 2 (substitute).</strong> Let \(b_n = T_n - 2\). Then:</div>
+        <div class="solution-step">\(b_n = T_n - 2 = (3T_{n-1} - 4) - 2 = 3T_{n-1} - 6 = 3(T_{n-1} - 2) = 3 b_{n-1}\). Homogeneous!</div>
+        <div class="solution-step"><strong>Step 3.</strong> \(b_0 = T_0 - 2 = 3\), and \(b_n = 3 b_{n-1}\) gives \(b_n = 3 \cdot 3^{n} = 3^{n+1}\).</div>
+        <div class="solution-step"><strong>Step 4 (back-substitute).</strong> \(T_n = b_n + 2 = 3^{n+1} + 2\).</div>
+        <div class="solution-step"><strong>Check.</strong> \(T_1\) recurrence: \(3(5) - 4 = 11\). Closed form: \(9 + 2 = 11\). ✓</div>
+    </div>
+    <div class="final-answer">\(T_n = 3^{\,n+1} + 2\)</div>
+</div>
+
+<div class="footer">
+    Created by Newton School 2026-04-26 &copy; Copyright<br>
+    2175 Lemoine Ave Suite 304, Fort Lee, NJ 07650 &nbsp;·&nbsp; (201) 252-7252 &nbsp;·&nbsp; www.newtonschool.net
+</div>
+
+</div>
+
+</body>
+</html>

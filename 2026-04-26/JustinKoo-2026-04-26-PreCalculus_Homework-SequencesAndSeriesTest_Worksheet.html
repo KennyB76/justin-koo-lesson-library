@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pre-Calculus Homework: Sequences &amp; Series Test Prep — Justin Koo (2026-04-26)</title>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']] }, startup: { ready: () => { MathJax.startup.defaultReady(); } } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Source Serif Pro', 'Georgia', 'Times New Roman', serif; color: #000; font-size: 10.5pt; line-height: 1.55; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+    html, body { background: #fff; }
+    .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+    .problem, .concept-box { page-break-inside: avoid; break-inside: avoid; }
+    .part-header, .directions, h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+    .page-break { page-break-before: always; break-before: page; }
+}
+
+:root {
+    --color-primary: #1565c0;
+    --color-primary-dark: #0d47a1;
+    --color-accent: #00838f;
+    --color-final-answer: #2e7d32;
+    --color-warning: #d84315;
+    --color-muted: #555;
+    --color-rule: #ccc;
+}
+
+h1, h2, h3, .part-header { font-family: 'Libre Baskerville', 'Georgia', serif; }
+.header { text-align: center; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid var(--color-primary); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 7px 3px; font-weight: bold; border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+h1 { font-size: 16pt; margin: 6px 0 8px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 4px; color: var(--color-muted); }
+.part-header { font-size: 13pt; font-weight: bold; color: var(--color-primary); margin: 22px 0 6px 0; padding-bottom: 3px; border-bottom: 1.5px solid var(--color-primary); }
+.directions { font-size: 10pt; font-style: italic; color: #333; margin-bottom: 12px; line-height: 1.5; }
+.directions strong { color: #000; font-style: normal; }
+.problem { margin: 14px 0; font-size: 10.5pt; line-height: 1.6; padding-left: 8px; border-left: 3px solid var(--color-primary); }
+.q-num { display: inline-block; min-width: 26px; font-weight: bold; color: var(--color-primary); }
+.work-space { min-height: 110px; margin-left: 24px; margin-top: 6px; }
+.problem.large .work-space { min-height: 150px; }
+.concept-box { border: 1.5px solid var(--color-accent); padding: 10px 14px; margin: 12px 0; font-size: 10pt; border-left-width: 4px; }
+.concept-box .title { font-weight: bold; color: var(--color-accent); margin-bottom: 4px; }
+.formula-list { font-size: 10pt; line-height: 1.8; margin: 4px 0 0 0; }
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid var(--color-rule); margin-top: 20px; padding-top: 6px; }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">PRE-CALCULUS</div>
+    <h1>Sequences &amp; Series Test Prep:<br>Series Sums, Recursion &amp; Characteristic Equation</h1>
+    <div class="info">
+        <span><strong>Student:</strong> Justin Koo</span>
+        <span><strong>Date:</strong> 2026-04-26</span>
+    </div>
+    <div class="standard"><strong>Standard:</strong> Pre-Calculus / Discrete Math — Arithmetic &amp; geometric series, recursive sequences, recursive-to-explicit via characteristic equation, non-homogeneous handling.</div>
+</div>
+
+<div class="concept-box">
+    <div class="title">Quick Reference</div>
+    <ul class="formula-list">
+        <li><strong>Arithmetic sum:</strong> \(S_n = \dfrac{n(a_1 + a_n)}{2}\)</li>
+        <li><strong>Geometric sum:</strong> \(S_n = g_0 \cdot \dfrac{r^{n} - 1}{r - 1}\) &nbsp; (\(r \neq 1\))</li>
+        <li><strong>Characteristic equation:</strong> \(x^{2} - a_1 x - a_2 = 0\) for \(T_n = a_1 T_{n-1} + a_2 T_{n-2}\)</li>
+        <li><strong>Two distinct roots:</strong> \(T_n = c_1 r_1^{\,n} + c_2 r_2^{\,n}\) &nbsp; <strong>Repeated root:</strong> \(T_n = (c_1 + c_2 n) r^{n}\)</li>
+        <li><strong>Non-homogeneous:</strong> Find particular constant \(K\), let \(b_n = a_n - K\), solve homogeneous \(b_n\), back-substitute.</li>
+    </ul>
+</div>
+
+<!-- ============================ PART A ============================ -->
+<div class="part-header">Part A — Series Sums &amp; Explicit Rules</div>
+<div class="directions"><strong>Directions:</strong> Use the appropriate sum formula or solve a system to find the explicit rule. Show all work.</div>
+
+<div class="problem">
+    <span class="q-num">1.</span> Find \(\displaystyle\sum_{i=1}^{15}(2i + 1)\).
+    <div class="work-space"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">2.</span> Find \(\displaystyle\sum_{k=1}^{4} 5 \cdot 3^{\,k-1}\).
+    <div class="work-space"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">3.</span> An arithmetic sequence has \(a_3 = 10\) and \(a_8 = 25\). Write the explicit rule \(a_n\).
+    <div class="work-space"></div>
+</div>
+
+</div>
+
+<!-- ============================ PAGE 2 ============================ -->
+<div class="page page-break">
+
+<!-- ============================ PART B ============================ -->
+<div class="part-header">Part B — Recursion Problems</div>
+<div class="directions"><strong>Directions:</strong> Compute the requested term using the given recurrence. You may iterate or use a known closed form when noted.</div>
+
+<div class="problem">
+    <span class="q-num">4.</span> A path of length \(n\) is built from \(1\)-unit and \(2\)-unit blocks. The number of arrangements satisfies \(L_n = L_{n-1} + L_{n-2}\) with \(L_1 = 1,\; L_2 = 2\). Find \(L_8\).
+    <div class="work-space"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">5.</span> The minimum number of moves for the Tower of Hanoi with \(n\) disks satisfies \(T_n = 2T_{n-1} + 1\) with \(T_1 = 1\). Find \(T_6\) using the closed form \(T_n = 2^{n} - 1\).
+    <div class="work-space"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">6.</span> A sequence satisfies \(a_n = a_{n-1} + a_{n-2}\) with \(a_1 = 1,\; a_2 = 3\). Find \(a_6\).
+    <div class="work-space"></div>
+</div>
+
+<!-- ============================ PART C ============================ -->
+<div class="part-header">Part C — Characteristic Equation ⭐ (Test Core)</div>
+<div class="directions"><strong>Directions:</strong> Apply the 5-step procedure: (1) identify, (2) char. equation, (3) two-root or repeated form, (4) solve for \(c_1, c_2\), (5) verify.</div>
+
+<div class="problem large">
+    <span class="q-num">7.</span> Find the explicit rule for \(T_n = 5T_{n-1} - 6T_{n-2}\) with \(T_0 = 2,\; T_1 = 5\).
+    <div class="work-space"></div>
+</div>
+
+</div>
+
+<!-- ============================ PAGE 3 ============================ -->
+<div class="page page-break">
+
+<div class="problem large">
+    <span class="q-num">8.</span> Find the explicit rule for \(a_n = 6a_{n-1} - 9a_{n-2}\) with \(a_0 = 1,\; a_1 = 6\). <em>(Watch for repeated root.)</em>
+    <div class="work-space"></div>
+</div>
+
+<div class="problem large">
+    <span class="q-num">9.</span> Find the explicit rule for \(T_n = 3T_{n-1} - 2T_{n-2}\) with \(T_0 = 0,\; T_1 = 1\).
+    <div class="work-space"></div>
+</div>
+
+<div class="problem large">
+    <span class="q-num">10.</span> Find the explicit rule for \(b_n = b_{n-1} + 2b_{n-2}\) with \(b_0 = 0,\; b_1 = 1\). <em>(Negative root appears.)</em>
+    <div class="work-space"></div>
+</div>
+
+</div>
+
+<!-- ============================ PAGE 4 ============================ -->
+<div class="page page-break">
+
+<!-- ============================ PART D ============================ -->
+<div class="part-header">Part D — Non-homogeneous Recursion</div>
+<div class="directions"><strong>Directions:</strong> Find the particular constant \(K\), substitute \(b_n = a_n - K\) to homogenize, solve, then back-substitute.</div>
+
+<div class="problem large">
+    <span class="q-num">11.</span> Find the explicit rule for \(a_n = 2a_{n-1} + 3\) with \(a_0 = 0\).
+    <div class="work-space"></div>
+</div>
+
+<div class="problem large">
+    <span class="q-num">12.</span> Find the explicit rule for \(T_n = 3T_{n-1} - 4\) with \(T_0 = 5\).
+    <div class="work-space"></div>
+</div>
+
+<div class="footer">
+    Created by Newton School 2026-04-26 &copy; Copyright<br>
+    2175 Lemoine Ave Suite 304, Fort Lee, NJ 07650 &nbsp;·&nbsp; (201) 252-7252 &nbsp;·&nbsp; www.newtonschool.net
+</div>
+
+</div>
+
+</body>
+</html>

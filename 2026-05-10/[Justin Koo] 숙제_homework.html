@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pre-Calculus Homework: Mathematical Induction (Take-Home)</title>
+<script>
+window.MathJax = {
+    tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']]
+    },
+    startup: { ready: () => { MathJax.startup.defaultReady(); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #f0f4f8; }
+body { font-family: 'Source Serif Pro', 'Georgia', 'Times New Roman', serif; color: #000; font-size: 10.5pt; line-height: 1.55; }
+.page { max-width: 720px; margin: 0 auto; padding: 60px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+
+@media print {
+    html, body { background: #fff; }
+    .page { max-width: none; padding: 0.6in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+    .page-break { page-break-before: always; break-before: page; }
+    .no-print { display: none !important; }
+    /* Answer key section: page-break before it */
+    .answer-key-start { page-break-before: always; }
+}
+
+:root {
+    --primary: #1a237e;
+    --accent:  #00695c;
+    --green:   #1b5e20;
+    --answer:  #b71c1c;
+    --rule:    #b0bec5;
+    --muted:   #546e7a;
+}
+
+/* ---- Toggle answer key (screen only) ---- */
+#toggle-answers {
+    display: block;
+    margin: 16px auto;
+    padding: 8px 24px;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    font-size: 10pt;
+    cursor: pointer;
+    font-family: inherit;
+    letter-spacing: 1px;
+}
+.answer-section { display: none; }
+.answer-section.visible { display: block; }
+
+/* ---- Header ---- */
+.header {
+    text-align: center;
+    padding-bottom: 12px;
+    margin-bottom: 18px;
+    border-bottom: 3px solid var(--primary);
+}
+.school-name { font-size: 8.5pt; letter-spacing: 5px; color: var(--primary); font-weight: bold; margin-bottom: 4px; }
+.badge {
+    display: inline-block;
+    padding: 2px 12px;
+    font-size: 7.5pt;
+    letter-spacing: 2px;
+    font-weight: bold;
+    border: 1.5px solid var(--primary);
+    color: var(--primary);
+    margin: 4px 2px 6px;
+}
+.badge.hw { background: #4a148c; border-color: #4a148c; color: #fff; }
+h1 { font-family: 'Libre Baskerville', 'Georgia', serif; font-size: 14.5pt; margin: 4px 0 6px; font-weight: bold; line-height: 1.3; }
+.meta { display: flex; justify-content: space-between; font-size: 9.5pt; color: #333; margin-top: 4px; }
+.info-row { font-size: 9pt; color: #555; margin-top: 6px; font-style: italic; }
+
+/* ---- Section header ---- */
+.section-header {
+    font-family: 'Libre Baskerville', 'Georgia', serif;
+    font-size: 12.5pt;
+    font-weight: bold;
+    color: var(--primary);
+    margin: 20px 0 6px;
+    padding-bottom: 3px;
+    border-bottom: 2px solid var(--primary);
+}
+
+/* ---- Reminder box ---- */
+.reminder {
+    border: 1.5px solid var(--accent);
+    border-left-width: 4px;
+    background: #f1f8f6;
+    padding: 9px 16px;
+    margin: 10px 0 14px;
+    font-size: 10pt;
+}
+.reminder .title { font-weight: bold; color: var(--accent); margin-bottom: 4px; }
+.reminder p { margin: 3px 0; }
+
+/* ---- Problem block ---- */
+.problem {
+    border-left: 3px solid var(--primary);
+    padding: 10px 10px 10px 14px;
+    margin: 14px 0 6px;
+    font-size: 10.5pt;
+    line-height: 1.65;
+}
+.q-num { font-weight: bold; color: var(--primary); }
+
+/* ---- Induction template ---- */
+.induction-steps { margin: 8px 0 8px 10px; font-size: 10pt; line-height: 1.9; }
+.slabel { font-weight: bold; color: var(--primary); display: inline-block; min-width: 130px; }
+.sbox { border: 1px solid #b0bec5; padding: 5px 10px; margin: 5px 0 5px 10px; min-height: 45px; background: #fff; }
+.sbox.tall { min-height: 80px; }
+.sbox.xtall { min-height: 115px; }
+
+/* ---- Footer ---- */
+.footer { text-align: center; font-size: 8pt; color: #777; border-top: 1px solid var(--rule); margin-top: 20px; padding-top: 6px; }
+
+/* ---- Answer Key styles ---- */
+.ak-header {
+    text-align: center;
+    background: #4a148c;
+    color: #fff;
+    padding: 14px;
+    margin-bottom: 20px;
+}
+.ak-header h2 { margin: 0; font-size: 14pt; letter-spacing: 2px; }
+.ak-header p { margin: 4px 0 0; font-size: 9pt; opacity: 0.85; }
+
+.ak-problem {
+    border: 1.5px solid var(--answer);
+    border-left-width: 4px;
+    background: #fff8f8;
+    padding: 12px 16px;
+    margin: 14px 0;
+    page-break-inside: avoid;
+}
+.ak-problem .ak-title { font-weight: bold; color: var(--answer); font-size: 11pt; margin-bottom: 8px; }
+.ak-step { margin: 6px 0; font-size: 10pt; }
+.ak-step .al { display: inline-block; min-width: 130px; font-weight: bold; color: var(--primary); vertical-align: top; }
+.ak-step .ab { display: inline-block; width: calc(100% - 140px); vertical-align: top; }
+.ak-final { font-weight: bold; color: var(--green); margin-top: 8px; border-top: 1px dashed #c8e6c9; padding-top: 6px; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     PAGE 1 — HW Cover + Problem 1 (Sum of Cubes)
+     ============================================================ -->
+<div class="page">
+
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="badge hw">TAKE-HOME HOMEWORK</div>
+    <div class="badge">PRE-CALCULUS</div>
+    <h1>Mathematical Induction — Practice Set</h1>
+    <div class="meta">
+      <span><strong>Student:</strong> Justin Koo</span>
+      <span><strong>Assigned:</strong> 2026-05-10</span>
+      <span><strong>Due:</strong> Next session</span>
+    </div>
+    <div class="info-row">5 problems &nbsp;&middot;&nbsp; Show all steps &nbsp;&middot;&nbsp; Write "By the Principle of Mathematical Induction" in your conclusion</div>
+  </div>
+
+  <button class="no-print" id="toggle-answers" onclick="toggleAnswers()">Show Answer Key</button>
+
+  <div class="reminder">
+    <div class="title">Induction Checklist — use every time</div>
+    <p>1. <strong>Base Case:</strong> state the value of $n$, compute both sides, confirm equal.</p>
+    <p>2. <strong>Inductive Hypothesis:</strong> write "Assume [formula/statement] for some $k \ge \ldots$"</p>
+    <p>3. <strong>Inductive Step:</strong> start from the $k+1$ expression, substitute I.H., simplify algebraically.</p>
+    <p>4. <strong>Conclusion:</strong> "By the Principle of Mathematical Induction, the statement holds for all $n \ge \ldots$"</p>
+  </div>
+
+  <div class="section-header">Problem 1 — Sum of Cubes &nbsp;<span style="font-size:9pt;font-weight:normal;color:var(--muted);">[Difficulty: Easy]</span></div>
+
+  <div class="problem">
+    <span class="q-num">1.</span>&nbsp;
+    Prove by mathematical induction that for all integers $n \ge 1$:
+    $$1^3 + 2^3 + 3^3 + \cdots + n^3 \;=\; \left(\frac{n(n+1)}{2}\right)^{\!2}$$
+    <em>(Hint: In the inductive step, factor out $\dfrac{(k+1)^2}{4}$ from the combined expression.)</em>
+  </div>
+
+  <div class="induction-steps">
+    <div><span class="slabel">Base Case ($n=1$):</span></div>
+    <div class="sbox"></div>
+    <div><span class="slabel">Inductive Hyp.:</span></div>
+    <div class="sbox"></div>
+    <div style="margin-top:6px;"><span class="slabel">Inductive Step:</span></div>
+    <div class="sbox xtall"></div>
+    <div><span class="slabel">Conclusion:</span></div>
+    <div class="sbox"></div>
+  </div>
+
+  <div class="footer">Newton School &mdash; 2026-05-10 &nbsp;|&nbsp; HOMEWORK &nbsp;|&nbsp; Problem 1 of 5</div>
+</div>
+
+<!-- ============================================================
+     PAGE 2 — Problem 2 (Sum with general formula)
+     ============================================================ -->
+<div class="page-break"></div>
+<div class="page">
+
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="badge hw">TAKE-HOME HOMEWORK</div>
+    <div class="badge">PRE-CALCULUS</div>
+    <h1>Mathematical Induction — Practice Set</h1>
+    <div class="meta">
+      <span><strong>Student:</strong> Justin Koo</span>
+      <span><strong>Date:</strong> 2026-05-10</span>
+    </div>
+  </div>
+
+  <div class="section-header">Problem 2 — Telescoping-Style Sum &nbsp;<span style="font-size:9pt;font-weight:normal;color:var(--muted);">[Difficulty: Easy-Medium]</span></div>
+
+  <div class="problem">
+    <span class="q-num">2.</span>&nbsp;
+    Prove by mathematical induction that for all integers $n \ge 1$:
+    $$\frac{1}{1\cdot2} + \frac{1}{2\cdot3} + \frac{1}{3\cdot4} + \cdots + \frac{1}{n(n+1)} \;=\; \frac{n}{n+1}$$
+    <em>(Hint: write $\dfrac{1}{k(k+1)}$ using partial fractions in the inductive step, then combine over a common denominator.)</em>
+  </div>
+
+  <div class="induction-steps">
+    <div><span class="slabel">Base Case ($n=1$):</span></div>
+    <div class="sbox"></div>
+    <div><span class="slabel">Inductive Hyp.:</span></div>
+    <div class="sbox"></div>
+    <div style="margin-top:6px;"><span class="slabel">Inductive Step:</span></div>
+    <div class="sbox xtall"></div>
+    <div><span class="slabel">Conclusion:</span></div>
+    <div class="sbox"></div>
+  </div>
+
+  <div class="footer">Newton School &mdash; 2026-05-10 &nbsp;|&nbsp; HOMEWORK &nbsp;|&nbsp; Problem 2 of 5</div>
+</div>
+
+<!-- ============================================================
+     PAGE 3 — Problem 3 (Geometric variant)
+     ============================================================ -->
+<div class="page-break"></div>
+<div class="page">
+
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="badge hw">TAKE-HOME HOMEWORK</div>
+    <div class="badge">PRE-CALCULUS</div>
+    <h1>Mathematical Induction — Practice Set</h1>
+    <div class="meta">
+      <span><strong>Student:</strong> Justin Koo</span>
+      <span><strong>Date:</strong> 2026-05-10</span>
+    </div>
+  </div>
+
+  <div class="section-header">Problem 3 — Powers of 3 &nbsp;<span style="font-size:9pt;font-weight:normal;color:var(--muted);">[Difficulty: Medium]</span></div>
+
+  <div class="problem">
+    <span class="q-num">3.</span>&nbsp;
+    Prove by mathematical induction that for all integers $n \ge 1$:
+    $$1 + 3 + 3^2 + \cdots + 3^{n-1} \;=\; \frac{3^n - 1}{2}$$
+    <em>(This is the geometric series formula for $r = 3$. Confirm it follows the same structure as the class example.)</em>
+  </div>
+
+  <div class="induction-steps">
+    <div><span class="slabel">Base Case ($n=1$):</span></div>
+    <div class="sbox"></div>
+    <div><span class="slabel">Inductive Hyp.:</span></div>
+    <div class="sbox"></div>
+    <div style="margin-top:6px;"><span class="slabel">Inductive Step:</span></div>
+    <div class="sbox xtall"></div>
+    <div><span class="slabel">Conclusion:</span></div>
+    <div class="sbox"></div>
+  </div>
+
+  <div class="footer">Newton School &mdash; 2026-05-10 &nbsp;|&nbsp; HOMEWORK &nbsp;|&nbsp; Problem 3 of 5</div>
+</div>
+
+<!-- ============================================================
+     PAGE 4 — Problem 4 (Divisibility)
+     ============================================================ -->
+<div class="page-break"></div>
+<div class="page">
+
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="badge hw">TAKE-HOME HOMEWORK</div>
+    <div class="badge">PRE-CALCULUS</div>
+    <h1>Mathematical Induction — Practice Set</h1>
+    <div class="meta">
+      <span><strong>Student:</strong> Justin Koo</span>
+      <span><strong>Date:</strong> 2026-05-10</span>
+    </div>
+  </div>
+
+  <div class="section-header">Problem 4 — Divisibility &nbsp;<span style="font-size:9pt;font-weight:normal;color:var(--muted);">[Difficulty: Medium]</span></div>
+
+  <div class="problem">
+    <span class="q-num">4.</span>&nbsp;
+    Prove by mathematical induction that $7 \mid (8^n - 1)$ for all integers $n \ge 1$.
+    <br><br>
+    That is, prove that $8^n - 1$ is divisible by 7 for every positive integer $n$.
+    <br>
+    <em>(Hint: write $8^{k+1} - 1 = 8 \cdot 8^k - 1 = 8(8^k - 1) + 7$.)</em>
+  </div>
+
+  <div class="induction-steps">
+    <div><span class="slabel">Base Case ($n=1$):</span></div>
+    <div class="sbox"></div>
+    <div><span class="slabel">Inductive Hyp.:</span></div>
+    <div class="sbox"></div>
+    <div style="margin-top:6px;"><span class="slabel">Inductive Step:</span></div>
+    <div class="sbox xtall"></div>
+    <div><span class="slabel">Conclusion:</span></div>
+    <div class="sbox"></div>
+  </div>
+
+  <div class="footer">Newton School &mdash; 2026-05-10 &nbsp;|&nbsp; HOMEWORK &nbsp;|&nbsp; Problem 4 of 5</div>
+</div>
+
+<!-- ============================================================
+     PAGE 5 — Problem 5 (Inequality / Hard)
+     ============================================================ -->
+<div class="page-break"></div>
+<div class="page">
+
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="badge hw">TAKE-HOME HOMEWORK</div>
+    <div class="badge">PRE-CALCULUS</div>
+    <h1>Mathematical Induction — Practice Set</h1>
+    <div class="meta">
+      <span><strong>Student:</strong> Justin Koo</span>
+      <span><strong>Date:</strong> 2026-05-10</span>
+    </div>
+  </div>
+
+  <div class="section-header">Problem 5 — Inequality Challenge &nbsp;<span style="font-size:9pt;font-weight:normal;color:var(--muted);">[Difficulty: Hard]</span></div>
+
+  <div class="problem">
+    <span class="q-num">5.</span>&nbsp;
+    Prove by mathematical induction that for all integers $n \ge 1$:
+    $$3^n \;\ge\; 2n + 1$$
+    <br>
+    <em>(Note: base case is $n = 1$. In the inductive step, you will use $3^{k+1} = 3 \cdot 3^k$.
+    You need to argue why $3(2k+1) \ge 2(k+1)+1$.)</em>
+  </div>
+
+  <div class="induction-steps">
+    <div><span class="slabel">Base Case ($n=1$):</span></div>
+    <div class="sbox"></div>
+    <div><span class="slabel">Inductive Hyp.:</span></div>
+    <div class="sbox"></div>
+    <div style="margin-top:6px;"><span class="slabel">Inductive Step:</span></div>
+    <div class="sbox xtall"></div>
+    <div><span class="slabel">Conclusion:</span></div>
+    <div class="sbox"></div>
+  </div>
+
+  <div class="footer">Newton School &mdash; 2026-05-10 &nbsp;|&nbsp; HOMEWORK &nbsp;|&nbsp; Problem 5 of 5</div>
+</div>
+
+<!-- ============================================================
+     ANSWER KEY — starts here (auto page-break on print)
+     ============================================================ -->
+<div id="answer-key" class="answer-section answer-key-start">
+
+<div class="page">
+  <div class="ak-header">
+    <h2>ANSWER KEY &mdash; TEACHER COPY</h2>
+    <p>Mathematical Induction Homework &nbsp;&middot;&nbsp; Justin Koo &nbsp;&middot;&nbsp; 2026-05-10</p>
+  </div>
+
+  <!-- AK Problem 1 -->
+  <div class="ak-problem">
+    <div class="ak-title">Problem 1 &mdash; Sum of Cubes: $\displaystyle\sum_{i=1}^{n} i^3 = \left(\frac{n(n+1)}{2}\right)^2$</div>
+
+    <div class="ak-step">
+      <span class="al">Base Case ($n=1$):</span>
+      <span class="ab">LHS $= 1^3 = 1$. &nbsp; RHS $= \left(\frac{1\cdot2}{2}\right)^2 = 1^2 = 1$. &nbsp; $1 = 1$ $\checkmark$</span>
+    </div>
+    <div class="ak-step">
+      <span class="al">Inductive Hyp.:</span>
+      <span class="ab">Assume $\displaystyle\sum_{i=1}^{k} i^3 = \left(\frac{k(k+1)}{2}\right)^2$ for some $k \ge 1$.</span>
+    </div>
+    <div class="ak-step">
+      <span class="al">Inductive Step:</span>
+      <span class="ab">
+        $\displaystyle\sum_{i=1}^{k+1} i^3 = \left(\frac{k(k+1)}{2}\right)^2 + (k+1)^3$<br><br>
+        $= \frac{k^2(k+1)^2}{4} + (k+1)^3$<br><br>
+        $= (k+1)^2\left[\frac{k^2}{4} + (k+1)\right]$<br><br>
+        $= (k+1)^2 \cdot \frac{k^2 + 4k + 4}{4}$<br><br>
+        $= (k+1)^2 \cdot \frac{(k+2)^2}{4} = \left(\frac{(k+1)(k+2)}{2}\right)^2$ &nbsp; $\checkmark$
+      </span>
+    </div>
+    <div class="ak-final">Conclusion: By PMI, $\displaystyle\sum_{i=1}^{n} i^3 = \left(\frac{n(n+1)}{2}\right)^2$ for all $n \ge 1$. $\blacksquare$</div>
+  </div>
+
+  <!-- AK Problem 2 -->
+  <div class="ak-problem">
+    <div class="ak-title">Problem 2 &mdash; Telescoping Sum: $\displaystyle\sum_{i=1}^{n} \frac{1}{i(i+1)} = \frac{n}{n+1}$</div>
+
+    <div class="ak-step">
+      <span class="al">Base Case ($n=1$):</span>
+      <span class="ab">LHS $= \dfrac{1}{1\cdot2} = \dfrac{1}{2}$. &nbsp; RHS $= \dfrac{1}{2}$. &nbsp; $\checkmark$</span>
+    </div>
+    <div class="ak-step">
+      <span class="al">Inductive Hyp.:</span>
+      <span class="ab">Assume $\displaystyle\sum_{i=1}^{k} \frac{1}{i(i+1)} = \frac{k}{k+1}$ for some $k \ge 1$.</span>
+    </div>
+    <div class="ak-step">
+      <span class="al">Inductive Step:</span>
+      <span class="ab">
+        $\displaystyle\sum_{i=1}^{k+1} \frac{1}{i(i+1)} = \frac{k}{k+1} + \frac{1}{(k+1)(k+2)}$<br><br>
+        $= \frac{k(k+2) + 1}{(k+1)(k+2)} = \frac{k^2+2k+1}{(k+1)(k+2)} = \frac{(k+1)^2}{(k+1)(k+2)} = \frac{k+1}{k+2}$ &nbsp; $\checkmark$
+      </span>
+    </div>
+    <div class="ak-final">Conclusion: By PMI, $\displaystyle\sum_{i=1}^{n} \frac{1}{i(i+1)} = \frac{n}{n+1}$ for all $n \ge 1$. $\blacksquare$</div>
+  </div>
+
+  <div class="footer">Newton School &mdash; Answer Key &nbsp;|&nbsp; Page 1 of 2</div>
+</div>
+
+<div class="page-break"></div>
+<div class="page">
+
+  <!-- AK Problem 3 -->
+  <div class="ak-problem">
+    <div class="ak-title">Problem 3 &mdash; Powers of 3: $1 + 3 + \cdots + 3^{n-1} = \dfrac{3^n-1}{2}$</div>
+
+    <div class="ak-step">
+      <span class="al">Base Case ($n=1$):</span>
+      <span class="ab">LHS $= 3^0 = 1$. &nbsp; RHS $= \dfrac{3^1-1}{2} = 1$. &nbsp; $\checkmark$</span>
+    </div>
+    <div class="ak-step">
+      <span class="al">Inductive Hyp.:</span>
+      <span class="ab">Assume $1 + 3 + \cdots + 3^{k-1} = \dfrac{3^k-1}{2}$ for some $k \ge 1$.</span>
+    </div>
+    <div class="ak-step">
+      <span class="al">Inductive Step:</span>
+      <span class="ab">
+        $\underbrace{1 + 3 + \cdots + 3^{k-1}}_{=\,\frac{3^k-1}{2}} + 3^k$<br><br>
+        $= \frac{3^k - 1}{2} + \frac{2 \cdot 3^k}{2} = \frac{3 \cdot 3^k - 1}{2} = \frac{3^{k+1}-1}{2}$ &nbsp; $\checkmark$
+      </span>
+    </div>
+    <div class="ak-final">Conclusion: By PMI, the formula holds for all $n \ge 1$. $\blacksquare$</div>
+  </div>
+
+  <!-- AK Problem 4 -->
+  <div class="ak-problem">
+    <div class="ak-title">Problem 4 &mdash; Divisibility: $7 \mid (8^n - 1)$</div>
+
+    <div class="ak-step">
+      <span class="al">Base Case ($n=1$):</span>
+      <span class="ab">$8^1 - 1 = 7 = 7 \cdot 1$. &nbsp; Divisible by 7. &nbsp; $\checkmark$</span>
+    </div>
+    <div class="ak-step">
+      <span class="al">Inductive Hyp.:</span>
+      <span class="ab">Assume $8^k - 1 = 7m$ for some integer $m$.</span>
+    </div>
+    <div class="ak-step">
+      <span class="al">Inductive Step:</span>
+      <span class="ab">
+        $8^{k+1} - 1 = 8 \cdot 8^k - 1 = 8(8^k - 1) + 8 - 1 = 8(8^k-1) + 7$<br><br>
+        $= 8 \cdot 7m + 7 = 7(8m + 1)$ &nbsp; $\checkmark$ &nbsp; (since $8m+1 \in \mathbb{Z}$)
+      </span>
+    </div>
+    <div class="ak-final">Conclusion: By PMI, $7 \mid (8^n-1)$ for all $n \ge 1$. $\blacksquare$</div>
+  </div>
+
+  <!-- AK Problem 5 -->
+  <div class="ak-problem">
+    <div class="ak-title">Problem 5 &mdash; Inequality: $3^n \ge 2n+1$ for $n \ge 1$</div>
+
+    <div class="ak-step">
+      <span class="al">Base Case ($n=1$):</span>
+      <span class="ab">$3^1 = 3 \ge 2(1)+1 = 3$. &nbsp; $3 \ge 3$ $\checkmark$</span>
+    </div>
+    <div class="ak-step">
+      <span class="al">Inductive Hyp.:</span>
+      <span class="ab">Assume $3^k \ge 2k+1$ for some $k \ge 1$.</span>
+    </div>
+    <div class="ak-step">
+      <span class="al">Inductive Step:</span>
+      <span class="ab">
+        $3^{k+1} = 3 \cdot 3^k \overset{\text{I.H.}}{\ge} 3(2k+1) = 6k + 3$<br><br>
+        We need $6k + 3 \ge 2(k+1)+1 = 2k+3$.<br><br>
+        $6k + 3 \ge 2k + 3 \iff 4k \ge 0$, which holds for all $k \ge 1$. &nbsp; $\checkmark$
+      </span>
+    </div>
+    <div class="ak-final">Conclusion: By PMI, $3^n \ge 2n+1$ for all $n \ge 1$. $\blacksquare$</div>
+  </div>
+
+  <div class="footer">Newton School &mdash; Answer Key &nbsp;|&nbsp; Page 2 of 2</div>
+</div>
+
+</div><!-- #answer-key -->
+
+<script>
+function toggleAnswers() {
+    var ak = document.getElementById('answer-key');
+    var btn = document.getElementById('toggle-answers');
+    if (ak.classList.contains('visible')) {
+        ak.classList.remove('visible');
+        btn.textContent = 'Show Answer Key';
+    } else {
+        ak.classList.add('visible');
+        btn.textContent = 'Hide Answer Key';
+        ak.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+</script>
+
+</body>
+</html>

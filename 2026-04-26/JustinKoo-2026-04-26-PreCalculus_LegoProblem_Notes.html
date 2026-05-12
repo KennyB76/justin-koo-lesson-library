@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Justin Koo — The Lego Problem · Full Solution Notes · 2026-04-26</title>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath:[['$$','$$'],['\\[','\\]']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+@page { size: letter; margin: 0.5in; }
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0d2c54; --navyLight:#1e4886; --cyan:#1976d2; --teal:#26a69a;
+  --gold:#f9a825; --warn:#e53935; --paper:#fdfdfd; --ink:#1a2138;
+  --gray:#666; --bg-soft:#f4f7fb;
+  --tileSq:#ffd54f; --tileRect:#4fc3f7;
+}
+html,body{font-family:"Times New Roman", Georgia, serif; color:var(--ink); background:#fff; line-height:1.55}
+body{padding:24px 28px; max-width:8.0in; margin:0 auto}
+
+.header{
+  border:3px solid var(--navy); border-radius:10px;
+  padding:14px 20px; margin-bottom:18px;
+  background:linear-gradient(135deg, #f0f6ff 0%, #e8f0fb 100%);
+}
+.school-name{font-size:11pt; letter-spacing:3px; color:var(--navy); font-weight:bold}
+.subject-tag{display:inline-block; background:var(--cyan); color:#fff; padding:2px 10px; border-radius:8px; font-size:10pt; font-weight:bold; margin-left:8px}
+.header h1{font-size:18pt; color:var(--navy); margin-top:6px; font-weight:bold}
+.header .info{display:flex; flex-wrap:wrap; gap:18px; margin-top:6px; font-size:10.5pt}
+.standard{font-size:9.5pt; color:var(--gray); margin-top:6px; font-style:italic; line-height:1.4}
+
+h2{
+  color:var(--navy); border-bottom:3px solid var(--cyan); padding:8px 0 4px;
+  margin:22px 0 10px; font-size:14pt; font-weight:bold;
+  page-break-after:avoid;
+}
+h3{ color:var(--navyLight); margin:14px 0 6px; font-size:12pt; page-break-after:avoid; }
+
+p{margin:6px 0}
+
+.problem-statement{
+  background:var(--bg-soft); border-left:5px solid var(--navy);
+  padding:10px 14px; border-radius:6px; margin:8px 0 14px;
+  font-style:italic;
+}
+.solution-step{
+  background:#fff; border:1.5px solid #d0d8e8; border-radius:6px;
+  padding:10px 14px; margin:8px 0; line-height:1.7;
+}
+.solution-step .label{
+  display:inline-block; background:var(--navy); color:#fff;
+  padding:2px 10px; border-radius:6px; font-size:9.5pt; font-weight:bold;
+  margin-right:6px; letter-spacing:.5px;
+}
+.key-formula{
+  background:#fff8e1; border:2px solid var(--gold); border-radius:8px;
+  padding:10px 14px; margin:10px 0; text-align:center; font-size:1.1em;
+  page-break-inside:avoid;
+}
+.key-formula .label{
+  display:inline-block; background:var(--gold); color:#000;
+  padding:2px 10px; border-radius:6px; font-size:9.5pt; font-weight:bold;
+  margin-bottom:6px;
+}
+.final-answer{
+  background:#e8f5e9; border:2.5px solid var(--teal); border-radius:8px;
+  padding:10px 14px; margin:12px 0; text-align:center; font-weight:bold;
+  font-size:1.15em; color:#0d4a3a;
+  page-break-inside:avoid;
+}
+.final-answer::before{content:"✓ "; color:var(--teal); font-weight:bold}
+.warn-box{
+  background:#ffebee; border-left:5px solid var(--warn);
+  padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.95em;
+}
+.tip{
+  background:#e1f5fe; border-left:5px solid var(--cyan);
+  padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.95em;
+}
+
+/* TILE VISUALS */
+.tile-strip{
+  display:flex; align-items:center; gap:2px;
+  background:#fafafa; border:1px solid #ddd; border-radius:6px;
+  padding:6px; margin:6px 0;
+}
+.tile{
+  height:32px; border:1.5px solid var(--navy); border-radius:4px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:9pt; font-weight:bold; color:#222;
+}
+.tile.sq{ width:32px; background:var(--tileSq); }
+.tile.rect{ width:66px; background:var(--tileRect); color:#fff; }
+.tile-strip .label{
+  margin-left:auto; font-family:"Cambria Math",serif; color:var(--gray); font-style:italic; font-size:10pt;
+}
+.cut-line{
+  width:2px; background:var(--warn); height:42px; margin:0 4px;
+  position:relative;
+}
+.cut-line::after{
+  content:"cut"; position:absolute; top:-14px; left:-14px;
+  font-size:8pt; color:var(--warn); font-weight:bold; letter-spacing:.5px;
+}
+
+table.values{ margin:8px auto; border-collapse:collapse; font-size:10.5pt; }
+table.values th, table.values td{
+  border:1.5px solid var(--navy); padding:5px 12px; text-align:center;
+}
+table.values th{background:var(--navy); color:#fff}
+
+table.case-table{ width:100%; border-collapse:collapse; margin:8px 0; font-size:10.5pt; }
+table.case-table th{
+  background:var(--navy); color:#fff; padding:6px 10px; text-align:left;
+  font-weight:bold; border:1px solid var(--navy);
+}
+table.case-table td{ padding:6px 10px; border:1px solid #ccd; vertical-align:top; }
+table.case-table tr:nth-child(even) td{background:#f8fafc}
+table.case-table .totalrow td{background:#fff8e1; font-weight:bold; border-top:2px solid var(--gold)}
+
+.derivation{
+  font-family:"Cambria Math","Latin Modern Math",serif;
+  background:#f9f9fc; padding:10px 14px; border-radius:6px;
+  margin:8px 0; font-size:1.05em; line-height:2.0;
+  border:1px solid #e0e0e8;
+}
+
+.connection{
+  background:linear-gradient(135deg, #fff8e1 0%, #f9f9fc 100%);
+  border:2px dashed var(--gold); border-radius:8px;
+  padding:14px 18px; margin:14px 0;
+}
+.connection .title{font-weight:bold; color:#a86f00; margin-bottom:6px; font-size:1.05em}
+
+.toc{
+  background:var(--bg-soft); border-radius:8px; padding:10px 16px;
+  margin-bottom:14px; font-size:10pt;
+}
+.toc strong{color:var(--navy)}
+.toc ol{margin-left:22px; line-height:1.8}
+
+.case-block{
+  border:2px solid var(--navyLight); border-radius:8px;
+  padding:10px 14px; margin:8px 0;
+  page-break-inside:avoid;
+}
+.case-block .case-title{
+  display:inline-block; background:var(--navyLight); color:#fff;
+  padding:2px 12px; border-radius:6px; font-weight:bold; margin-bottom:6px;
+}
+
+.footer{
+  text-align:center; color:var(--gray); font-size:9pt;
+  margin-top:30px; border-top:1px solid #ccc; padding-top:8px;
+}
+
+.page-break{page-break-before:always}
+
+@media print{
+  body{padding:0}
+  .solution-step,.key-formula,.final-answer,.connection,.case-block,.tile-strip{page-break-inside:avoid}
+  h2,h3{page-break-after:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <span class="school-name">NEWTON SCHOOL</span><span class="subject-tag">PRE-CALCULUS</span>
+  <h1>The Lego Problem — Full Solution Notes</h1>
+  <div class="info">
+    <span><strong>Student:</strong> Justin Koo</span>
+    <span><strong>Date:</strong> 2026-04-26</span>
+    <span><strong>Grade:</strong> 10 (Horace Mann)</span>
+    <span><strong>Topic:</strong> Recurrence · Fibonacci · Tiling Arguments</span>
+  </div>
+  <div class="standard"><strong>Standard:</strong> CCSS.MATH.CONTENT.HSF-IF.A.3 (recursive sequences) · HSF-BF.A.2 (define recursively, write closed form). Companion to the Towers of Hanoi notes — same recurrence machinery, second-order this time.</div>
+</div>
+
+<div class="toc">
+  <strong>What's in here</strong>
+  <ol>
+    <li><strong>Problem 1</strong> — Tilings of a 6-unit walkway (two methods)</li>
+    <li><strong>Problem 2</strong> — Tilings of a 12-unit walkway</li>
+    <li><strong>Problem 3</strong> — General recursive formula $L_n$</li>
+    <li><strong>Problem 4</strong> — Tiling argument for $L_{10} = L_4 L_6 + L_3 L_5$</li>
+    <li><strong>Problem 5</strong> — Tiling argument for $L_{2n} = L_n^2 + L_{n-1}^2$</li>
+    <li><strong>Problem 6 [Challenge]</strong> — Formula for $L_{3n}$</li>
+    <li>Pre-Calc bridge — characteristic equation, golden ratio, Binet's formula</li>
+    <li>Test-prep checklist</li>
+  </ol>
+</div>
+
+<!-- ============ PROBLEM 1 ============ -->
+<h2>1. Problem 1 — Tile a 6-Unit Walkway</h2>
+
+<div class="problem-statement">
+  In how many different ways can you tile a 6-unit walkway with 1-unit squares and 2-unit rectangles? Order matters.
+</div>
+
+<h3>Method A — Case analysis (count by number of 2-unit tiles)</h3>
+
+<p>Suppose you use $k$ rectangles (length 2) and $(6 - 2k)$ squares (length 1). Total tiles: $6 - 2k + k = 6 - k$.</p>
+<p>The number of arrangements is the number of ways to choose which positions in the sequence of $(6-k)$ tiles are rectangles: $\dbinom{6 - k}{k}$.</p>
+
+<table class="case-table">
+  <thead>
+    <tr><th>$k$ (# rect)</th><th># sq</th><th>Total tiles</th><th>Arrangement count $\binom{6-k}{k}$</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>0</td><td>6</td><td>6</td><td>$\binom{6}{0} = 1$</td></tr>
+    <tr><td>1</td><td>4</td><td>5</td><td>$\binom{5}{1} = 5$</td></tr>
+    <tr><td>2</td><td>2</td><td>4</td><td>$\binom{4}{2} = 6$</td></tr>
+    <tr><td>3</td><td>0</td><td>3</td><td>$\binom{3}{3} = 1$</td></tr>
+    <tr class="totalrow"><td colspan="3">Total</td><td>$1+5+6+1 = \mathbf{13}$</td></tr>
+  </tbody>
+</table>
+
+<h3>Method B — Recursion (cleaner; we'll use this everywhere)</h3>
+
+<p>Let $L_n$ = number of tilings of an $n$-strip. Look at <em>the very first tile</em> placed at position 1:</p>
+
+<div class="solution-step">
+  <span class="label">CASE 1</span> First tile is a <strong>1-unit square</strong>. Remaining strip has length $n-1$ → $L_{n-1}$ tilings.
+</div>
+<div class="solution-step">
+  <span class="label">CASE 2</span> First tile is a <strong>2-unit rectangle</strong>. Remaining strip has length $n-2$ → $L_{n-2}$ tilings.
+</div>
+
+<div class="key-formula">
+  <span class="label">RECURRENCE</span><br>
+  $L_n = L_{n-1} + L_{n-2}$, &nbsp; $L_1 = 1$, &nbsp; $L_2 = 2$ &nbsp;&nbsp; (and $L_0 = 1$ by convention)
+</div>
+
+<p>Build up:</p>
+<table class="values">
+  <tr><th>$n$</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th></tr>
+  <tr><th>$L_n$</th><td>1</td><td>1</td><td>2</td><td>3</td><td>5</td><td>8</td><td><strong>13</strong></td></tr>
+</table>
+
+<div class="final-answer">
+  $L_6 = \boxed{13}$ &nbsp; tilings of a 6-strip
+</div>
+
+<h3>Visualizing the 13 tilings</h3>
+<p>Here are a few examples (rectangle = blue 2-block, square = yellow 1-block):</p>
+<div class="tile-strip"><span class="tile sq">1</span><span class="tile sq">1</span><span class="tile sq">1</span><span class="tile sq">1</span><span class="tile sq">1</span><span class="tile sq">1</span><span class="label">all 1-units (1 way)</span></div>
+<div class="tile-strip"><span class="tile rect">2</span><span class="tile sq">1</span><span class="tile sq">1</span><span class="tile sq">1</span><span class="tile sq">1</span><span class="label">1 rect + 4 sq, k=1 (5 ways)</span></div>
+<div class="tile-strip"><span class="tile rect">2</span><span class="tile rect">2</span><span class="tile sq">1</span><span class="tile sq">1</span><span class="label">2 rect + 2 sq, k=2 (6 ways)</span></div>
+<div class="tile-strip"><span class="tile rect">2</span><span class="tile rect">2</span><span class="tile rect">2</span><span class="label">all rect, k=3 (1 way)</span></div>
+
+<!-- ============ PROBLEM 2 ============ -->
+<h2 class="page-break">2. Problem 2 — Tile a 12-Unit Walkway</h2>
+
+<div class="problem-statement">
+  In how many ways can you tile a 12-unit walkway?
+</div>
+
+<h3>Method A — Same case analysis (sum over $k$)</h3>
+
+<table class="case-table">
+  <thead>
+    <tr><th>$k$</th><th>$\binom{12-k}{k}$</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>0</td><td>$\binom{12}{0} = 1$</td></tr>
+    <tr><td>1</td><td>$\binom{11}{1} = 11$</td></tr>
+    <tr><td>2</td><td>$\binom{10}{2} = 45$</td></tr>
+    <tr><td>3</td><td>$\binom{9}{3} = 84$</td></tr>
+    <tr><td>4</td><td>$\binom{8}{4} = 70$</td></tr>
+    <tr><td>5</td><td>$\binom{7}{5} = 21$</td></tr>
+    <tr><td>6</td><td>$\binom{6}{6} = 1$</td></tr>
+    <tr class="totalrow"><td>Total</td><td>$1+11+45+84+70+21+1 = \mathbf{233}$</td></tr>
+  </tbody>
+</table>
+
+<h3>Method B — Just keep the recurrence rolling</h3>
+<table class="values">
+  <tr><th>$n$</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th></tr>
+  <tr><th>$L_n$</th><td>1</td><td>1</td><td>2</td><td>3</td><td>5</td><td>8</td><td>13</td><td>21</td><td>34</td><td>55</td><td>89</td><td>144</td><td><strong>233</strong></td></tr>
+</table>
+
+<div class="final-answer">
+  $L_{12} = \boxed{233}$ &nbsp; tilings of a 12-strip
+</div>
+
+<div class="tip">
+  <strong>The Fibonacci connection:</strong> If you compare $L_n$ to the standard Fibonacci $F_n$ ($F_1 = F_2 = 1, F_3 = 2, \ldots$), you'll see $L_n = F_{n+1}$. The Lego problem <em>is</em> Fibonacci — just shifted by one index.
+</div>
+
+<!-- ============ PROBLEM 3 ============ -->
+<h2>3. Problem 3 — General Method for an $n$-Strip</h2>
+
+<div class="problem-statement">
+  Derive a general method for the number of tilings of an $n$-strip.
+</div>
+
+<p>We did the work in Problem 1 already. Restating cleanly as a <em>recursive definition</em> (the format Mr. Jones is asking for):</p>
+
+<div class="key-formula" style="font-size:1.05em">
+  <span class="label">RECURSIVE DEFINITION</span><br><br>
+  <strong>I. Recurrence relation:</strong> &nbsp; $L_n = L_{n-1} + L_{n-2}$ for all $n \ge 3$<br><br>
+  <strong>II. Initial values:</strong> &nbsp; $L_1 = 1, \;\; L_2 = 2$
+</div>
+
+<div class="tip">
+  <strong>The "look at the first tile" argument (write this down on the test):</strong><br>
+  Every valid tiling of an $n$-strip starts with either a square (leaving an $(n-1)$-strip to tile in $L_{n-1}$ ways) or a rectangle (leaving an $(n-2)$-strip to tile in $L_{n-2}$ ways). These cases don't overlap and cover everything, so $L_n = L_{n-1} + L_{n-2}$.
+</div>
+
+<!-- ============ PROBLEM 4 ============ -->
+<h2 class="page-break">4. Problem 4 — Tiling Argument: $L_{10} = L_4 L_6 + L_3 L_5$</h2>
+
+<div class="problem-statement">
+  Use a tiling argument to explain why $L_{10} = L_4 L_6 + L_3 L_5$.
+</div>
+
+<h3>The "cut" idea</h3>
+
+<p>Look at any tiling of a 10-strip. Draw a vertical cut between unit 4 and unit 5. Exactly one of two things must be true:</p>
+
+<div class="case-block">
+  <span class="case-title">CASE A — No 2-tile straddles the cut.</span>
+  <p>The cut splits the tiling into two independent pieces:</p>
+  <div class="tile-strip">
+    <span class="tile sq">1</span><span class="tile rect">2</span><span class="tile sq">1</span>
+    <div class="cut-line"></div>
+    <span class="tile rect">2</span><span class="tile sq">1</span><span class="tile rect">2</span><span class="tile sq">1</span>
+    <span class="label">left = 4-strip · right = 6-strip</span>
+  </div>
+  <p>Left piece (units 1-4): any tiling of a 4-strip → $L_4$ choices.<br>
+  Right piece (units 5-10): any tiling of a 6-strip → $L_6$ choices.</p>
+  <p style="text-align:center; font-weight:bold; margin-top:6px">Case A total = $L_4 \cdot L_6$</p>
+</div>
+
+<div class="case-block">
+  <span class="case-title">CASE B — A 2-tile covers units 4 and 5.</span>
+  <p>That single rectangle straddles the cut. The remaining tiling splits as:</p>
+  <div class="tile-strip">
+    <span class="tile sq">1</span><span class="tile rect">2</span>
+    <span class="tile rect" style="background:#ef5350; outline:2px dashed #b71c1c">2</span>
+    <span class="tile sq">1</span><span class="tile sq">1</span><span class="tile rect">2</span><span class="tile sq">1</span>
+    <span class="label">left = 3-strip · straddler · right = 5-strip</span>
+  </div>
+  <p>Left piece (units 1-3): $L_3$ choices.<br>
+  Right piece (units 6-10): $L_5$ choices.<br>
+  The red 2-tile straddling 4-5 is fixed (no choice involved).</p>
+  <p style="text-align:center; font-weight:bold; margin-top:6px">Case B total = $L_3 \cdot L_5$</p>
+</div>
+
+<p>Cases A and B are <strong>mutually exclusive</strong> (either a 2-tile covers 4-5 or it doesn't) and <strong>exhaustive</strong> (every tiling falls into one). So:</p>
+
+<div class="key-formula">
+  $L_{10} = L_4 \cdot L_6 + L_3 \cdot L_5 \quad \blacksquare$
+</div>
+
+<h3>Numerical sanity check</h3>
+<div class="derivation">
+  $L_4 = 5, \;\; L_6 = 13, \;\; L_3 = 3, \;\; L_5 = 8$.<br>
+  $L_4 \cdot L_6 + L_3 \cdot L_5 = 5(13) + 3(8) = 65 + 24 = 89$.<br>
+  And $L_{10} = 89$ from the table above. ✓
+</div>
+
+<!-- ============ PROBLEM 5 ============ -->
+<h2>5. Problem 5 — Tiling Argument: $L_{2n} = L_n^2 + L_{n-1}^2$</h2>
+
+<div class="problem-statement">
+  Use a tiling argument to explain why $L_{2n} = L_n^2 + L_{n-1}^2$ for $n \ge 1$.
+</div>
+
+<p>This is the <em>same idea</em> as Problem 4, but with the cut placed at the midpoint of a $2n$-strip.</p>
+
+<p>Tile a $2n$-strip and draw a cut between unit $n$ and unit $n+1$.</p>
+
+<div class="case-block">
+  <span class="case-title">CASE A — No 2-tile straddles the midpoint cut.</span>
+  <p>Splits cleanly into two $n$-strips.<br>
+  Left: $L_n$ choices. Right: $L_n$ choices.</p>
+  <p style="text-align:center; font-weight:bold">Case A total = $L_n \cdot L_n = L_n^2$</p>
+</div>
+
+<div class="case-block">
+  <span class="case-title">CASE B — A 2-tile covers units $n$ and $n+1$.</span>
+  <p>That rectangle is forced. What's left to tile: units 1 through $n-1$, and units $n+2$ through $2n$ — both are $(n-1)$-strips.<br>
+  Left: $L_{n-1}$ choices. Right: $L_{n-1}$ choices.</p>
+  <p style="text-align:center; font-weight:bold">Case B total = $L_{n-1} \cdot L_{n-1} = L_{n-1}^2$</p>
+</div>
+
+<div class="key-formula">
+  $L_{2n} = L_n^2 + L_{n-1}^2 \quad \blacksquare$
+</div>
+
+<h3>Sanity check with $n = 5$ (so $2n = 10$):</h3>
+<div class="derivation">
+  $L_5 = 8, \;\; L_4 = 5$.<br>
+  $L_5^2 + L_4^2 = 64 + 25 = 89$.<br>
+  $L_{10} = 89$. ✓
+</div>
+
+<div class="tip">
+  <strong>The general pattern (worth memorizing):</strong> for any cut between position $m$ and $m+1$ in an $(m+k)$-strip,
+  $$L_{m+k} = L_m L_k + L_{m-1} L_{k-1}.$$
+  Problem 4 is $m=4, k=6$. Problem 5 is $m=k=n$. We'll use the general version in Problem 6.
+</div>
+
+<!-- ============ PROBLEM 6 ============ -->
+<h2 class="page-break">6. Problem 6 [Challenge] — Formula for $L_{3n}$</h2>
+
+<div class="problem-statement">
+  Create a formula for computing $L_{3n}$ (for $n \ge 2$) by thinking about what happens at units $n$ and $2n$. Your formula should involve $L_n$, $L_{n-1}$, and $L_{n-2}$.
+</div>
+
+<h3>Strategy: cut at unit $2n$, then cut what's left at unit $n$</h3>
+
+<p>Apply the general cut formula $\;L_{m+k} = L_m L_k + L_{m-1} L_{k-1}\;$ <strong>twice</strong>.</p>
+
+<div class="solution-step">
+  <span class="label">CUT 1</span> Split $L_{3n}$ at the boundary between unit $2n$ and unit $2n+1$ (so $m = 2n$, $k = n$):
+  $$L_{3n} = L_{2n}\,L_n + L_{2n-1}\,L_{n-1} \tag{$\ast$}$$
+</div>
+
+<div class="solution-step">
+  <span class="label">CUT 2a</span> We already know from Problem 5: $\;L_{2n} = L_n^2 + L_{n-1}^2$.
+</div>
+
+<div class="solution-step">
+  <span class="label">CUT 2b</span> Apply the general cut formula to $L_{2n-1} = L_{n + (n-1)}$ with $m = n$, $k = n-1$:
+  $$L_{2n-1} = L_n L_{n-1} + L_{n-1} L_{n-2} = L_{n-1}\bigl(L_n + L_{n-2}\bigr).$$
+</div>
+
+<div class="solution-step">
+  <span class="label">SUBSTITUTE</span> Plug both into ($\ast$):
+  <div class="derivation">
+    $L_{3n} = (L_n^2 + L_{n-1}^2)\, L_n \;+\; L_{n-1}(L_n + L_{n-2})\, L_{n-1}$<br><br>
+    $\quad\;\; = L_n^3 + L_n L_{n-1}^2 \;+\; L_{n-1}^2 L_n + L_{n-1}^2 L_{n-2}$<br><br>
+    $\quad\;\; = L_n^3 + 2\,L_n L_{n-1}^2 + L_{n-1}^2 L_{n-2}$
+  </div>
+</div>
+
+<div class="key-formula">
+  <span class="label">ANSWER</span><br>
+  $L_{3n} = L_n^3 + 2\,L_n L_{n-1}^2 + L_{n-1}^2 L_{n-2}$
+</div>
+
+<h3>Sanity check with $n = 2$ (so $3n = 6$):</h3>
+<div class="derivation">
+  $L_2 = 2, \;\; L_1 = 1, \;\; L_0 = 1$.<br>
+  $L_2^3 + 2 L_2 L_1^2 + L_1^2 L_0 = 8 + 2(2)(1) + (1)(1) = 8 + 4 + 1 = 13$.<br>
+  $L_6 = 13$. ✓
+</div>
+
+<h3>Sanity check with $n = 3$ (so $3n = 9$):</h3>
+<div class="derivation">
+  $L_3 = 3, \;\; L_2 = 2, \;\; L_1 = 1$.<br>
+  $L_3^3 + 2 L_3 L_2^2 + L_2^2 L_1 = 27 + 2(3)(4) + (4)(1) = 27 + 24 + 4 = 55$.<br>
+  $L_9 = 55$. ✓
+</div>
+
+<div class="final-answer">
+  $L_{3n} = L_n^3 + 2 L_n L_{n-1}^2 + L_{n-1}^2 L_{n-2}$
+</div>
+
+<!-- ============ PRE-CALC CONNECTION ============ -->
+<h2 class="page-break">7. Pre-Calc Connection — Characteristic Equation &amp; Closed Form</h2>
+
+<div class="connection">
+  <div class="title">🔑 Lego is a degree-2 homogeneous recurrence — your test's bread and butter.</div>
+  <p>Towers of Hanoi gave you $T(n) = 2T(n-1) + 1$ — first-order, non-homogeneous. Lego gives you</p>
+  <p style="text-align:center; font-size:1.15em; margin:8px 0">$L_n = L_{n-1} + L_{n-2}$ — second-order, homogeneous.</p>
+  <p>The closed form drops out of the <strong>characteristic equation</strong>.</p>
+</div>
+
+<h3>7.1 Five-step characteristic-equation method (your study notes 5단계)</h3>
+
+<div class="solution-step">
+  <span class="label">STEP 1</span> Identify the recurrence: $L_n = a_1 L_{n-1} + a_2 L_{n-2}$ with $a_1 = 1$, $a_2 = 1$.
+</div>
+
+<div class="solution-step">
+  <span class="label">STEP 2</span> Write the characteristic equation $\;x^2 - a_1 x - a_2 = 0$:
+  $$x^2 - x - 1 = 0$$
+  Solve: $\;x = \dfrac{1 \pm \sqrt{5}}{2}$. Call the roots
+  $$\varphi = \frac{1+\sqrt{5}}{2} \approx 1.618 \quad\text{(the golden ratio)}, \qquad \psi = \frac{1-\sqrt{5}}{2} \approx -0.618.$$
+</div>
+
+<div class="solution-step">
+  <span class="label">STEP 3</span> Two distinct roots → general solution
+  $$L_n = C_1 \varphi^n + C_2 \psi^n.$$
+</div>
+
+<div class="solution-step">
+  <span class="label">STEP 4</span> Use $L_0 = 1$ and $L_1 = 1$:
+  <div class="derivation">
+    $C_1 + C_2 = 1$<br>
+    $C_1 \varphi + C_2 \psi = 1$<br>
+    Solve: $\;C_1 = \dfrac{\varphi}{\sqrt{5}}, \;\; C_2 = -\dfrac{\psi}{\sqrt{5}}\;$ &nbsp;(uses $\varphi - \psi = \sqrt{5}$).
+  </div>
+</div>
+
+<div class="solution-step">
+  <span class="label">STEP 5</span> Closed form (Binet-style):
+  $$\boxed{\;L_n = \dfrac{\varphi^{n+1} - \psi^{n+1}}{\sqrt{5}}\;}$$
+  Equivalently, $L_n = F_{n+1}$ where $F_n$ is the standard Fibonacci sequence.
+</div>
+
+<h3>7.2 Lego vs Hanoi — the same machinery</h3>
+
+<table class="case-table">
+  <thead>
+    <tr><th>Problem</th><th>Recurrence</th><th>Order</th><th>Tool</th><th>Closed form</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Towers of Hanoi</td>
+      <td>$T_n = 2T_{n-1} + 1$</td>
+      <td>1st, +1 (non-hom.)</td>
+      <td>shift trick</td>
+      <td>$T_n = 2^n - 1$</td>
+    </tr>
+    <tr>
+      <td>Adjacent-only Hanoi</td>
+      <td>$A_n = 3A_{n-1} + 2$</td>
+      <td>1st, +2 (non-hom.)</td>
+      <td>shift trick</td>
+      <td>$A_n = 3^n - 1$</td>
+    </tr>
+    <tr style="background:#fff8e1">
+      <td><strong>Lego (Fibonacci)</strong></td>
+      <td>$L_n = L_{n-1} + L_{n-2}$</td>
+      <td><strong>2nd, hom.</strong></td>
+      <td><strong>characteristic equation ⭐</strong></td>
+      <td>$L_n = (\varphi^{n+1} - \psi^{n+1})/\sqrt{5}$</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>7.3 Two patterns to recognize on test day</h3>
+
+<div class="solution-step">
+  <span class="label">PATTERN 1</span> If the recurrence is degree 1 (only one previous term) plus a constant — use the <strong>shift trick</strong> (Hanoi-style).
+</div>
+<div class="solution-step">
+  <span class="label">PATTERN 2</span> If the recurrence is degree 2 (two previous terms) and homogeneous — use the <strong>characteristic equation</strong> (Lego/Fibonacci-style).
+</div>
+
+<div class="warn-box">
+  <strong>⚠️ Trap to remember:</strong> when the characteristic equation has a <em>double root</em> $r$, the form is $(C_1 + C_2 n)\,r^n$ — not $C_1 r^n + C_2 r^n$. The extra factor of $n$ catches a lot of students.
+</div>
+
+<!-- ============ CHECKLIST ============ -->
+<h2>8. Test-Prep Checklist</h2>
+
+<div class="solution-step">☐ I can derive $L_n = L_{n-1} + L_{n-2}$ from the "look at the first tile" argument.</div>
+<div class="solution-step">☐ I know $L_n = F_{n+1}$ — Lego is Fibonacci shifted.</div>
+<div class="solution-step">☐ I can compute $L_6 = 13$ and $L_{12} = 233$ both ways (recurrence and case sum).</div>
+<div class="solution-step">☐ I can perform a <strong>cut argument</strong>: $L_{m+k} = L_m L_k + L_{m-1} L_{k-1}$, and explain why (no straddler vs straddler).</div>
+<div class="solution-step">☐ I derived $L_{2n} = L_n^2 + L_{n-1}^2$ as a special case ($m = k = n$).</div>
+<div class="solution-step">☐ I can stack two cuts to derive $L_{3n} = L_n^3 + 2L_n L_{n-1}^2 + L_{n-1}^2 L_{n-2}$.</div>
+<div class="solution-step">☐ I can solve $L_n = L_{n-1} + L_{n-2}$ by the <strong>characteristic equation</strong> method (5 steps): $x^2 - x - 1 = 0 \Rightarrow \varphi, \psi \Rightarrow C_1, C_2 \Rightarrow$ closed form.</div>
+<div class="solution-step">☐ I remember the double-root trap: $(C_1 + C_2 n) r^n$.</div>
+
+<div class="connection">
+  <div class="title">💡 One-line takeaway</div>
+  <p>Lego, Hanoi, walkways, dominoes — they all reduce to the same skeleton: <em>look at the last (or first, or middle) thing placed</em>, count by mutually-exclusive cases, and you've got a recurrence. Closed form is whichever method (shift trick vs. characteristic equation) the recurrence's <em>shape</em> calls for.</p>
+</div>
+
+<div class="footer">
+  Created by Newton School · 2026-04-26 · Mr. Kenny &copy; Newton School Fort Lee · Companion to Towers of Hanoi notes
+</div>
+
+</body>
+</html>

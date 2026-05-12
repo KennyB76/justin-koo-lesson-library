@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Power Series, IoC, Σ Rules &amp; Bernoulli Telescoping — Practice Set</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+  startup: { ready: () => { MathJax.startup.defaultReady(); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+.page { max-width: 720px; margin: 0 auto; padding: 60px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+  html, body { background: #fff; }
+  .page { max-width: none; padding: 0.6in 0.55in 0.5in 0.55in; margin: 0; }
+  .problem, .item-box, .concept-box { page-break-inside: avoid; break-inside: avoid; }
+  .part-header, h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+  .page-break { page-break-before: always; break-before: page; }
+}
+
+:root {
+  --color-primary: #1565c0;
+  --color-primary-dark: #0d47a1;
+  --color-accent: #00838f;
+  --color-final-answer: #2e7d32;
+  --color-warning: #c62828;
+  --color-muted: #555;
+  --color-rule: #ccc;
+}
+
+body { font-family: 'Source Serif Pro', Georgia, 'Times New Roman', serif; color: #000; font-size: 10.5pt; line-height: 1.55; }
+h1, h2, h3, .part-header { font-family: 'Libre Baskerville', Georgia, serif; }
+
+.header { text-align: center; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid var(--color-primary); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 7px 3px; font-weight: bold; border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+h1 { font-size: 16pt; margin: 6px 0 8px 0; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 4px; color: var(--color-muted); }
+
+.part-header { font-size: 14pt; font-weight: bold; color: var(--color-primary); margin: 22px 0 6px 0; padding-bottom: 4px; border-bottom: 1.5px solid var(--color-primary); }
+.directions { font-size: 10pt; font-style: italic; color: #333; margin: 4px 0 14px 0; line-height: 1.5; }
+.directions strong { color: #000; font-style: normal; }
+
+.item-box {
+  border: 1.5px solid var(--color-accent);
+  border-left-width: 5px;
+  border-radius: 4px;
+  padding: 12px 16px;
+  margin: 14px 0;
+}
+.item-box .item-title {
+  font-weight: bold; color: var(--color-accent);
+  font-size: 11.5pt; margin-bottom: 4px;
+  letter-spacing: 0.5px;
+}
+.item-box .item-desc {
+  font-size: 9.5pt; color: var(--color-muted);
+  font-style: italic; margin-bottom: 8px;
+}
+
+.problem {
+  margin: 14px 0;
+  font-size: 10.5pt;
+  line-height: 1.6;
+  padding-left: 10px;
+  border-left: 3px solid var(--color-primary);
+}
+.q-num {
+  display: inline-block;
+  min-width: 30px;
+  font-weight: bold;
+  color: var(--color-primary);
+  font-size: 11pt;
+}
+.work-space {
+  min-height: 130px;
+  margin-left: 16px;
+  margin-top: 8px;
+  border-bottom: 1px dotted #ddd;
+}
+.work-space.short { min-height: 90px; }
+.work-space.tall { min-height: 170px; }
+.ans-line { display: inline-block; border-bottom: 1.5px solid #000; min-width: 90px; height: 18px; margin: 0 4px; vertical-align: bottom; }
+
+.concept-box {
+  border: 1.5px solid var(--color-accent);
+  border-left-width: 4px;
+  background: transparent;
+  padding: 9px 14px;
+  margin: 12px 0;
+  font-size: 10pt;
+}
+.concept-box .title { font-weight: bold; color: var(--color-accent); margin-bottom: 4px; }
+
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid var(--color-rule); margin-top: 24px; padding-top: 6px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">PRE-CALCULUS · LECTURE COMPANION</div>
+    <h1>Power Series, IoC, Σ Rules &amp; Bernoulli Telescoping<br><span style="font-size: 11pt; color: var(--color-muted);">Practice Set — 4 Items × 4 Questions</span></h1>
+    <div class="info">
+      <span><strong>Student:</strong> Justin Koo</span>
+      <span><strong>Date:</strong> 2026-05-03</span>
+    </div>
+    <div class="standard"><strong>Standard:</strong> CCSS.MATH.CONTENT.HSF-BF.A.2 / HSA-SSE.B.4 — Recognize and rewrite series; identify intervals of convergence for parametric (power) series; manipulate finite sums.</div>
+  </div>
+
+  <!-- Quick reference reminder -->
+  <div class="concept-box">
+    <div class="title">★ Quick Reference (from lecture)</div>
+    Geometric sum: $\displaystyle \sum_{k=0}^{\infty} g_0 \cdot r^k = \frac{g_0}{1-r}$ when $|r| &lt; 1$.
+    For a power series $\sum (r(x))^k$, the IoC is the set of $x$ where $|r(x)| &lt; 1$.
+    Bernoulli telescoping: split $\frac{1}{(\,\cdot\,)(\,\cdot\,)}$ via partial fractions, then cancel.
+  </div>
+
+  <!-- ==================================================================== -->
+  <!-- ITEM 1 -->
+  <!-- ==================================================================== -->
+  <div class="part-header">Item 1 · Power Series as a Family of Geometric Series</div>
+  <div class="directions"><strong>Directions:</strong> For each problem, identify $g_0$ and $r$ first, then answer the question. Plugging in a specific $x$ turns a power series into a number-only geometric series.</div>
+
+  <div class="item-box">
+    <div class="item-title">4 Questions — "Plug-in awareness"</div>
+    <div class="item-desc">Test: Can you spot $g_0$, $r$ in different forms (k starts at 0 vs 1, shifted center, fraction)?</div>
+
+    <div class="problem">
+      <span class="q-num">1.1</span> For $\displaystyle \sum_{k=0}^{\infty} \left(\tfrac{x}{2}\right)^k$, plug in $x = 1$. Does the resulting numerical series converge? If yes, what is its sum?
+      <div class="work-space"></div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">1.2</span> For $\displaystyle \sum_{k=0}^{\infty} (3x)^k$, give <em>one</em> value of $x$ that makes the series converge and <em>one</em> value that makes it diverge. Justify both.
+      <div class="work-space"></div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">1.3</span> Identify $r$ and $g_0$ for $\displaystyle \sum_{k=0}^{\infty} \left(\frac{x-2}{4}\right)^k$.
+      <div class="work-space short"></div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">1.4</span> For $\displaystyle \sum_{k=1}^{\infty} \left(\frac{x+1}{3}\right)^k$, identify $g_0$ (be careful — the index starts at $k=1$, not $0$). What is $r$?
+      <div class="work-space short"></div>
+    </div>
+  </div>
+
+  <!-- ==================================================================== -->
+  <!-- ITEM 2 -->
+  <!-- ==================================================================== -->
+  <div class="part-header page-break">Item 2 · Find IoC and the Sum Function $P(x)$</div>
+  <div class="directions"><strong>Directions:</strong> Apply $|r(x)| &lt; 1$ to find the IoC, then write the closed-form sum $\;P(x) = \dfrac{g_0}{1-r}$. Simplify so $P(x)$ has no fractions stacked inside fractions.</div>
+
+  <div class="item-box">
+    <div class="item-title">4 Questions — "IoC mechanics"</div>
+    <div class="item-desc">Includes: standard, shifted center, variable in denominator, and starting at $k=1$.</div>
+
+    <div class="problem">
+      <span class="q-num">2.1</span> $\displaystyle \sum_{k=0}^{\infty} \left(\frac{x}{5}\right)^k$. Find IoC and $P(x)$.
+      <div class="work-space"></div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">2.2</span> $\displaystyle \sum_{k=0}^{\infty} \left(\frac{x-1}{3}\right)^k$. Find IoC and $P(x)$. <em>(Center is shifted — solve $|x-1| &lt; 3$.)</em>
+      <div class="work-space"></div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">2.3</span> $\displaystyle \sum_{k=0}^{\infty} \left(\frac{3}{x}\right)^k$. Find IoC and $P(x)$. <em>(Variable in the denominator — IoC is two rays.)</em>
+      <div class="work-space"></div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">2.4</span> $\displaystyle \sum_{k=1}^{\infty} \left(\frac{x}{4}\right)^k$. Find IoC and $P(x)$. <em>(Starts at $k=1$, so $g_0 = \tfrac{x}{4}$, not 1.)</em>
+      <div class="work-space"></div>
+    </div>
+  </div>
+
+  <!-- ==================================================================== -->
+  <!-- ITEM 3 -->
+  <!-- ==================================================================== -->
+  <div class="part-header page-break">Item 3 · Three Σ Rules (Pull-out · Split · Index Shift)</div>
+  <div class="directions"><strong>Directions:</strong> Rewrite each sum using the indicated rule(s). Do <em>not</em> evaluate numerically — these test whether you can manipulate symbols correctly.</div>
+
+  <div class="item-box">
+    <div class="item-title">4 Questions — "Σ algebra"</div>
+    <div class="item-desc">Rules: (I) constant pull-out, (II) sum split, (III) index shift. Q4 chains two rules.</div>
+
+    <div class="problem">
+      <span class="q-num">3.1</span> <strong>(Rule I — pull out the constant)</strong> Rewrite $\displaystyle \sum_{n=1}^{8} 5n$ with the constant pulled outside the Σ.
+      <div class="work-space short"></div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">3.2</span> <strong>(Rule II — split the sum)</strong> Rewrite $\displaystyle \sum_{n=1}^{12} (n^2 - 3n + 4)$ as <em>three</em> separate sums.
+      <div class="work-space"></div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">3.3</span> <strong>(Rule III — index shift)</strong> Rewrite $\displaystyle \sum_{n=3}^{20} n^2$ so the index starts at $n = 0$. Do <em>not</em> evaluate.
+      <div class="work-space"></div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">3.4</span> <strong>(Combined — pull out, then shift)</strong> Rewrite $\displaystyle \sum_{n=5}^{14} 4(n-3)^2$ by first pulling the 4 out front, then shifting the index to start at $n = 0$.
+      <div class="work-space"></div>
+    </div>
+  </div>
+
+  <!-- ==================================================================== -->
+  <!-- ITEM 4 -->
+  <!-- ==================================================================== -->
+  <div class="part-header page-break">Item 4 · Bernoulli Telescoping</div>
+  <div class="directions"><strong>Directions:</strong> Set up partial fractions, then write out the partial sum and watch the middle terms cancel. Show the surviving "first + last" pieces clearly.</div>
+
+  <div class="item-box">
+    <div class="item-title">4 Questions — "Telescoping mechanics"</div>
+    <div class="item-desc">Q1 sets up the partial fractions; Q2 uses them. Q3 is a Bernoulli-style harder one. Q4 is a finite (not infinite) telescoping computation.</div>
+
+    <div class="problem">
+      <span class="q-num">4.1</span> Find $A$ and $B$ such that $\displaystyle \frac{1}{(n+1)(n+2)} = \frac{A}{n+1} + \frac{B}{n+2}$.
+      <div class="work-space"></div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">4.2</span> Using your answer from 4.1, evaluate $\displaystyle \sum_{n=1}^{\infty} \frac{1}{(n+1)(n+2)}$. Show the partial sum $S_N$ and take the limit.
+      <div class="work-space tall"></div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">4.3</span> Evaluate $\displaystyle \sum_{n=1}^{\infty} \frac{1}{(4n-3)(4n+1)}$. <em>(Bernoulli style — find $A$, $B$ first, then telescope.)</em>
+      <div class="work-space tall"></div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">4.4</span> Compute the <em>finite</em> telescoping sum $\displaystyle \sum_{n=1}^{4} \frac{1}{n(n+1)}$ by writing out all 4 terms (using $\frac{1}{n(n+1)} = \frac{1}{n} - \frac{1}{n+1}$) and cancelling the middle pieces. Express the answer as a single fraction.
+      <div class="work-space"></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Created by Newton School 2026-05-03 &copy; Copyright · Pre-Calculus Practice Set (Justin Koo)
+  </div>
+
+</div>
+</body>
+</html>

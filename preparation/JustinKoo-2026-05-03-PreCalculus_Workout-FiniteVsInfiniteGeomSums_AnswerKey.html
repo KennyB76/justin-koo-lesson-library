@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pre-Calculus Workout Answer Key — Finite vs Infinite Geometric Sums</title>
+<script>
+window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+    startup: { ready: () => { MathJax.startup.defaultReady(); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Source Serif Pro', 'Georgia', 'Times New Roman', serif; color: #000; font-size: 10.5pt; line-height: 1.55; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+    html, body { background: #fff; }
+    .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+    .answer-block, .concept-box { page-break-inside: avoid; break-inside: avoid; }
+    .part-header, h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+    .page-break { page-break-before: always; break-before: page; }
+    * { background: transparent !important; }
+}
+
+:root {
+    --color-primary: #1565c0;
+    --color-accent: #00838f;
+    --color-final-answer: #2e7d32;
+    --color-warning: #c62828;
+    --color-muted: #555;
+    --color-rule: #ccc;
+}
+
+h1, h2, h3, .part-header { font-family: 'Libre Baskerville', 'Georgia', serif; }
+.header { text-align: center; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid var(--color-primary); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 7px 3px; font-weight: bold; border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+.key-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 7px 3px; font-weight: bold; border: 1.5px solid var(--color-warning); color: var(--color-warning); }
+h1 { font-size: 16pt; margin: 6px 0 8px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 4px; color: var(--color-muted); }
+.part-header { font-size: 13pt; font-weight: bold; color: var(--color-primary); margin: 22px 0 6px 0; padding-bottom: 3px; border-bottom: 1.5px solid var(--color-primary); }
+
+.concept-box { border: 1.5px solid var(--color-accent); padding: 10px 14px; margin: 10px 0 16px 0; font-size: 10pt; border-left-width: 4px; }
+.concept-box .title { font-weight: bold; color: var(--color-accent); margin-bottom: 4px; font-size: 10.5pt; }
+
+.answer-block { margin: 12px 0; padding: 10px 14px; border: 1px solid #ddd; border-radius: 4px; }
+.problem-header { font-weight: bold; color: var(--color-primary); font-size: 11pt; margin-bottom: 5px; }
+.problem-text { font-size: 10pt; padding: 6px 10px; background: #f7f7f7; border-left: 3px solid #bbb; margin-bottom: 8px; line-height: 1.5; }
+.concept-tag { display: inline-block; font-size: 8pt; padding: 2px 8px; margin: 2px 3px 5px 0; border: 1px solid var(--color-primary); color: var(--color-primary); border-radius: 10px; }
+.solution { margin: 6px 0; padding-left: 10px; border-left: 3px solid var(--color-final-answer); font-size: 10pt; }
+.solution p { margin: 5px 0; line-height: 1.6; }
+.final-answer { display: inline-block; border: 2px solid var(--color-final-answer); color: var(--color-final-answer); font-weight: bold; padding: 4px 12px; border-radius: 4px; margin-top: 6px; font-size: 11pt; }
+.diverges { display: inline-block; border: 2px solid var(--color-warning); color: var(--color-warning); font-weight: bold; padding: 4px 12px; border-radius: 4px; margin-top: 6px; font-size: 11pt; letter-spacing: 1px; }
+
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid var(--color-rule); margin-top: 20px; padding-top: 6px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">PRE-CALCULUS</div>
+    <span class="key-tag">ANSWER KEY</span>
+    <h1>Workout: Finite vs Infinite Geometric Sums</h1>
+    <div class="info">
+        <span><strong>Student:</strong> Justin Koo</span>
+        <span><strong>Date:</strong> 2026-05-03</span>
+    </div>
+    <div class="standard"><strong>Standard:</strong> CCSS.MATH.CONTENT.HSA-SSE.B.4 — Derive and use formulas for finite/infinite geometric series; identify when an infinite series converges.</div>
+</div>
+
+<div class="concept-box">
+<div class="title">Two formulas — DON'T mix them up</div>
+<p><strong>Finite</strong> ($k=0$ to $n$): &nbsp; $\displaystyle\sum_{k=0}^{n} r^k = \frac{1 - r^{\,n+1}}{1 - r}$ &nbsp; — works for <em>any</em> $r \ne 1$.</p>
+<p><strong>Infinite</strong> ($k=0$ to $\infty$): &nbsp; $\displaystyle\sum_{k=0}^{\infty} r^k = \frac{1}{1 - r}$ &nbsp; — exists <strong>only when</strong> $|r| &lt; 1$. If $|r| \ge 1$, the series <strong>diverges</strong>.</p>
+</div>
+
+<!-- ===== Problem i ===== -->
+<div class="answer-block">
+    <div class="problem-header">Problem i — Finite, $|r|&lt;1$</div>
+    <div class="problem-text">$\displaystyle \sum_{k=0}^{10} \left(\tfrac{2}{3}\right)^k$</div>
+    <span class="concept-tag">finite formula</span>
+    <span class="concept-tag">11 terms (k=0..10)</span>
+    <div class="solution">
+        <p>Apply finite formula with $r = \tfrac{2}{3}$, $n = 10$:</p>
+        <p>$\displaystyle S = \frac{1 - (2/3)^{11}}{1 - 2/3} = \frac{1 - (2/3)^{11}}{1/3} = 3\!\left(1 - \tfrac{2^{11}}{3^{11}}\right) = 3\!\left(1 - \tfrac{2048}{177147}\right) = 3 \cdot \tfrac{175099}{177147} = \tfrac{175099}{59049}$</p>
+        <p>Decimal: $\;(2/3)^{11} \approx 0.01156$, &nbsp; $S \approx 3(1 - 0.01156) \approx 2.9653$.</p>
+    </div>
+    <div class="final-answer">$S = 3\!\left(1 - \left(\tfrac{2}{3}\right)^{11}\right) = \dfrac{175099}{59049} \approx 2.9653$</div>
+</div>
+
+<!-- ===== Problem ii ===== -->
+<div class="answer-block">
+    <div class="problem-header">Problem ii — Infinite, $|r|&lt;1$ (CONVERGES)</div>
+    <div class="problem-text">$\displaystyle \sum_{k=0}^{\infty} \left(\tfrac{2}{3}\right)^k$</div>
+    <span class="concept-tag">infinite formula</span>
+    <span class="concept-tag">|r|&lt;1 ✓</span>
+    <div class="solution">
+        <p>$|r| = 2/3 &lt; 1$ ✓ &nbsp;⇒&nbsp; series converges. Use $\displaystyle S_\infty = \tfrac{1}{1-r}$:</p>
+        <p>$\displaystyle S_\infty = \frac{1}{1 - 2/3} = \frac{1}{1/3} = 3$</p>
+        <p style="font-size:9.5pt;color:#555;"><em>Sanity check vs (i):</em> $S_{10} \approx 2.9653$ is just shy of $3$. The "missing" $\approx 0.0347$ is the tail $\sum_{k=11}^{\infty}(2/3)^k$. The partial sum is climbing toward $3$. ✓</p>
+    </div>
+    <div class="final-answer">$S_\infty = 3$</div>
+</div>
+
+<!-- ===== Problem iii ===== -->
+<div class="answer-block">
+    <div class="problem-header">Problem iii — Finite, $|r|&gt;1$ (still works!)</div>
+    <div class="problem-text">$\displaystyle \sum_{k=0}^{10} \left(\tfrac{4}{3}\right)^k$</div>
+    <span class="concept-tag">finite formula</span>
+    <span class="concept-tag">|r|&gt;1 OK for finite</span>
+    <div class="solution">
+        <p>$|r| = 4/3 &gt; 1$ — but for a <strong>finite</strong> sum that doesn't matter. Apply the formula:</p>
+        <p>$\displaystyle S = \frac{1 - (4/3)^{11}}{1 - 4/3} = \frac{1 - (4/3)^{11}}{-1/3} = 3\!\left((4/3)^{11} - 1\right) = 3\!\left(\tfrac{4^{11}}{3^{11}} - 1\right)$</p>
+        <p>$\;= 3 \cdot \dfrac{4^{11} - 3^{11}}{3^{11}} = \dfrac{4^{11} - 3^{11}}{3^{10}} = \dfrac{4194304 - 177147}{59049} = \dfrac{4017157}{59049}$</p>
+        <p>Decimal: $\;(4/3)^{11} \approx 23.679$, &nbsp; $S \approx 3(23.679 - 1) \approx 68.04$.</p>
+    </div>
+    <div class="final-answer">$S = 3\!\left(\!\left(\tfrac{4}{3}\right)^{11} - 1\right) = \dfrac{4017157}{59049} \approx 68.04$</div>
+</div>
+
+<!-- ===== Problem iv ===== -->
+<div class="answer-block">
+    <div class="problem-header">Problem iv — Infinite, $|r|&gt;1$ (DIVERGES)</div>
+    <div class="problem-text">$\displaystyle \sum_{k=0}^{\infty} \left(\tfrac{4}{3}\right)^k$</div>
+    <span class="concept-tag">infinite formula</span>
+    <span class="concept-tag">|r|&gt;1 ✗</span>
+    <div class="solution">
+        <p>$|r| = 4/3 &gt; 1$ ⇒ &nbsp; the terms $(4/3)^k$ <strong>grow without bound</strong> as $k \to \infty$ — the partial sums explode.</p>
+        <p>The formula $\tfrac{1}{1-r} = \tfrac{1}{1-4/3} = -3$ is <strong>nonsense</strong> here — it would say a sum of positive terms equals a negative number. The formula is <em>only valid</em> when $|r|&lt;1$.</p>
+    </div>
+    <div class="diverges">DIVERGES</div>
+</div>
+
+<!-- ===== Problem v ===== -->
+<div class="answer-block">
+    <div class="problem-header">Problem v — Finite, $r = -\tfrac{4}{3}$ (signs alternate, still computable)</div>
+    <div class="problem-text">$\displaystyle \sum_{k=0}^{10} \left(-\tfrac{4}{3}\right)^k$</div>
+    <span class="concept-tag">finite formula</span>
+    <span class="concept-tag">alternating signs</span>
+    <div class="solution">
+        <p>Apply the finite formula with $r = -\tfrac{4}{3}$, $n = 10$. Note $(-4/3)^{11}$ has odd power, so the sign is negative: $\;(-4/3)^{11} = -(4/3)^{11}$.</p>
+        <p>$\displaystyle S = \frac{1 - (-4/3)^{11}}{1 - (-4/3)} = \frac{1 + (4/3)^{11}}{1 + 4/3} = \frac{1 + (4/3)^{11}}{7/3} = \frac{3}{7}\left(1 + (4/3)^{11}\right)$</p>
+        <p>$\;= \dfrac{3}{7} \cdot \dfrac{3^{11} + 4^{11}}{3^{11}} = \dfrac{3^{11} + 4^{11}}{7 \cdot 3^{10}} = \dfrac{177147 + 4194304}{7 \cdot 59049} = \dfrac{4371451}{413343}$</p>
+        <p>Decimal: $\;S \approx \tfrac{3}{7}(1 + 23.679) \approx \tfrac{3}{7} \cdot 24.679 \approx 10.577$.</p>
+    </div>
+    <div class="final-answer">$S = \dfrac{3}{7}\!\left(1 + \left(\tfrac{4}{3}\right)^{11}\right) = \dfrac{4371451}{413343} \approx 10.58$</div>
+</div>
+
+<!-- ===== Problem vi ===== -->
+<div class="answer-block">
+    <div class="problem-header">Problem vi — Infinite, $|r| = \tfrac{4}{3} &gt; 1$ (DIVERGES)</div>
+    <div class="problem-text">$\displaystyle \sum_{k=0}^{\infty} \left(-\tfrac{4}{3}\right)^k$</div>
+    <span class="concept-tag">infinite formula</span>
+    <span class="concept-tag">|r|&gt;1 ✗</span>
+    <div class="solution">
+        <p>Even though $r$ is negative, what matters is $|r|$. Here $|r| = 4/3 &gt; 1$, so the magnitudes $|(-4/3)^k| = (4/3)^k$ <strong>grow without bound</strong>. The partial sums oscillate between huge positive and huge negative numbers — no limit exists.</p>
+        <p>The formula $\tfrac{1}{1-(-4/3)} = \tfrac{1}{7/3} = \tfrac{3}{7}$ is <strong>not the sum</strong> — it's the value the formula spits out, but the formula doesn't apply.</p>
+    </div>
+    <div class="diverges">DIVERGES</div>
+</div>
+
+<!-- ===== Summary ===== -->
+<div class="concept-box" style="margin-top: 22px;">
+<div class="title">Pattern to remember</div>
+<table style="border-collapse: collapse; width:100%; margin-top:6px; font-size: 10pt;">
+<tr style="border-bottom: 1.5px solid #888;"><th style="text-align:left; padding: 4px 8px;">Ratio</th><th style="padding: 4px 8px;">Finite (k=0..10)</th><th style="padding: 4px 8px;">Infinite (k=0..∞)</th></tr>
+<tr><td style="padding: 4px 8px;">$r = 2/3$ &nbsp;($|r|&lt;1$)</td><td style="text-align:center; padding: 4px 8px;">≈ 2.97</td><td style="text-align:center; padding: 4px 8px;"><strong>3</strong> (converges)</td></tr>
+<tr><td style="padding: 4px 8px;">$r = 4/3$ &nbsp;($|r|&gt;1$)</td><td style="text-align:center; padding: 4px 8px;">≈ 68.0</td><td style="text-align:center; padding: 4px 8px; color: var(--color-warning);"><strong>DIVERGES</strong></td></tr>
+<tr><td style="padding: 4px 8px;">$r = -4/3$ &nbsp;($|r|&gt;1$)</td><td style="text-align:center; padding: 4px 8px;">≈ 10.6</td><td style="text-align:center; padding: 4px 8px; color: var(--color-warning);"><strong>DIVERGES</strong></td></tr>
+</table>
+<p style="margin-top: 8px;"><strong>Take-away:</strong> the finite formula $\tfrac{1-r^{n+1}}{1-r}$ never lies. The infinite formula $\tfrac{1}{1-r}$ is a <strong>limit shortcut</strong> that only exists when $r^n \to 0$, i.e. when $|r|&lt;1$. Plugging $|r|\ge 1$ into it returns numbers, but those numbers don't represent any actual sum.</p>
+</div>
+
+<div class="footer">
+    Created by Newton School &nbsp;|&nbsp; 2026-05-03 &nbsp;|&nbsp; Pre-Calculus Workout Answer Key — Justin Koo &copy; Copyright
+</div>
+
+</div>
+</body>
+</html>

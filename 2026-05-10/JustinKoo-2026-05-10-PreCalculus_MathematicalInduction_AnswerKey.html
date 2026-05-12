@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pre-Calculus Homework Answer Key: Mathematical Induction</title>
+<script>
+window.MathJax = {
+    tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']]
+    },
+    startup: { ready: () => { MathJax.startup.defaultReady(); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+/* ===== base-print.css ===== */
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Century Schoolbook', 'Times New Roman', serif; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+    html, body { background: #fff; }
+    .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+    .answer-block { page-break-inside: avoid; break-inside: avoid; }
+    .part-header, h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+    .page-break { page-break-before: always; break-before: page; }
+}
+
+/* ===== theme-boy.css ===== */
+:root {
+    --color-primary:        #1565c0;
+    --color-primary-dark:   #0d47a1;
+    --color-accent:         #00838f;
+    --color-header-border:  #1565c0;
+    --color-final-answer:   #2e7d32;
+    --color-warning:        #c62828;
+    --color-tag-bg:         transparent;
+    --color-tag-border:     #1565c0;
+    --color-tag-text:       #1565c0;
+    --color-muted:          #555;
+    --color-rule:           #ccc;
+}
+
+/* ===== level-high.css ===== */
+body { font-family: 'Source Serif Pro', 'Georgia', 'Times New Roman', serif; font-size: 10.5pt; line-height: 1.55; }
+h1, h2, h3, .part-header { font-family: 'Libre Baskerville', 'Georgia', serif; }
+.header { text-align: center; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid var(--color-header-border); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 7px 3px; font-weight: bold; border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+.key-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 7px 3px; font-weight: bold; border: 1.5px solid var(--color-warning); color: var(--color-warning); }
+h1 { font-size: 15pt; margin: 6px 0 8px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.part-header { font-size: 13pt; font-weight: bold; color: var(--color-primary); margin: 22px 0 6px 0; padding-bottom: 3px; border-bottom: 1.5px solid var(--color-primary); }
+.answer-block { margin: 16px 0; padding: 12px 16px; border: 1px solid #ddd; border-radius: 4px; page-break-inside: avoid; break-inside: avoid; }
+.problem-header { font-weight: bold; color: var(--color-primary); font-size: 11pt; margin-bottom: 6px; }
+.problem-text { font-size: 10pt; padding: 6px 10px; background: #f7f7f7; border-left: 3px solid #bbb; margin-bottom: 8px; line-height: 1.5; }
+.concept-tag { display: inline-block; font-size: 8pt; padding: 2px 8px; margin: 2px 3px 6px 0; border: 1px solid var(--color-tag-border); color: var(--color-tag-text); border-radius: 10px; }
+.solution { margin: 8px 0; padding-left: 10px; border-left: 3px solid var(--color-final-answer); }
+.solution-step { margin: 5px 0; font-size: 10pt; line-height: 1.65; }
+.solution-step.indent { margin-left: 16px; }
+.final-answer { display: inline-block; border: 2px solid var(--color-final-answer); color: var(--color-final-answer); font-weight: bold; padding: 4px 14px; border-radius: 4px; margin-top: 8px; font-size: 11pt; }
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid var(--color-rule); margin-top: 20px; padding-top: 6px; }
+.note { font-size: 9pt; color: var(--color-muted); font-style: italic; margin-top: 6px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ===== HEADER ===== -->
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">PRE-CALCULUS</div>
+    <div class="key-tag">ANSWER KEY</div>
+    <h1>Mathematical Induction: Sum Formulas &amp; Proof by Induction</h1>
+    <div class="info">
+      <span><strong>Student:</strong> Justin Koo</span>
+      <span><strong>Date:</strong> 2026-05-10</span>
+    </div>
+  </div>
+
+  <!-- ===== PROBLEM 1 ===== -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 1 &mdash; Sum of First <em>n</em> Positive Integers</div>
+    <div class="problem-text">
+      Prove: $\displaystyle 1 + 2 + \cdots + n = \dfrac{n(n+1)}{2}$ for all $n \ge 1$.
+    </div>
+    <span class="concept-tag">Base Case</span>
+    <span class="concept-tag">Inductive Step</span>
+    <span class="concept-tag">Sum Formula</span>
+    <div class="solution">
+      <div class="solution-step"><strong>Base Case</strong> ($n = 1$): LHS $= 1$. &nbsp; RHS $= \dfrac{1 \cdot 2}{2} = 1$. &nbsp; $\checkmark$</div>
+      <div class="solution-step"><strong>Inductive Hypothesis:</strong> Assume $1 + 2 + \cdots + k = \dfrac{k(k+1)}{2}$ for some $k \ge 1$.</div>
+      <div class="solution-step"><strong>Inductive Step</strong> (show true for $n = k+1$):</div>
+      <div class="solution-step indent">
+        $1 + 2 + \cdots + k + (k+1)$<br>
+        $= \dfrac{k(k+1)}{2} + (k+1)$ &nbsp;&nbsp; (by inductive hypothesis)<br>
+        $= (k+1)\!\left(\dfrac{k}{2} + 1\right)$<br>
+        $= (k+1) \cdot \dfrac{k+2}{2}$<br>
+        $= \dfrac{(k+1)(k+2)}{2}$ &nbsp;&nbsp; $\checkmark$ &nbsp; (this is $\tfrac{(k+1)((k+1)+1)}{2}$)
+      </div>
+      <div class="solution-step"><strong>Conclusion:</strong> By the Principle of Mathematical Induction, the formula holds for all $n \ge 1$.</div>
+    </div>
+    <div class="final-answer">$\displaystyle\sum_{i=1}^{n} i = \dfrac{n(n+1)}{2}$ &nbsp; $\blacksquare$</div>
+  </div>
+
+  <!-- ===== PROBLEM 2 ===== -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 2 &mdash; Sum of Squares</div>
+    <div class="problem-text">
+      Prove: $\displaystyle 1^2 + 2^2 + \cdots + n^2 = \dfrac{n(n+1)(2n+1)}{6}$ for all $n \ge 1$.
+    </div>
+    <span class="concept-tag">Base Case</span>
+    <span class="concept-tag">Inductive Step</span>
+    <span class="concept-tag">Factoring</span>
+    <div class="solution">
+      <div class="solution-step"><strong>Base Case</strong> ($n=1$): LHS $= 1$. &nbsp; RHS $= \dfrac{1 \cdot 2 \cdot 3}{6} = 1$. &nbsp; $\checkmark$</div>
+      <div class="solution-step"><strong>Inductive Hypothesis:</strong> Assume $1^2 + \cdots + k^2 = \dfrac{k(k+1)(2k+1)}{6}$.</div>
+      <div class="solution-step"><strong>Inductive Step:</strong></div>
+      <div class="solution-step indent">
+        $1^2 + \cdots + k^2 + (k+1)^2$<br>
+        $= \dfrac{k(k+1)(2k+1)}{6} + (k+1)^2$ &nbsp;&nbsp; (by IH)<br>
+        $= \dfrac{k(k+1)(2k+1) + 6(k+1)^2}{6}$<br>
+        $= \dfrac{(k+1)\bigl[k(2k+1) + 6(k+1)\bigr]}{6}$<br>
+        $= \dfrac{(k+1)(2k^2 + 7k + 6)}{6}$<br>
+        $= \dfrac{(k+1)(k+2)(2k+3)}{6}$ &nbsp;&nbsp; (factor quadratic)<br>
+        $= \dfrac{(k+1)\bigl((k+1)+1\bigr)\bigl(2(k+1)+1\bigr)}{6}$ &nbsp;&nbsp; $\checkmark$
+      </div>
+      <div class="solution-step"><strong>Conclusion:</strong> Formula holds for all $n \ge 1$ by induction.</div>
+    </div>
+    <div class="final-answer">$\displaystyle\sum_{i=1}^{n} i^2 = \dfrac{n(n+1)(2n+1)}{6}$ &nbsp; $\blacksquare$</div>
+  </div>
+
+  <!-- ===== PAGE BREAK before P3 ===== -->
+  <div class="page-break"></div>
+
+  <!-- ===== PROBLEM 3 ===== -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 3 &mdash; Geometric Series Sum</div>
+    <div class="problem-text">
+      Prove: $\displaystyle 1 + r + r^2 + \cdots + r^{n-1} = \dfrac{r^n - 1}{r-1}$ for all $n \ge 1$, $r \ne 1$.
+    </div>
+    <span class="concept-tag">Geometric Series</span>
+    <span class="concept-tag">Base Case</span>
+    <span class="concept-tag">Inductive Step</span>
+    <div class="solution">
+      <div class="solution-step"><strong>Base Case</strong> ($n=1$): LHS $= r^0 = 1$. &nbsp; RHS $= \dfrac{r^1 - 1}{r-1} = 1$. &nbsp; $\checkmark$</div>
+      <div class="solution-step"><strong>Inductive Hypothesis:</strong> Assume $1 + r + \cdots + r^{k-1} = \dfrac{r^k-1}{r-1}$.</div>
+      <div class="solution-step"><strong>Inductive Step:</strong></div>
+      <div class="solution-step indent">
+        $1 + r + \cdots + r^{k-1} + r^k$<br>
+        $= \dfrac{r^k - 1}{r-1} + r^k$ &nbsp;&nbsp; (by IH)<br>
+        $= \dfrac{r^k - 1 + r^k(r-1)}{r-1}$<br>
+        $= \dfrac{r^k - 1 + r^{k+1} - r^k}{r-1}$<br>
+        $= \dfrac{r^{k+1} - 1}{r-1}$ &nbsp;&nbsp; $\checkmark$
+      </div>
+      <div class="solution-step"><strong>Conclusion:</strong> The geometric series formula holds for all $n \ge 1$.</div>
+    </div>
+    <div class="final-answer">$\displaystyle\sum_{i=0}^{n-1} r^i = \dfrac{r^n - 1}{r-1}$ &nbsp; $\blacksquare$</div>
+  </div>
+
+  <!-- ===== PROBLEM 4 ===== -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 4 &mdash; Divisibility by 6</div>
+    <div class="problem-text">
+      Prove: $6 \mid (n^3 - n)$ for all integers $n \ge 1$.
+    </div>
+    <span class="concept-tag">Divisibility</span>
+    <span class="concept-tag">Factoring</span>
+    <span class="concept-tag">Inductive Step</span>
+    <div class="solution">
+      <div class="solution-step"><strong>Base Case</strong> ($n=1$): $1^3 - 1 = 0 = 6 \cdot 0$. Divisible by 6. &nbsp; $\checkmark$</div>
+      <div class="solution-step"><strong>Inductive Hypothesis:</strong> Assume $6 \mid (k^3 - k)$, i.e., $k^3 - k = 6m$ for some integer $m$.</div>
+      <div class="solution-step"><strong>Inductive Step:</strong></div>
+      <div class="solution-step indent">
+        $(k+1)^3 - (k+1)$<br>
+        $= k^3 + 3k^2 + 3k + 1 - k - 1$<br>
+        $= (k^3 - k) + 3k^2 + 3k$<br>
+        $= (k^3 - k) + 3k(k+1)$
+      </div>
+      <div class="solution-step indent">
+        Now, $k^3 - k = 6m$ by IH. Also, $k(k+1)$ is a product of two consecutive integers, so it is always even: $k(k+1) = 2t$ for some integer $t$.
+      </div>
+      <div class="solution-step indent">
+        Therefore: $(k+1)^3 - (k+1) = 6m + 3 \cdot 2t = 6m + 6t = 6(m+t)$, which is divisible by 6. &nbsp; $\checkmark$
+      </div>
+      <div class="solution-step"><strong>Conclusion:</strong> $6 \mid (n^3 - n)$ for all $n \ge 1$.</div>
+      <div class="note">Alternate check: $n^3 - n = n(n-1)(n+1)$ = product of three consecutive integers, always divisible by $3! = 6$.</div>
+    </div>
+    <div class="final-answer">$6 \mid (n^3 - n)$ for all $n \ge 1$ &nbsp; $\blacksquare$</div>
+  </div>
+
+  <!-- ===== PAGE BREAK before P5 ===== -->
+  <div class="page-break"></div>
+
+  <!-- ===== PROBLEM 5 ===== -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 5 &mdash; Inequality: $2^n \ge n^2$ for $n \ge 4$</div>
+    <div class="problem-text">
+      Prove: $2^n \ge n^2$ for all integers $n \ge 4$.
+    </div>
+    <span class="concept-tag">Inequality</span>
+    <span class="concept-tag">Non-standard Base Case</span>
+    <span class="concept-tag">Exponential vs Polynomial</span>
+    <div class="solution">
+      <div class="solution-step"><strong>Why not $n=1,2,3$:</strong> $2^1=2 &lt; 1^2$ — wait, actually $2 &gt; 1$. Let's recheck: $n=2$: $2^2=4 = 2^2=4$ ✓. $n=3$: $2^3=8 &lt; 9=3^2$ ✗. So $n=3$ fails; base case must start at $n=4$.</div>
+      <div class="solution-step"><strong>Base Case</strong> ($n=4$): $2^4 = 16 = 4^2 = 16$. &nbsp; $16 \ge 16$. &nbsp; $\checkmark$</div>
+      <div class="solution-step"><strong>Inductive Hypothesis:</strong> Assume $2^k \ge k^2$ for some $k \ge 4$.</div>
+      <div class="solution-step"><strong>Inductive Step</strong> (show $2^{k+1} \ge (k+1)^2$):</div>
+      <div class="solution-step indent">
+        $2^{k+1} = 2 \cdot 2^k \ge 2k^2$ &nbsp;&nbsp; (by IH, multiplying both sides by 2)
+      </div>
+      <div class="solution-step indent">
+        Need to show: $2k^2 \ge (k+1)^2 = k^2 + 2k + 1$<br>
+        i.e., $k^2 - 2k - 1 \ge 0$<br>
+        i.e., $(k-1)^2 \ge 2$<br>
+        For $k \ge 4$: $(k-1) \ge 3$, so $(k-1)^2 \ge 9 \ge 2$. &nbsp; $\checkmark$
+      </div>
+      <div class="solution-step indent">
+        Chaining: $2^{k+1} \ge 2k^2 \ge (k+1)^2$. &nbsp; $\checkmark$
+      </div>
+      <div class="solution-step"><strong>Conclusion:</strong> $2^n \ge n^2$ for all integers $n \ge 4$.</div>
+    </div>
+    <div class="final-answer">$2^n \ge n^2$ for all $n \ge 4$ &nbsp; $\blacksquare$</div>
+  </div>
+
+  <div class="footer">Newton School &mdash; 2026-05-10 &copy; Copyright &nbsp;|&nbsp; Answer Key &mdash; For Teacher Use</div>
+
+</div>
+</body>
+</html>

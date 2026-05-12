@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pre-Calculus Lecture: Mathematical Induction</title>
+<script>
+window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+    startup: { ready: () => { MathJax.startup.defaultReady(); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+/* ============ base-print.css ============ */
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Century Schoolbook', 'Times New Roman', serif; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+    html, body { background: #fff; }
+    .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+    .concept-box, .example, .practice-block, .reminder { page-break-inside: avoid; break-inside: avoid; }
+    .part-header, h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+    .page-break { page-break-before: always; break-before: page; }
+    * { background: transparent !important; }
+}
+
+/* ============ theme-boy.css ============ */
+:root {
+    --color-primary: #1565c0;
+    --color-primary-dark: #0d47a1;
+    --color-accent: #00838f;
+    --color-header-border: #1565c0;
+    --color-final-answer: #2e7d32;
+    --color-warning: #c62828;
+    --color-parent-note: #283593;
+    --color-tag-border: #1565c0;
+    --color-tag-text: #1565c0;
+    --color-muted: #555;
+    --color-rule: #ccc;
+}
+
+/* ============ level-high.css ============ */
+body { font-family: 'Source Serif Pro', 'Georgia', 'Times New Roman', serif; font-size: 10.5pt; line-height: 1.55; }
+h1, h2, h3, .part-header { font-family: 'Libre Baskerville', 'Georgia', serif; }
+.header { text-align: center; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid var(--color-header-border); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 7px 3px; font-weight: bold; border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+h1 { font-size: 15pt; margin: 6px 0 8px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 4px; color: var(--color-muted); }
+.part-header { font-size: 13pt; font-weight: bold; color: var(--color-primary); margin: 22px 0 6px 0; padding-bottom: 3px; border-bottom: 1.5px solid var(--color-primary); }
+.directions { font-size: 10pt; font-style: italic; color: #333; margin-bottom: 12px; line-height: 1.5; }
+.directions strong { color: #000; font-style: normal; }
+
+/* Concept box */
+.concept-box { border: 1.5px solid var(--color-accent); background: transparent; padding: 12px 16px; margin: 14px 0; font-size: 10.5pt; border-left-width: 4px; }
+.concept-box .title { font-weight: bold; color: var(--color-accent); margin-bottom: 6px; font-size: 11pt; }
+.concept-box ul { margin: 6px 0 6px 20px; padding: 0; }
+.concept-box li { margin: 4px 0; }
+.concept-box p { margin: 5px 0; }
+
+/* Example */
+.example { border: 2px solid var(--color-final-answer); padding: 12px 16px; margin: 14px 0; }
+.example-title { font-weight: bold; color: var(--color-final-answer); margin-bottom: 6px; font-size: 11pt; }
+.example-problem { font-size: 10.5pt; margin-bottom: 8px; }
+.example-solution { border-left: 3px solid var(--color-final-answer); padding-left: 12px; margin-top: 8px; font-size: 10pt; }
+.example-solution p { margin: 6px 0; line-height: 1.6; }
+.example-solution .final { font-weight: bold; color: var(--color-final-answer); margin-top: 8px; }
+
+/* Practice */
+.practice-block { margin: 18px 0; }
+.practice-problem { padding: 8px 12px; border-left: 3px solid var(--color-primary); margin-bottom: 4px; font-size: 10.5pt; }
+.practice-problem .q-num { display: inline-block; min-width: 26px; font-weight: bold; color: var(--color-primary); }
+.practice-answer { margin: 4px 0 0 16px; padding: 8px 14px; border-left: 3px solid var(--color-final-answer); font-size: 10pt; line-height: 1.6; }
+.practice-answer .ans-label { font-weight: bold; color: var(--color-final-answer); margin-right: 6px; letter-spacing: 1px; }
+.practice-answer p { margin: 4px 0; }
+.practice-answer .final { font-weight: bold; color: var(--color-final-answer); }
+
+/* Proof scaffold */
+.proof-scaffold { margin: 14px 0; }
+.proof-step { display: flex; gap: 10px; margin: 8px 0; align-items: baseline; }
+.proof-label { font-weight: bold; color: var(--color-primary); min-width: 150px; font-size: 10pt; }
+.proof-body { font-size: 10.5pt; line-height: 1.6; flex: 1; }
+
+/* Reminder / warning */
+.reminder { border: 1.5px solid var(--color-warning); padding: 8px 14px; margin: 14px 0; font-size: 10pt; }
+.reminder .rem-title { font-weight: bold; color: var(--color-warning); margin-bottom: 4px; }
+
+/* Footer */
+.footer { font-size: 7.5pt; color: var(--color-muted); text-align: center; margin-top: 30px; padding-top: 6px; border-top: 1px solid var(--color-rule); }
+
+/* Summary table */
+.summary-table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 10pt; }
+.summary-table th { background: transparent; color: var(--color-primary); border: 1.5px solid var(--color-primary); padding: 6px 10px; text-align: left; font-weight: bold; }
+.summary-table td { border: 1px solid #ccc; padding: 6px 10px; vertical-align: top; }
+.summary-table tr:nth-child(even) td { background: transparent; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ==============================================================
+       PAGE 1 — What Is Mathematical Induction? (Concept + Intuition)
+       ============================================================== -->
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">PRE-CALCULUS &nbsp;|&nbsp; LECTURE NOTES</div>
+    <h1>Mathematical Induction</h1>
+    <div class="info">
+      <span><strong>Student:</strong> Justin Koo</span>
+      <span><strong>Date:</strong> 2026-05-10</span>
+    </div>
+    <div class="standard">
+      <strong>Standard:</strong> CCSS.MATH.CONTENT.HSA-APR &mdash;
+      Prove statements about integers using the Principle of Mathematical Induction;
+      write rigorous base case + inductive step arguments for sums, divisibility, and inequalities.
+    </div>
+  </div>
+
+  <div class="part-header">1. Big Picture — Why Induction?</div>
+  <p>
+    Suppose you want to prove that a formula (or property) is true for <em>every positive integer</em>
+    $n = 1, 2, 3, \ldots$ You cannot check infinitely many cases one by one.
+    Mathematical Induction lets you do it in exactly <strong>two steps</strong>.
+  </p>
+
+  <div class="concept-box">
+    <div class="title">Principle of Mathematical Induction (PMI)</div>
+    <p>Let $P(n)$ be a statement about positive integers. If:</p>
+    <ul>
+      <li><strong>Base Case:</strong> $P(1)$ is true, <em>and</em></li>
+      <li><strong>Inductive Step:</strong> whenever $P(k)$ is true for some $k \ge 1$, then $P(k+1)$ is also true,</li>
+    </ul>
+    <p>then $P(n)$ is true for <strong>all</strong> integers $n \ge 1$.</p>
+  </div>
+
+  <div class="part-header">2. The Domino Analogy</div>
+  <p>
+    Think of each integer $n$ as a domino standing upright. The two steps guarantee:
+  </p>
+  <ul>
+    <li><strong>Base Case</strong> = the first domino falls.</li>
+    <li><strong>Inductive Step</strong> = if any domino $k$ falls, it knocks over domino $k+1$.</li>
+  </ul>
+  <p>
+    Together, all dominoes fall — i.e., $P(n)$ is true for every $n \ge 1$.
+  </p>
+
+  <div class="part-header">3. Proof Template (Use This Every Time)</div>
+
+  <div class="proof-scaffold">
+    <div class="proof-step">
+      <span class="proof-label">Claim:</span>
+      <span class="proof-body">$P(n)$: [write the exact statement here] for all $n \ge 1$.</span>
+    </div>
+    <div class="proof-step">
+      <span class="proof-label">Step 1 — Base Case:</span>
+      <span class="proof-body">Show $P(1)$ is true. Substitute $n = 1$ and verify LHS $=$ RHS (or the property holds).</span>
+    </div>
+    <div class="proof-step">
+      <span class="proof-label">Step 2 — Inductive Hypothesis:</span>
+      <span class="proof-body">Assume $P(k)$ is true for some arbitrary but fixed $k \ge 1$.</span>
+    </div>
+    <div class="proof-step">
+      <span class="proof-label">Step 3 — Inductive Step:</span>
+      <span class="proof-body">Using the inductive hypothesis, prove $P(k+1)$ is true. (This is the algebra-heavy part.)</span>
+    </div>
+    <div class="proof-step">
+      <span class="proof-label">Conclusion:</span>
+      <span class="proof-body">By the Principle of Mathematical Induction, $P(n)$ is true for all integers $n \ge 1$. $\blacksquare$</span>
+    </div>
+  </div>
+
+  <div class="reminder">
+    <div class="rem-title">Key Mindset</div>
+    In the inductive step you do <em>not</em> assume what you are trying to prove.
+    You assume $P(k)$ and <em>derive</em> $P(k+1)$ as a logical consequence.
+    The inductive hypothesis is your "free gift" — use it!
+  </div>
+
+  <div class="footer">Newton School &mdash; 2026-05-10 &copy; Copyright &nbsp;|&nbsp; Page 1 of 5</div>
+
+  <!-- ==============================================================
+       PAGE 2 — Sum Formulas (Sum of integers / Sum of squares)
+       ============================================================== -->
+  <div class="page-break"></div>
+
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">PRE-CALCULUS &nbsp;|&nbsp; LECTURE NOTES</div>
+    <h1>Mathematical Induction</h1>
+    <div class="info">
+      <span><strong>Student:</strong> Justin Koo</span>
+      <span><strong>Date:</strong> 2026-05-10</span>
+    </div>
+  </div>
+
+  <div class="part-header">4. Type A — Sum Formulas</div>
+  <div class="directions">
+    The most common induction problems prove a closed-form formula for a sum.
+    The key move in the inductive step: write out the $(k+1)$-th sum as the $k$-th sum <em>plus</em>
+    the new last term, then use the inductive hypothesis to replace the $k$-th sum.
+  </div>
+
+  <div class="example">
+    <div class="example-title">Worked Example A1 — Sum of First <em>n</em> Integers</div>
+    <div class="example-problem">
+      Prove: $\displaystyle\sum_{i=1}^{n} i = 1 + 2 + 3 + \cdots + n = \dfrac{n(n+1)}{2}$ for all $n \ge 1$.
+    </div>
+    <div class="example-solution">
+      <p><strong>Base Case</strong> ($n = 1$): LHS $= 1$. &nbsp; RHS $= \dfrac{1 \cdot 2}{2} = 1$. &nbsp; $\checkmark$</p>
+      <p><strong>Inductive Hypothesis (IH):</strong> Assume $1 + 2 + \cdots + k = \dfrac{k(k+1)}{2}$.</p>
+      <p><strong>Inductive Step</strong> (show for $n = k+1$):</p>
+      <p style="margin-left:16px;">
+        $\underbrace{1 + 2 + \cdots + k}_{\text{use IH}} + (k+1)$<br>
+        $= \dfrac{k(k+1)}{2} + (k+1)$ &nbsp;&nbsp; (by IH)<br>
+        $= (k+1)\!\left(\dfrac{k}{2} + 1\right)$<br>
+        $= (k+1)\cdot\dfrac{k+2}{2} = \dfrac{(k+1)(k+2)}{2}$ &nbsp;&nbsp; $\checkmark$
+      </p>
+      <p class="final">Conclusion: The formula holds for all $n \ge 1$. $\blacksquare$</p>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="example-title">Worked Example A2 — Sum of Squares</div>
+    <div class="example-problem">
+      Prove: $\displaystyle 1^2 + 2^2 + \cdots + n^2 = \dfrac{n(n+1)(2n+1)}{6}$ for all $n \ge 1$.
+    </div>
+    <div class="example-solution">
+      <p><strong>Base Case</strong> ($n = 1$): LHS $= 1$. &nbsp; RHS $= \dfrac{1 \cdot 2 \cdot 3}{6} = 1$. &nbsp; $\checkmark$</p>
+      <p><strong>Inductive Hypothesis:</strong> Assume $1^2 + 2^2 + \cdots + k^2 = \dfrac{k(k+1)(2k+1)}{6}$.</p>
+      <p><strong>Inductive Step:</strong></p>
+      <p style="margin-left:16px;">
+        $1^2 + \cdots + k^2 + (k+1)^2 = \dfrac{k(k+1)(2k+1)}{6} + (k+1)^2$<br>
+        $= \dfrac{k(k+1)(2k+1) + 6(k+1)^2}{6}$<br>
+        $= \dfrac{(k+1)\bigl[k(2k+1) + 6(k+1)\bigr]}{6}$<br>
+        $= \dfrac{(k+1)(2k^2 + 7k + 6)}{6}$<br>
+        $= \dfrac{(k+1)(k+2)(2k+3)}{6} = \dfrac{(k+1)\bigl((k+1)+1\bigr)\bigl(2(k+1)+1\bigr)}{6}$ &nbsp;&nbsp; $\checkmark$
+      </p>
+      <p class="final">Conclusion: The formula holds for all $n \ge 1$. $\blacksquare$</p>
+    </div>
+  </div>
+
+  <div class="footer">Newton School &mdash; 2026-05-10 &copy; Copyright &nbsp;|&nbsp; Page 2 of 5</div>
+
+  <!-- ==============================================================
+       PAGE 3 — Geometric Series + Connection to Last Week
+       ============================================================== -->
+  <div class="page-break"></div>
+
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">PRE-CALCULUS &nbsp;|&nbsp; LECTURE NOTES</div>
+    <h1>Mathematical Induction</h1>
+    <div class="info">
+      <span><strong>Student:</strong> Justin Koo</span>
+      <span><strong>Date:</strong> 2026-05-10</span>
+    </div>
+  </div>
+
+  <div class="part-header">5. Type B — Geometric Series Formula (Connection to Last Week)</div>
+  <div class="directions">
+    Last week we derived the geometric series formula by "multiplying the trick."
+    Today we <em>prove</em> that same formula rigorously using induction.
+    The algebra in the inductive step requires factoring out $(r - 1)$.
+  </div>
+
+  <div class="example">
+    <div class="example-title">Worked Example B — Geometric Series</div>
+    <div class="example-problem">
+      Prove: $\displaystyle 1 + r + r^2 + \cdots + r^{n-1} = \dfrac{r^n - 1}{r - 1}$ for all $n \ge 1$, $r \ne 1$.
+    </div>
+    <div class="example-solution">
+      <p><strong>Base Case</strong> ($n = 1$): LHS $= r^0 = 1$. &nbsp; RHS $= \dfrac{r - 1}{r - 1} = 1$. &nbsp; $\checkmark$</p>
+      <p><strong>Inductive Hypothesis:</strong> Assume $1 + r + \cdots + r^{k-1} = \dfrac{r^k - 1}{r - 1}$.</p>
+      <p><strong>Inductive Step</strong> (prove for $n = k+1$):</p>
+      <p style="margin-left:16px;">
+        $1 + r + \cdots + r^{k-1} + r^k$<br>
+        $= \dfrac{r^k - 1}{r - 1} + r^k$ &nbsp;&nbsp; (by IH)<br>
+        $= \dfrac{r^k - 1 + r^k(r-1)}{r - 1}$<br>
+        $= \dfrac{r^k - 1 + r^{k+1} - r^k}{r - 1}$<br>
+        $= \dfrac{r^{k+1} - 1}{r - 1}$ &nbsp;&nbsp; $\checkmark$
+      </p>
+      <p class="final">Conclusion: The formula holds for all $n \ge 1$. $\blacksquare$</p>
+    </div>
+  </div>
+
+  <div class="concept-box">
+    <div class="title">Why Does This Matter?</div>
+    <p>
+      The geometric series formula $\displaystyle\sum_{i=0}^{n-1} r^i = \dfrac{r^n - 1}{r-1}$ is the same one
+      we used last week for partial sums of geometric sequences.
+      Now we know it is not just a pattern — it is a <em>theorem</em> with a rigorous proof.
+    </p>
+    <p>
+      For $|r| &lt; 1$, as $n \to \infty$, $r^n \to 0$, giving the infinite sum:
+      $\displaystyle\sum_{i=0}^{\infty} r^i = \dfrac{1}{1-r}$.
+      Induction proves the finite case; the limit gives the infinite case.
+    </p>
+  </div>
+
+  <div class="footer">Newton School &mdash; 2026-05-10 &copy; Copyright &nbsp;|&nbsp; Page 3 of 5</div>
+
+  <!-- ==============================================================
+       PAGE 4 — Divisibility Proofs
+       ============================================================== -->
+  <div class="page-break"></div>
+
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">PRE-CALCULUS &nbsp;|&nbsp; LECTURE NOTES</div>
+    <h1>Mathematical Induction</h1>
+    <div class="info">
+      <span><strong>Student:</strong> Justin Koo</span>
+      <span><strong>Date:</strong> 2026-05-10</span>
+    </div>
+  </div>
+
+  <div class="part-header">6. Type C — Divisibility Proofs</div>
+  <div class="directions">
+    Divisibility proofs have a slightly different structure. Instead of showing two sums are equal,
+    you show that an expression is always a multiple of some fixed integer $d$.
+    The key move: write $f(k+1)$ in terms of $f(k)$ by expanding and regrouping.
+  </div>
+
+  <div class="concept-box">
+    <div class="title">Divisibility Notation</div>
+    <p>
+      "$d \mid f(n)$" means "$d$ divides $f(n)$" — i.e., $f(n) = d \cdot m$ for some integer $m$.
+    </p>
+    <p>
+      <strong>IH form for divisibility:</strong> Assume $f(k) = d \cdot m$ for some integer $m$.
+      Then show $f(k+1) = d \cdot (\text{integer})$.
+    </p>
+  </div>
+
+  <div class="example">
+    <div class="example-title">Worked Example C — Divisibility by 3</div>
+    <div class="example-problem">
+      Prove: $3 \mid (n^3 - n)$ for all $n \ge 1$.
+    </div>
+    <div class="example-solution">
+      <p><strong>Base Case</strong> ($n = 1$): $1^3 - 1 = 0 = 3 \cdot 0$. &nbsp; Divisible by 3. &nbsp; $\checkmark$</p>
+      <p><strong>Inductive Hypothesis:</strong> Assume $k^3 - k = 3m$ for some integer $m$.</p>
+      <p><strong>Inductive Step</strong> (show $3 \mid (k+1)^3 - (k+1)$):</p>
+      <p style="margin-left:16px;">
+        $(k+1)^3 - (k+1)$<br>
+        $= k^3 + 3k^2 + 3k + 1 - k - 1$ &nbsp;&nbsp; (expand)<br>
+        $= \underbrace{(k^3 - k)}_{\text{use IH}} + 3k^2 + 3k$<br>
+        $= 3m + 3(k^2 + k)$ &nbsp;&nbsp; (by IH)<br>
+        $= 3\bigl(m + k^2 + k\bigr)$, divisible by 3. &nbsp; $\checkmark$
+      </p>
+      <p class="final">Conclusion: $3 \mid (n^3 - n)$ for all $n \ge 1$. $\blacksquare$</p>
+    </div>
+  </div>
+
+  <div class="reminder">
+    <div class="rem-title">Divisibility Proof Strategy</div>
+    <ol style="margin: 6px 0 0 18px; padding: 0; font-size: 10pt; line-height: 1.7;">
+      <li>Expand $f(k+1)$ fully.</li>
+      <li>Identify and isolate $f(k)$ inside the expansion.</li>
+      <li>Replace $f(k)$ using the inductive hypothesis.</li>
+      <li>Factor out $d$ from the entire expression.</li>
+    </ol>
+  </div>
+
+  <div class="footer">Newton School &mdash; 2026-05-10 &copy; Copyright &nbsp;|&nbsp; Page 4 of 5</div>
+
+  <!-- ==============================================================
+       PAGE 5 — Inequality Proofs + Summary Table
+       ============================================================== -->
+  <div class="page-break"></div>
+
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">PRE-CALCULUS &nbsp;|&nbsp; LECTURE NOTES</div>
+    <h1>Mathematical Induction</h1>
+    <div class="info">
+      <span><strong>Student:</strong> Justin Koo</span>
+      <span><strong>Date:</strong> 2026-05-10</span>
+    </div>
+  </div>
+
+  <div class="part-header">7. Type D — Inequality Proofs</div>
+  <div class="directions">
+    Inequality induction uses the same two-step framework, but the inductive step involves
+    a <em>chain of inequalities</em> rather than equalities.
+    Justify every inequality sign — each one must follow from either the IH or basic algebra.
+  </div>
+
+  <div class="example">
+    <div class="example-title">Worked Example D1 — Exponential vs. Linear ($2^n > n$)</div>
+    <div class="example-problem">
+      Prove: $2^n > n$ for all $n \ge 1$.
+    </div>
+    <div class="example-solution">
+      <p><strong>Base Case</strong> ($n = 1$): $2^1 = 2 > 1$. &nbsp; $\checkmark$</p>
+      <p><strong>Inductive Hypothesis:</strong> Assume $2^k > k$ for some $k \ge 1$.</p>
+      <p><strong>Inductive Step</strong> (show $2^{k+1} > k+1$):</p>
+      <p style="margin-left:16px;">
+        $2^{k+1} = 2 \cdot 2^k > 2k$ &nbsp;&nbsp; (by IH, multiply both sides by 2)<br>
+        $2k = k + k \ge k + 1$ &nbsp;&nbsp; (since $k \ge 1$)<br>
+        $\therefore \; 2^{k+1} > k + 1$ &nbsp;&nbsp; $\checkmark$
+      </p>
+      <p class="final">Conclusion: $2^n > n$ for all $n \ge 1$. $\blacksquare$</p>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="example-title">Worked Example D2 — Exponential vs. Quadratic ($2^n \ge n^2$, $n \ge 4$)</div>
+    <div class="example-problem">
+      Prove: $2^n \ge n^2$ for all integers $n \ge 4$.
+      <br><small style="color:#555;">(Note: fails for $n = 1,2,3$ — the base case starts at $n = 4$.)</small>
+    </div>
+    <div class="example-solution">
+      <p><strong>Base Case</strong> ($n = 4$): $2^4 = 16$ and $4^2 = 16$. &nbsp; $16 \ge 16$. &nbsp; $\checkmark$</p>
+      <p><strong>Inductive Hypothesis:</strong> Assume $2^k \ge k^2$ for some $k \ge 4$.</p>
+      <p><strong>Inductive Step</strong> (show $2^{k+1} \ge (k+1)^2$):</p>
+      <p style="margin-left:16px;">
+        $2^{k+1} = 2 \cdot 2^k \ge 2k^2$ &nbsp;&nbsp; (by IH)<br>
+        It suffices to show $2k^2 \ge (k+1)^2 = k^2 + 2k + 1$,<br>
+        i.e., $k^2 - 2k - 1 \ge 0$, i.e., $(k-1)^2 \ge 2$.<br>
+        Since $k \ge 4$: $(k-1) \ge 3 > \sqrt{2}$, so $(k-1)^2 \ge 9 > 2$. &nbsp; $\checkmark$<br>
+        Therefore $2^{k+1} \ge 2k^2 \ge (k+1)^2$. &nbsp; $\checkmark$
+      </p>
+      <p class="final">Conclusion: $2^n \ge n^2$ for all $n \ge 4$. $\blacksquare$</p>
+    </div>
+  </div>
+
+  <div class="part-header">8. Summary — Four Types of Induction</div>
+
+  <table class="summary-table">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>What to Prove</th>
+        <th>Key Move in Inductive Step</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>A — Sum Formula</strong></td>
+        <td>$\sum_{i=1}^n f(i) = \text{formula}$</td>
+        <td>Split off last term; use IH to replace the partial sum.</td>
+      </tr>
+      <tr>
+        <td><strong>B — Geometric Series</strong></td>
+        <td>$\sum r^i = \frac{r^n-1}{r-1}$</td>
+        <td>Add $r^k$ to both sides; factor out $(r-1)$ numerator.</td>
+      </tr>
+      <tr>
+        <td><strong>C — Divisibility</strong></td>
+        <td>$d \mid f(n)$</td>
+        <td>Expand $f(k+1)$; isolate $f(k)$; factor out $d$.</td>
+      </tr>
+      <tr>
+        <td><strong>D — Inequality</strong></td>
+        <td>$f(n) \ge g(n)$ (or $>$)</td>
+        <td>Chain inequalities; justify each $\ge$ from IH or $k \ge$ base.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="footer">Newton School &mdash; 2026-05-10 &copy; Copyright &nbsp;|&nbsp; Page 5 of 5</div>
+
+</div>
+</body>
+</html>

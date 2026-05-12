@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Justin Koo — Towers of Hanoi · Full Solution Notes · 2026-04-26</title>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath:[['$$','$$'],['\\[','\\]']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+@page { size: letter; margin: 0.5in; }
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0d2c54; --navyLight:#1e4886; --cyan:#1976d2; --teal:#26a69a;
+  --gold:#f9a825; --warn:#e53935; --paper:#fdfdfd; --ink:#1a2138;
+  --gray:#666; --bg-soft:#f4f7fb;
+}
+html,body{font-family:"Times New Roman", Georgia, serif; color:var(--ink); background:#fff; line-height:1.55}
+body{padding:24px 28px; max-width:8.0in; margin:0 auto}
+
+.header{
+  border:3px solid var(--navy); border-radius:10px;
+  padding:14px 20px; margin-bottom:18px;
+  background:linear-gradient(135deg, #f0f6ff 0%, #e8f0fb 100%);
+}
+.school-name{font-size:11pt; letter-spacing:3px; color:var(--navy); font-weight:bold}
+.subject-tag{display:inline-block; background:var(--cyan); color:#fff; padding:2px 10px; border-radius:8px; font-size:10pt; font-weight:bold; margin-left:8px}
+.header h1{font-size:18pt; color:var(--navy); margin-top:6px; font-weight:bold}
+.header .info{display:flex; flex-wrap:wrap; gap:18px; margin-top:6px; font-size:10.5pt}
+.standard{font-size:9.5pt; color:var(--gray); margin-top:6px; font-style:italic; line-height:1.4}
+
+h2{
+  color:var(--navy); border-bottom:3px solid var(--cyan); padding:8px 0 4px;
+  margin:22px 0 10px; font-size:14pt; font-weight:bold;
+  page-break-after:avoid;
+}
+h3{
+  color:var(--navyLight); margin:14px 0 6px; font-size:12pt;
+  page-break-after:avoid;
+}
+
+p{margin:6px 0}
+
+.problem-statement{
+  background:var(--bg-soft); border-left:5px solid var(--navy);
+  padding:10px 14px; border-radius:6px; margin:8px 0 14px;
+  font-style:italic;
+}
+
+.solution-step{
+  background:#fff; border:1.5px solid #d0d8e8; border-radius:6px;
+  padding:10px 14px; margin:8px 0; line-height:1.7;
+}
+.solution-step .label{
+  display:inline-block; background:var(--navy); color:#fff;
+  padding:2px 10px; border-radius:6px; font-size:9.5pt; font-weight:bold;
+  margin-right:6px; letter-spacing:.5px;
+}
+
+.key-formula{
+  background:#fff8e1; border:2px solid var(--gold); border-radius:8px;
+  padding:10px 14px; margin:10px 0; text-align:center; font-size:1.1em;
+  page-break-inside:avoid;
+}
+.key-formula .label{
+  display:inline-block; background:var(--gold); color:#000;
+  padding:2px 10px; border-radius:6px; font-size:9.5pt; font-weight:bold;
+  margin-bottom:6px;
+}
+
+.final-answer{
+  background:#e8f5e9; border:2.5px solid var(--teal); border-radius:8px;
+  padding:10px 14px; margin:12px 0; text-align:center; font-weight:bold;
+  font-size:1.15em; color:#0d4a3a;
+  page-break-inside:avoid;
+}
+.final-answer::before{content:"✓ "; color:var(--teal); font-weight:bold}
+
+.warn-box{
+  background:#ffebee; border-left:5px solid var(--warn);
+  padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.95em;
+}
+
+.tip{
+  background:#e1f5fe; border-left:5px solid var(--cyan);
+  padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.95em;
+}
+
+.tower-diagram{
+  display:flex; gap:24px; justify-content:center; align-items:flex-end;
+  background:#fafafa; border:1px solid #ddd; border-radius:8px;
+  padding:14px 8px; margin:10px 0;
+}
+.tower{display:flex; flex-direction:column; align-items:center; min-height:120px; justify-content:flex-end}
+.peg{width:6px; background:#5a3e1a; border-radius:3px}
+.peg.tall{height:120px}
+.peg.short{height:80px}
+.tower-label{margin-top:6px; font-weight:bold; color:var(--navy); font-size:.9em}
+.disk{
+  height:14px; border-radius:7px; margin-top:2px;
+  background:linear-gradient(90deg, var(--cyan), var(--teal));
+  border:1.5px solid var(--navy);
+}
+.disk.d1{width:30px}
+.disk.d2{width:50px}
+.disk.d3{width:70px}
+.disk.d4{width:90px}
+.disk.d5{width:110px}
+.base{
+  width:100%; height:6px; background:#5a3e1a; border-radius:3px; margin-top:1px;
+}
+.tower-block{position:relative}
+
+table.move-table{
+  width:100%; border-collapse:collapse; margin:8px 0; font-size:10.5pt;
+}
+table.move-table th{
+  background:var(--navy); color:#fff; padding:6px 10px;
+  text-align:left; font-weight:bold; border:1px solid var(--navy);
+}
+table.move-table td{
+  padding:6px 10px; border:1px solid #ccd; vertical-align:top;
+}
+table.move-table tr:nth-child(even) td{background:#f8fafc}
+
+table.values{
+  margin:8px auto; border-collapse:collapse; font-size:10.5pt;
+}
+table.values th, table.values td{
+  border:1.5px solid var(--navy); padding:5px 14px; text-align:center;
+}
+table.values th{background:var(--navy); color:#fff}
+
+.derivation{
+  font-family:"Cambria Math","Latin Modern Math",serif;
+  background:#f9f9fc; padding:10px 14px; border-radius:6px;
+  margin:8px 0; font-size:1.05em; line-height:2.0;
+  border:1px solid #e0e0e8;
+}
+
+.connection{
+  background:linear-gradient(135deg, #fff8e1 0%, #f9f9fc 100%);
+  border:2px dashed var(--gold); border-radius:8px;
+  padding:14px 18px; margin:14px 0;
+}
+.connection .title{font-weight:bold; color:#a86f00; margin-bottom:6px; font-size:1.05em}
+
+.toc{
+  background:var(--bg-soft); border-radius:8px; padding:10px 16px;
+  margin-bottom:14px; font-size:10pt;
+}
+.toc strong{color:var(--navy)}
+.toc ol{margin-left:22px; line-height:1.8}
+
+.footer{
+  text-align:center; color:var(--gray); font-size:9pt;
+  margin-top:30px; border-top:1px solid #ccc; padding-top:8px;
+}
+
+.page-break{page-break-before:always}
+
+@media print{
+  body{padding:0}
+  .solution-step,.key-formula,.final-answer,.connection,.tower-diagram{page-break-inside:avoid}
+  h2,h3{page-break-after:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <span class="school-name">NEWTON SCHOOL</span><span class="subject-tag">PRE-CALCULUS</span>
+  <h1>Towers of Hanoi — Full Solution Notes</h1>
+  <div class="info">
+    <span><strong>Student:</strong> Justin Koo</span>
+    <span><strong>Date:</strong> 2026-04-26</span>
+    <span><strong>Grade:</strong> 10 (Horace Mann)</span>
+    <span><strong>Topic:</strong> Recursion · Sequences</span>
+  </div>
+  <div class="standard"><strong>Standard:</strong> CCSS.MATH.CONTENT.HSF-IF.A.3 (recursive sequences) · HSF-BF.A.2 (define recursively, translate to closed form). Builds discrete-math intuition for the characteristic-equation method coming up on the test.</div>
+</div>
+
+<div class="toc">
+  <strong>What's in here</strong>
+  <ol>
+    <li>Restating the rules (sanity check)</li>
+    <li><strong>Problem 1</strong> — Minimum moves for 8 rings</li>
+    <li><strong>Problem 2</strong> — Conjecture for $n$ rings + proof</li>
+    <li><strong>Problem 3</strong> — Adjacent-only restriction (recursive formula)</li>
+    <li>Pre-Calc connection: linking to characteristic-equation method</li>
+    <li>Test-prep checklist</li>
+  </ol>
+</div>
+
+<!-- ============ 1. RULES ============ -->
+<h2>1. The Three Rules — Restated</h2>
+
+<div class="problem-statement">
+  Move the entire stack of rings from one tower to another, where:
+  <ol style="margin-left:22px; margin-top:6px">
+    <li><strong>Rule I:</strong> One move = one ring, one tower → another tower.</li>
+    <li><strong>Rule II:</strong> Never place a larger ring on a smaller one.</li>
+    <li><strong>Rule III:</strong> Goal — move the entire stack to a different tower (typically far-left → far-right).</li>
+  </ol>
+</div>
+
+<div class="tip">
+  <strong>Key observation:</strong> Rule II forces a recursive structure. To move the bottom ring, every ring above it has to be parked somewhere first.
+</div>
+
+<!-- ============ 2. PROBLEM 1 ============ -->
+<h2>2. Problem 1 — Minimum Moves for 8 Rings</h2>
+
+<div class="problem-statement">
+  Determine the minimum number of moves required to accomplish this "stack exchange" given <strong>8 rings</strong>.
+</div>
+
+<h3>2.1 Build the pattern from small cases</h3>
+
+<p>Let $T(n)$ = minimum number of moves needed to relocate $n$ rings from one tower to another.</p>
+
+<div class="solution-step">
+  <span class="label">CASE n=1</span> One ring. Just move it: A → C. <strong>$T(1) = 1$.</strong>
+</div>
+
+<div class="solution-step">
+  <span class="label">CASE n=2</span> Small ring on top, big ring on bottom, both on A.
+  <ol style="margin-left:22px; margin-top:4px">
+    <li>Small ring: A → B (out of the way)</li>
+    <li>Big ring: A → C</li>
+    <li>Small ring: B → C (drops on top of the big ring)</li>
+  </ol>
+  <strong>$T(2) = 3$.</strong>
+</div>
+
+<div class="solution-step">
+  <span class="label">CASE n=3</span> Three rings on A. To move the bottom ring (ring 3) from A to C, the top two must be parked on B first.
+  <ol style="margin-left:22px; margin-top:4px">
+    <li>Move top 2 rings from A → B: that's $T(2) = 3$ moves.</li>
+    <li>Move bottom ring (ring 3): A → C. That's 1 move.</li>
+    <li>Move 2 rings from B → C: again $T(2) = 3$ moves.</li>
+  </ol>
+  Total: $3 + 1 + 3 = 7$. <strong>$T(3) = 7$.</strong>
+</div>
+
+<h3>2.2 Notice the pattern</h3>
+
+<table class="values">
+  <tr><th>$n$</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr>
+  <tr><th>$T(n)$</th><td>1</td><td>3</td><td>7</td><td>15</td><td>31</td><td>63</td><td>127</td><td><strong>255</strong></td></tr>
+</table>
+
+<p>Each value is one less than a power of 2. In fact:</p>
+
+<div class="key-formula">
+  <span class="label">PATTERN</span><br>
+  $T(n) = 2^n - 1$
+</div>
+
+<div class="final-answer">
+  $T(8) = 2^8 - 1 = 256 - 1 = \boxed{255 \text{ moves}}$
+</div>
+
+<!-- ============ 3. PROBLEM 2 ============ -->
+<h2 class="page-break">3. Problem 2 — Conjecture for $n$ Rings + Justification</h2>
+
+<div class="problem-statement">
+  Make a conjecture about the minimum number of moves if you start with $n$ rings. <strong>Justify your result.</strong>
+</div>
+
+<h3>3.1 The conjecture</h3>
+
+<div class="key-formula">
+  <span class="label">CONJECTURE</span><br>
+  $T(n) = 2^n - 1$ &nbsp; for all integers $n \ge 1$
+</div>
+
+<h3>3.2 Step 1 — Set up the recurrence</h3>
+
+<p>To move $n$ rings from tower A to tower C, the bottom (largest) ring <em>must</em> be moved at least once, and to do so the other $(n-1)$ rings have to be sitting on B (out of the way of both A and C).</p>
+
+<div class="solution-step">
+  <span class="label">PHASE 1</span> Move top $(n-1)$ rings from A → B. &nbsp; <em>cost:</em> $T(n-1)$
+</div>
+<div class="solution-step">
+  <span class="label">PHASE 2</span> Move the bottom ring from A → C. &nbsp; <em>cost:</em> $1$
+</div>
+<div class="solution-step">
+  <span class="label">PHASE 3</span> Move the $(n-1)$ rings from B → C onto the bottom ring. &nbsp; <em>cost:</em> $T(n-1)$
+</div>
+
+<div class="key-formula">
+  <span class="label">RECURRENCE</span><br>
+  $T(n) = 2\,T(n-1) + 1$, &nbsp; with $T(1) = 1$
+</div>
+
+<div class="tip">
+  <strong>Why this is the minimum:</strong> The bottom ring has to move at least once (Rule III says the stack ends up on a different tower). Each time it moves, the $(n-1)$ rings above it must be on the third peg (Rule II). So the structure $T(n-1) + 1 + T(n-1)$ is unavoidable. You can't do better than $2T(n-1)+1$.
+</div>
+
+<h3>3.3 Step 2 — Solve the recurrence to get the closed form</h3>
+
+<p>This is a non-homogeneous linear recurrence (the "+1" makes it non-homogeneous). We'll use the trick from Phase 3 of your study notes — the <strong>shift trick</strong>.</p>
+
+<div class="solution-step">
+  <span class="label">TRICK</span> Add 1 to both sides:
+  $$T(n) + 1 = 2T(n-1) + 1 + 1 = 2\bigl(T(n-1) + 1\bigr)$$
+</div>
+
+<div class="solution-step">
+  <span class="label">SUBSTITUTE</span> Let $U(n) = T(n) + 1$. Then:
+  $$U(n) = 2\,U(n-1), \qquad U(1) = T(1)+1 = 2$$
+</div>
+
+<div class="solution-step">
+  <span class="label">SOLVE</span> This is a pure geometric recurrence: $U(n) = 2^n$.
+</div>
+
+<div class="solution-step">
+  <span class="label">UN-SUBSTITUTE</span>
+  $$T(n) = U(n) - 1 = 2^n - 1 \quad \blacksquare$$
+</div>
+
+<h3>3.4 Step 3 — Independent proof by induction</h3>
+
+<div class="derivation">
+  <strong>Base case:</strong> $n=1$: $T(1) = 1 = 2^1 - 1$. ✓<br><br>
+  <strong>Inductive step:</strong> Assume $T(k) = 2^k - 1$ for some $k \ge 1$. Then:
+  <br>
+  $\quad T(k+1) = 2T(k) + 1 = 2(2^k - 1) + 1 = 2^{k+1} - 2 + 1 = 2^{k+1} - 1$. ✓
+  <br><br>
+  By induction, $T(n) = 2^n - 1$ for all $n \ge 1$. $\blacksquare$
+</div>
+
+<div class="final-answer">
+  Minimum moves for $n$ rings: $T(n) = 2^n - 1$
+</div>
+
+<!-- ============ 4. PROBLEM 3 ============ -->
+<h2 class="page-break">4. Problem 3 — Adjacent-Only Constraint</h2>
+
+<div class="problem-statement">
+  Suppose we change the rules so that you can only move a ring to an <strong>adjacent</strong> tower, and your objective is still to move the entire stack from the far-left tower to the far-right tower. Find a recursive formula for this more laborious sequence.
+</div>
+
+<h3>4.1 Setup</h3>
+
+<p>Three towers in a line: $\;A — B — C$.</p>
+
+<div class="tower-diagram">
+  <div class="tower"><div class="tower-block"><span class="peg tall"></span></div><div class="base" style="width:80px"></div><div class="tower-label">A (far-left)</div></div>
+  <div class="tower"><div class="tower-block"><span class="peg tall"></span></div><div class="base" style="width:80px"></div><div class="tower-label">B (middle)</div></div>
+  <div class="tower"><div class="tower-block"><span class="peg tall"></span></div><div class="base" style="width:80px"></div><div class="tower-label">C (far-right)</div></div>
+</div>
+
+<p><strong>New rule:</strong> A ↔ B and B ↔ C are allowed, but A ↔ C is <strong>not</strong> a single move (they are not adjacent).</p>
+
+<p>Let $A(n)$ = minimum number of moves to relocate $n$ rings from tower A to tower C under this constraint.</p>
+
+<h3>4.2 Tiny case — $n=1$</h3>
+
+<div class="solution-step">
+  <span class="label">A(1)</span> One ring on A. To get it to C, you must go through B.
+  <ol style="margin-left:22px; margin-top:4px">
+    <li>Move the ring: A → B (1 move)</li>
+    <li>Move the ring: B → C (1 move)</li>
+  </ol>
+  <strong>$A(1) = 2$.</strong>
+</div>
+
+<h3>4.3 Building the recurrence</h3>
+
+<p>Think about how the bottom (largest) ring travels from A to C. Since A and C are not adjacent, the bottom ring must go A → B → C, which takes <strong>two moves</strong>. Between (and around) those two moves, the other $(n-1)$ rings have to clear the way.</p>
+
+<div class="solution-step">
+  <span class="label">PHASE 1</span> Move the top $(n-1)$ rings off A so the bottom ring can move A → B.
+  Where do they go? They <em>can't</em> sit on B (B is the bottom ring's next stop) — so they have to go all the way to C.
+  &nbsp;<em>cost:</em> $A(n-1)$
+</div>
+
+<div class="solution-step">
+  <span class="label">PHASE 2</span> Move the bottom ring: A → B. &nbsp; <em>cost:</em> 1
+</div>
+
+<div class="solution-step">
+  <span class="label">PHASE 3</span> Now the bottom ring sits on B. Before it can move B → C, the $(n-1)$ rings on C must get out of the way (you can't drop the bottom ring onto rings smaller than it).
+  Move them from C → A. &nbsp;<em>cost:</em> $A(n-1)$
+</div>
+
+<div class="solution-step">
+  <span class="label">PHASE 4</span> Move the bottom ring: B → C. &nbsp; <em>cost:</em> 1
+</div>
+
+<div class="solution-step">
+  <span class="label">PHASE 5</span> Finally move the $(n-1)$ rings from A → C onto the bottom ring. &nbsp;<em>cost:</em> $A(n-1)$
+</div>
+
+<p>Adding up the five phases:</p>
+
+<div class="key-formula">
+  <span class="label">RECURRENCE</span><br>
+  $A(n) = 3\,A(n-1) + 2, \quad A(1) = 2$
+</div>
+
+<h3>4.4 Sanity-check with $n=2$</h3>
+
+<p>Predicted: $A(2) = 3\cdot 2 + 2 = 8$.</p>
+
+<table class="move-table">
+  <thead>
+    <tr><th>#</th><th>Move</th><th>State after move (A | B | C)</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>0</td><td><em>start</em></td><td>[2,1] | [&nbsp;] | [&nbsp;]</td></tr>
+    <tr><td>1</td><td>1: A → B</td><td>[2] | [1] | [&nbsp;]</td></tr>
+    <tr><td>2</td><td>1: B → C</td><td>[2] | [&nbsp;] | [1]</td></tr>
+    <tr><td>3</td><td>2: A → B</td><td>[&nbsp;] | [2] | [1]</td></tr>
+    <tr><td>4</td><td>1: C → B</td><td>[&nbsp;] | [2,1] | [&nbsp;]</td></tr>
+    <tr><td>5</td><td>1: B → A</td><td>[1] | [2] | [&nbsp;]</td></tr>
+    <tr><td>6</td><td>2: B → C</td><td>[1] | [&nbsp;] | [2]</td></tr>
+    <tr><td>7</td><td>1: A → B</td><td>[&nbsp;] | [1] | [2]</td></tr>
+    <tr><td>8</td><td>1: B → C</td><td>[&nbsp;] | [&nbsp;] | [2,1]</td></tr>
+  </tbody>
+</table>
+
+<p>Exactly <strong>8 moves</strong>. ✓ (Notation: <em>"k: X → Y"</em> means "move ring $k$ from tower X to tower Y". Bottom ring is biggest number; lists are bottom-first.)</p>
+
+<h3>4.5 Closed form (for full credit / curiosity)</h3>
+
+<p>The recurrence $A(n) = 3A(n-1) + 2$ is non-homogeneous. Same shift trick as Problem 2 — but now the multiplier is 3, so we add a different constant.</p>
+
+<div class="solution-step">
+  <span class="label">TRICK</span> Find the constant $c$ so that $A(n) + c = 3(A(n-1) + c)$ becomes pure geometric.
+  Expand: $A(n) + c = 3A(n-1) + 3c$, so $A(n) = 3A(n-1) + 2c$.
+  Compare with $A(n) = 3A(n-1) + 2$: we need $2c = 2$, i.e. $c = 1$.
+</div>
+
+<div class="solution-step">
+  <span class="label">SUBSTITUTE</span> $V(n) = A(n) + 1$. Then $V(n) = 3V(n-1)$, $\;V(1) = A(1)+1 = 3$.
+</div>
+
+<div class="solution-step">
+  <span class="label">SOLVE</span> $V(n) = 3^n$.
+</div>
+
+<div class="solution-step">
+  <span class="label">UN-SUBSTITUTE</span> $A(n) = V(n) - 1 = 3^n - 1$.
+</div>
+
+<table class="values">
+  <tr><th>$n$</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr>
+  <tr><th>$A(n) = 3^n - 1$</th><td>2</td><td>8</td><td>26</td><td>80</td><td>242</td></tr>
+</table>
+
+<div class="final-answer">
+  Recursive: $A(n) = 3A(n-1) + 2$, $\;A(1) = 2$<br>
+  Closed form: $A(n) = 3^n - 1$
+</div>
+
+<div class="warn-box">
+  <strong>Notice:</strong> the standard Hanoi grows like $2^n$; the adjacent-only Hanoi grows like $3^n$. Same rings, much more painful — that's where "more laborious" comes from.
+</div>
+
+<!-- ============ 5. PRE-CALC CONNECTION ============ -->
+<h2 class="page-break">5. Pre-Calc Connection — Why This Matters for the Test</h2>
+
+<div class="connection">
+  <div class="title">🔑 Both problems are <em>non-homogeneous linear recurrences</em>.</div>
+  <p>Both Hanoi recurrences have the <strong>same shape</strong>:</p>
+  <p style="text-align:center; font-size:1.1em; margin:8px 0">
+    $T(n) = a \cdot T(n-1) + b$
+  </p>
+  <p>This is the same family that the test will hit you with via the <strong>characteristic-equation method</strong>. Let me show you the bridge.</p>
+</div>
+
+<h3>5.1 The shift trick (what we just used twice)</h3>
+
+<p>For $T(n) = aT(n-1) + b$, look for a particular solution that's a constant: $T^*(n) = k$ for all $n$.</p>
+
+<div class="derivation">
+  Plug in: $k = ak + b \;\Longrightarrow\; k(1-a) = b \;\Longrightarrow\; k = \dfrac{b}{1-a}$ &nbsp; (valid when $a \ne 1$).<br><br>
+  Then $T(n) - k$ satisfies the <strong>homogeneous</strong> recurrence $\;u(n) = a\,u(n-1)\;$, which is just $u(n) = u(1) \cdot a^{n-1}$.<br><br>
+  So $\;\boxed{T(n) = C \cdot a^n + k}\;$ where $C$ is fixed by the initial condition.
+</div>
+
+<p>Apply this template:</p>
+
+<table class="values" style="font-size:11pt">
+  <tr><th>Problem</th><th>$a$</th><th>$b$</th><th>$k = \dfrac{b}{1-a}$</th><th>Closed form</th></tr>
+  <tr><td>Standard Hanoi</td><td>2</td><td>1</td><td>$\frac{1}{1-2} = -1$</td><td>$T(n) = 2^n - 1$</td></tr>
+  <tr><td>Adjacent-only Hanoi</td><td>3</td><td>2</td><td>$\frac{2}{1-3} = -1$</td><td>$A(n) = 3^n - 1$</td></tr>
+</table>
+
+<h3>5.2 Connect to the characteristic equation</h3>
+
+<p>For the <strong>homogeneous</strong> piece $u(n) = a\cdot u(n-1)$, the characteristic equation is</p>
+<p style="text-align:center; font-size:1.1em">$x - a = 0 \;\Longrightarrow\; x = a$</p>
+<p>so $u(n) = C \cdot a^n$. The general solution to a non-homogeneous recurrence is:</p>
+
+<div class="key-formula">
+  <span class="label">TEMPLATE</span><br>
+  $T(n) = \underbrace{C \cdot a^n}_{\text{homogeneous part}} + \underbrace{k}_{\text{particular solution (constant)}}$
+</div>
+
+<div class="tip">
+  <strong>How this generalizes:</strong> If your recurrence is degree-2 (e.g., Fibonacci-type $L_n = L_{n-1} + L_{n-2}$), the characteristic equation is quadratic ($x^2 - x - 1 = 0$ for Fibonacci), and the homogeneous solution becomes $C_1 r_1^n + C_2 r_2^n$. <em>Same idea, more roots.</em>
+</div>
+
+<h3>5.3 Pattern recognition for the test</h3>
+
+<table class="move-table">
+  <thead>
+    <tr><th>Recurrence Type</th><th>Method</th><th>Closed form shape</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>$T(n) = aT(n-1)$ (1st-order, homogeneous)</td><td>Iterate</td><td>$T(n) = C \cdot a^n$</td></tr>
+    <tr><td>$T(n) = aT(n-1) + b$ (1st-order, +constant)</td><td><strong>Shift trick</strong> ⭐</td><td>$T(n) = C \cdot a^n + k$</td></tr>
+    <tr><td>$T(n) = a_1 T(n-1) + a_2 T(n-2)$ (2nd-order, homogeneous)</td><td><strong>Characteristic equation</strong> ⭐</td><td>$T(n) = C_1 r_1^n + C_2 r_2^n$ (or $(C_1 + C_2 n)r^n$ if double root)</td></tr>
+    <tr><td>$T(n) = a_1 T(n-1) + a_2 T(n-2) + b$ (2nd-order, +constant)</td><td>Char. eq. + shift trick</td><td>Combine the two</td></tr>
+  </tbody>
+</table>
+
+<!-- ============ 6. CHECKLIST ============ -->
+<h2>6. Test-Prep Checklist</h2>
+
+<div class="solution-step">
+  ☐ I can write the recurrence $T(n) = 2T(n-1) + 1$ from a <em>verbal</em> Hanoi description (Phase-1, Phase-2, Phase-3 logic).
+</div>
+<div class="solution-step">
+  ☐ I can solve $T(n) = 2T(n-1) + 1$ with $T(1)=1$ by the <strong>shift trick</strong> ($U_n = T_n + 1$) and get $T(n) = 2^n - 1$.
+</div>
+<div class="solution-step">
+  ☐ I can prove $T(n) = 2^n - 1$ by <strong>induction</strong> as a backup.
+</div>
+<div class="solution-step">
+  ☐ Given a constraint variant (adjacent-only, towers in a circle, etc.), I can rebuild the recurrence by counting how many "sub-problems" the bottom ring forces.
+</div>
+<div class="solution-step">
+  ☐ I see the bridge from Hanoi-style recurrences to the <strong>characteristic equation</strong> method (degree-2 case) — both use the "homogeneous + particular" structure.
+</div>
+<div class="solution-step">
+  ☐ I can write and solve $A(n) = 3A(n-1) + 2$ from scratch and arrive at $A(n) = 3^n - 1$.
+</div>
+
+<div class="connection">
+  <div class="title">💡 One-line takeaway</div>
+  <p>A recursive formula <em>defines</em> a sequence; the closed form <em>computes</em> it. Hanoi gives you a clean physical reason why each recurrence has that exact shape — use that intuition on the test when the problem is wrapped in a different story (Lego stacking, walkway tilings, etc.).</p>
+</div>
+
+<div class="footer">
+  Created by Newton School · 2026-04-26 · Mr. Kenny &copy; Newton School Fort Lee
+</div>
+
+</body>
+</html>

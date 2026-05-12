@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ANSWER KEY · Power Series, IoC, Σ Rules &amp; Bernoulli Telescoping</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+.page { max-width: 720px; margin: 0 auto; padding: 60px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+  html, body { background: #fff; }
+  .page { max-width: none; padding: 0.55in 0.5in 0.5in 0.5in; margin: 0; }
+  .answer-block { page-break-inside: avoid; break-inside: avoid; }
+  .part-header, h1, h2 { page-break-after: avoid; break-after: avoid; }
+  .page-break { page-break-before: always; break-before: page; }
+}
+
+:root {
+  --color-primary: #1565c0;
+  --color-primary-dark: #0d47a1;
+  --color-accent: #00838f;
+  --color-final-answer: #2e7d32;
+  --color-warning: #c62828;
+  --color-muted: #555;
+}
+
+body { font-family: 'Source Serif Pro', Georgia, 'Times New Roman', serif; color: #000; font-size: 10pt; line-height: 1.55; }
+h1, h2, h3, .part-header { font-family: 'Libre Baskerville', Georgia, serif; }
+
+.header { text-align: center; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid var(--color-primary); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag, .key-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 7px 3px; font-weight: bold; }
+.subject-tag { border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+.key-tag { border: 1.5px solid var(--color-warning); color: var(--color-warning); }
+h1 { font-size: 15pt; margin: 6px 0 8px 0; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 4px; color: var(--color-muted); }
+
+.part-header { font-size: 13pt; font-weight: bold; color: var(--color-primary); margin: 20px 0 6px 0; padding-bottom: 4px; border-bottom: 1.5px solid var(--color-primary); }
+
+.answer-block { margin: 12px 0; padding: 10px 14px; border: 1px solid #ddd; border-radius: 4px; }
+.problem-header { font-weight: bold; color: var(--color-primary); font-size: 11pt; margin-bottom: 5px; }
+.problem-text { font-size: 9.5pt; padding: 6px 10px; background: #f7f7f7; border-left: 3px solid #bbb; margin-bottom: 8px; line-height: 1.5; }
+.concept-tag { display: inline-block; font-size: 8pt; padding: 2px 8px; margin: 2px 3px 5px 0; border: 1px solid var(--color-primary); color: var(--color-primary); border-radius: 10px; }
+.solution { margin: 6px 0; padding-left: 10px; border-left: 3px solid var(--color-final-answer); }
+.solution-step { margin: 5px 0; font-size: 10pt; line-height: 1.6; }
+.final-answer {
+  display: inline-block;
+  border: 2px solid var(--color-final-answer);
+  color: var(--color-final-answer);
+  font-weight: bold;
+  padding: 4px 12px;
+  border-radius: 4px;
+  margin-top: 6px;
+  font-size: 11pt;
+}
+
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid #ccc; margin-top: 20px; padding-top: 6px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <span class="subject-tag">PRE-CALCULUS · LECTURE COMPANION</span>
+    <span class="key-tag">★ ANSWER KEY ★</span>
+    <h1>Power Series, IoC, Σ Rules &amp; Bernoulli Telescoping</h1>
+    <div class="info">
+      <span><strong>Student:</strong> Justin Koo</span>
+      <span><strong>Date:</strong> 2026-05-03</span>
+    </div>
+    <div class="standard">CCSS.MATH.CONTENT.HSF-BF.A.2 / HSA-SSE.B.4 — Recognize/rewrite series; identify intervals of convergence; manipulate finite sums.</div>
+  </div>
+
+  <!-- ============================== ITEM 1 ============================== -->
+  <div class="part-header">Item 1 · Power Series as a Family of Geometric Series</div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 1.1</div>
+    <div class="problem-text">$\sum_{k=0}^{\infty} (x/2)^k$ at $x = 1$. Converges? Sum?</div>
+    <span class="concept-tag">Plug in</span> <span class="concept-tag">|r|&lt;1</span>
+    <div class="solution">
+      <div class="solution-step">At $x=1$: ratio $r = 1/2$. Since $|r| = 1/2 &lt; 1$, the geometric series <strong>converges</strong>.</div>
+      <div class="solution-step">$g_0 = 1$, so $\displaystyle \text{Sum} = \frac{g_0}{1-r} = \frac{1}{1 - 1/2} = 2.$</div>
+    </div>
+    <span class="final-answer">Converges; sum = 2</span>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 1.2</div>
+    <div class="problem-text">$\sum_{k=0}^{\infty} (3x)^k$ — give one converging $x$, one diverging $x$.</div>
+    <span class="concept-tag">|r|&lt;1</span>
+    <div class="solution">
+      <div class="solution-step">$r = 3x$. Convergence requires $|3x| &lt; 1 \;\Longleftrightarrow\; |x| &lt; \tfrac{1}{3}$.</div>
+      <div class="solution-step"><strong>Converges:</strong> $x = \tfrac{1}{4}$ → $|r| = 3/4 &lt; 1$. ✓</div>
+      <div class="solution-step"><strong>Diverges:</strong> $x = 1$ → $|r| = 3 &gt; 1$. ✗ (any $|x| \ge 1/3$ works).</div>
+    </div>
+    <span class="final-answer">e.g. $x=\tfrac{1}{4}$ converges, $x=1$ diverges</span>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 1.3</div>
+    <div class="problem-text">$\sum_{k=0}^{\infty} \left(\frac{x-2}{4}\right)^k$ — identify $r$ and $g_0$.</div>
+    <span class="concept-tag">Identify ratio</span>
+    <div class="solution">
+      <div class="solution-step">Index starts at $k=0$, so the first term is $\left(\frac{x-2}{4}\right)^0 = 1 \;\Rightarrow\; g_0 = 1$.</div>
+      <div class="solution-step">Ratio $r = \dfrac{x-2}{4}$.</div>
+    </div>
+    <span class="final-answer">$g_0 = 1, \;\; r = \dfrac{x-2}{4}$</span>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 1.4</div>
+    <div class="problem-text">$\sum_{k=1}^{\infty} \left(\frac{x+1}{3}\right)^k$ — identify $g_0$ and $r$ (note $k$ starts at 1!).</div>
+    <span class="concept-tag">Index starts ≠ 0</span>
+    <div class="solution">
+      <div class="solution-step">Since $k$ starts at <strong>1</strong>, the first term is $\left(\frac{x+1}{3}\right)^1 = \frac{x+1}{3}$. So $g_0 = \dfrac{x+1}{3}$.</div>
+      <div class="solution-step">Ratio between consecutive terms is still $r = \dfrac{x+1}{3}$.</div>
+      <div class="solution-step"><em>Note:</em> Sum (when convergent) is $\dfrac{g_0}{1-r}$, not $\dfrac{1}{1-r}$.</div>
+    </div>
+    <span class="final-answer">$g_0 = \dfrac{x+1}{3}, \;\; r = \dfrac{x+1}{3}$</span>
+  </div>
+
+  <!-- ============================== ITEM 2 ============================== -->
+  <div class="part-header page-break">Item 2 · Find IoC and Sum Function $P(x)$</div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 2.1</div>
+    <div class="problem-text">$\sum_{k=0}^{\infty}(x/5)^k$ → IoC and $P(x)$.</div>
+    <span class="concept-tag">|r|&lt;1</span> <span class="concept-tag">P = g₀/(1−r)</span>
+    <div class="solution">
+      <div class="solution-step">$g_0 = 1$, $r = x/5$. Need $|x/5| &lt; 1 \;\Rightarrow\; |x| &lt; 5$.</div>
+      <div class="solution-step">$P(x) = \dfrac{1}{1 - x/5} = \dfrac{5}{5 - x}.$</div>
+    </div>
+    <span class="final-answer">IoC $= (-5, 5),\; P(x) = \dfrac{5}{5-x}$</span>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 2.2</div>
+    <div class="problem-text">$\sum_{k=0}^{\infty}\left(\frac{x-1}{3}\right)^k$ → IoC and $P(x)$.</div>
+    <span class="concept-tag">Shifted center</span>
+    <div class="solution">
+      <div class="solution-step">$g_0 = 1$, $r = \dfrac{x-1}{3}$. Need $\left|\dfrac{x-1}{3}\right| &lt; 1 \;\Rightarrow\; |x-1| &lt; 3 \;\Rightarrow\; -3 &lt; x-1 &lt; 3 \;\Rightarrow\; -2 &lt; x &lt; 4$.</div>
+      <div class="solution-step">$P(x) = \dfrac{1}{1 - (x-1)/3} = \dfrac{3}{3 - (x-1)} = \dfrac{3}{4 - x}.$</div>
+    </div>
+    <span class="final-answer">IoC $= (-2, 4),\; P(x) = \dfrac{3}{4-x}$</span>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 2.3</div>
+    <div class="problem-text">$\sum_{k=0}^{\infty} (3/x)^k$ → IoC and $P(x)$.</div>
+    <span class="concept-tag">Variable in denom</span>
+    <div class="solution">
+      <div class="solution-step">$g_0 = 1$, $r = 3/x$. Need $\left|\dfrac{3}{x}\right| &lt; 1 \;\Rightarrow\; \dfrac{3}{|x|} &lt; 1 \;\Rightarrow\; |x| &gt; 3$.</div>
+      <div class="solution-step">So IoC = $(-\infty, -3) \cup (3, \infty)$ — two rays.</div>
+      <div class="solution-step">$P(x) = \dfrac{1}{1 - 3/x} = \dfrac{x}{x - 3}.$</div>
+    </div>
+    <span class="final-answer">IoC $= (-\infty, -3) \cup (3, \infty),\; P(x) = \dfrac{x}{x-3}$</span>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 2.4</div>
+    <div class="problem-text">$\sum_{k=1}^{\infty}(x/4)^k$ → IoC and $P(x)$. (Starts at $k=1$.)</div>
+    <span class="concept-tag">k=1 start</span> <span class="concept-tag">g₀ ≠ 1</span>
+    <div class="solution">
+      <div class="solution-step">First term ($k=1$): $g_0 = \dfrac{x}{4}$. Ratio $r = \dfrac{x}{4}$. Convergence: $|x/4| &lt; 1 \;\Rightarrow\; |x| &lt; 4$.</div>
+      <div class="solution-step">$P(x) = \dfrac{g_0}{1-r} = \dfrac{x/4}{1 - x/4} = \dfrac{x/4}{(4-x)/4} = \dfrac{x}{4 - x}.$</div>
+    </div>
+    <span class="final-answer">IoC $= (-4, 4),\; P(x) = \dfrac{x}{4-x}$</span>
+  </div>
+
+  <!-- ============================== ITEM 3 ============================== -->
+  <div class="part-header page-break">Item 3 · Three Σ Rules</div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 3.1 — Pull out</div>
+    <div class="problem-text">Rewrite $\sum_{n=1}^{8} 5n$ with the constant out.</div>
+    <span class="concept-tag">Rule I</span>
+    <div class="solution">
+      <div class="solution-step">$\displaystyle \sum_{n=1}^{8} 5n = 5 \sum_{n=1}^{8} n.$</div>
+    </div>
+    <span class="final-answer">$5 \displaystyle\sum_{n=1}^{8} n$</span>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 3.2 — Split</div>
+    <div class="problem-text">Rewrite $\sum_{n=1}^{12}(n^2 - 3n + 4)$ as 3 separate sums.</div>
+    <span class="concept-tag">Rule II</span> <span class="concept-tag">Rule I</span>
+    <div class="solution">
+      <div class="solution-step">First split (Rule II), then pull constants (Rule I):</div>
+      <div class="solution-step">$\displaystyle \sum_{n=1}^{12} (n^2 - 3n + 4) = \sum_{n=1}^{12} n^2 \; - \; 3\sum_{n=1}^{12} n \; + \; \sum_{n=1}^{12} 4.$</div>
+      <div class="solution-step"><em>Bonus simplification:</em> $\sum_{n=1}^{12} 4 = 12 \cdot 4 = 48$.</div>
+    </div>
+    <span class="final-answer">$\displaystyle\sum_{n=1}^{12} n^2 - 3\sum_{n=1}^{12} n + \sum_{n=1}^{12} 4$</span>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 3.3 — Index shift</div>
+    <div class="problem-text">Rewrite $\sum_{n=3}^{20} n^2$ to start at $n=0$.</div>
+    <span class="concept-tag">Rule III</span>
+    <div class="solution">
+      <div class="solution-step">Substitute $n \to n+3$ inside the summand. Drop the start by 3 (so 3 → 0, 20 → 17):</div>
+      <div class="solution-step">$\displaystyle \sum_{n=3}^{20} n^2 = \sum_{n=0}^{17} (n+3)^2.$</div>
+      <div class="solution-step"><em>Sanity check:</em> new $n=0$ → $(0+3)^2 = 9 = 3^2$ ✓; new $n=17$ → $(17+3)^2 = 400 = 20^2$ ✓.</div>
+    </div>
+    <span class="final-answer">$\displaystyle\sum_{n=0}^{17} (n+3)^2$</span>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 3.4 — Combined</div>
+    <div class="problem-text">Rewrite $\sum_{n=5}^{14} 4(n-3)^2$ — pull out 4, then shift to $n=0$.</div>
+    <span class="concept-tag">Rule I + III</span>
+    <div class="solution">
+      <div class="solution-step"><strong>Step 1 (pull out 4):</strong> $\displaystyle 4 \sum_{n=5}^{14} (n-3)^2.$</div>
+      <div class="solution-step"><strong>Step 2 (shift $n \to n+5$, drop bounds by 5):</strong> $\displaystyle 4 \sum_{n=0}^{9} \big((n+5)-3\big)^2 = 4 \sum_{n=0}^{9} (n+2)^2.$</div>
+      <div class="solution-step"><em>Sanity check:</em> new $n=0$ → $(0+2)^2 = 4 = (5-3)^2$ ✓; new $n=9$ → $(9+2)^2 = 121 = (14-3)^2$ ✓.</div>
+    </div>
+    <span class="final-answer">$4\displaystyle\sum_{n=0}^{9}(n+2)^2$</span>
+  </div>
+
+  <!-- ============================== ITEM 4 ============================== -->
+  <div class="part-header page-break">Item 4 · Bernoulli Telescoping</div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 4.1 — Set up partial fractions</div>
+    <div class="problem-text">Find $A, B$: $\dfrac{1}{(n+1)(n+2)} = \dfrac{A}{n+1} + \dfrac{B}{n+2}$.</div>
+    <span class="concept-tag">Partial fractions</span>
+    <div class="solution">
+      <div class="solution-step">Multiply through by $(n+1)(n+2)$: $\;1 = A(n+2) + B(n+1)$.</div>
+      <div class="solution-step">Plug $n = -1$: $\;1 = A(1) + B(0) \;\Rightarrow\; A = 1$.</div>
+      <div class="solution-step">Plug $n = -2$: $\;1 = A(0) + B(-1) \;\Rightarrow\; B = -1$.</div>
+    </div>
+    <span class="final-answer">$A = 1, \;\; B = -1$</span>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 4.2 — Telescope to ∞</div>
+    <div class="problem-text">Evaluate $\sum_{n=1}^{\infty} \dfrac{1}{(n+1)(n+2)}$.</div>
+    <span class="concept-tag">Telescoping</span> <span class="concept-tag">Limit</span>
+    <div class="solution">
+      <div class="solution-step">From 4.1: each term $= \dfrac{1}{n+1} - \dfrac{1}{n+2}$.</div>
+      <div class="solution-step">Partial sum $S_N = \left(\dfrac{1}{2} - \dfrac{1}{3}\right) + \left(\dfrac{1}{3} - \dfrac{1}{4}\right) + \cdots + \left(\dfrac{1}{N+1} - \dfrac{1}{N+2}\right) = \dfrac{1}{2} - \dfrac{1}{N+2}.$</div>
+      <div class="solution-step">As $N \to \infty$: $\dfrac{1}{N+2} \to 0$, so $S_\infty = \dfrac{1}{2}$.</div>
+    </div>
+    <span class="final-answer">$\dfrac{1}{2}$</span>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 4.3 — Bernoulli style</div>
+    <div class="problem-text">Evaluate $\sum_{n=1}^{\infty} \dfrac{1}{(4n-3)(4n+1)}$.</div>
+    <span class="concept-tag">Partial fractions</span> <span class="concept-tag">Telescoping</span>
+    <div class="solution">
+      <div class="solution-step">Set $\dfrac{1}{(4n-3)(4n+1)} = \dfrac{A}{4n-3} + \dfrac{B}{4n+1}$. Multiply: $\;1 = A(4n+1) + B(4n-3)$.</div>
+      <div class="solution-step">$n$ coefficient: $4A + 4B = 0 \;\Rightarrow\; A = -B$. Constant: $A - 3B = 1 \;\Rightarrow\; -B - 3B = 1 \;\Rightarrow\; B = -\tfrac{1}{4},\; A = \tfrac{1}{4}.$</div>
+      <div class="solution-step">Each term $= \dfrac{1}{4}\left(\dfrac{1}{4n-3} - \dfrac{1}{4n+1}\right)$. Partial sum:</div>
+      <div class="solution-step">$S_N = \dfrac{1}{4}\!\left[\!\left(\dfrac{1}{1} - \dfrac{1}{5}\right) + \left(\dfrac{1}{5} - \dfrac{1}{9}\right) + \cdots + \left(\dfrac{1}{4N-3} - \dfrac{1}{4N+1}\right)\!\right] = \dfrac{1}{4}\!\left(1 - \dfrac{1}{4N+1}\right).$</div>
+      <div class="solution-step">As $N \to \infty$: $S_\infty = \dfrac{1}{4}(1 - 0) = \dfrac{1}{4}$.</div>
+    </div>
+    <span class="final-answer">$\dfrac{1}{4}$</span>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 4.4 — Finite telescoping</div>
+    <div class="problem-text">Compute $\sum_{n=1}^{4} \dfrac{1}{n(n+1)}$ using $\dfrac{1}{n(n+1)} = \dfrac{1}{n} - \dfrac{1}{n+1}$.</div>
+    <span class="concept-tag">Finite sum</span>
+    <div class="solution">
+      <div class="solution-step">Write out all 4 terms:</div>
+      <div class="solution-step">$n=1$: $\;1 - \tfrac{1}{2}$</div>
+      <div class="solution-step">$n=2$: $\;\tfrac{1}{2} - \tfrac{1}{3}$</div>
+      <div class="solution-step">$n=3$: $\;\tfrac{1}{3} - \tfrac{1}{4}$</div>
+      <div class="solution-step">$n=4$: $\;\tfrac{1}{4} - \tfrac{1}{5}$</div>
+      <div class="solution-step">Summing: $\;1 + (-\tfrac{1}{2} + \tfrac{1}{2}) + (-\tfrac{1}{3} + \tfrac{1}{3}) + (-\tfrac{1}{4} + \tfrac{1}{4}) - \tfrac{1}{5} = 1 - \tfrac{1}{5} = \tfrac{4}{5}.$</div>
+    </div>
+    <span class="final-answer">$\dfrac{4}{5}$</span>
+  </div>
+
+  <div class="footer">
+    Created by Newton School 2026-05-03 &copy; Copyright · Pre-Calculus Answer Key (Justin Koo)
+  </div>
+
+</div>
+</body>
+</html>

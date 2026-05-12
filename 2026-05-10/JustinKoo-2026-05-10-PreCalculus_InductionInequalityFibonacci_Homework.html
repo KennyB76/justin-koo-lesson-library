@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pre-Calculus Homework: Induction — Inequalities &amp; Fibonacci (Part 2)</title>
+<script>
+window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+    startup: { ready: () => { MathJax.startup.defaultReady(); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+/* ============ base-print.css ============ */
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Century Schoolbook', 'Times New Roman', serif; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.work-space { min-height: 2.2in; margin: 8px 0 20px 28px; border-bottom: 1px solid #ccc; }
+.work-space.sm { min-height: 0.75in; }
+.work-space.lg { min-height: 2.5in; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+    html, body { background: #fff; }
+    .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+    .problem, .answer-block, .reminder, .example { page-break-inside: avoid; break-inside: avoid; }
+    .part-header, .directions, h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+    .work-space { min-height: 2.2in; border-bottom: 1px dashed #999; border-top: none; border-left: none; border-right: none; margin-bottom: 0.35in; }
+    .work-space.sm { min-height: 0.75in; }
+    .work-space.lg { min-height: 2.5in; }
+    .page-break { page-break-before: always; break-before: page; }
+    /* Suppress browser URL/time footer — Chrome flags are primary, this is belt+suspenders */
+    .footer { display: none !important; }
+}
+
+/* ============ theme-boy.css ============ */
+:root {
+    --color-primary: #1565c0;
+    --color-primary-dark: #0d47a1;
+    --color-accent: #00838f;
+    --color-header-border: #1565c0;
+    --color-final-answer: #2e7d32;
+    --color-warning: #c62828;
+    --color-tag-border: #1565c0;
+    --color-tag-text: #1565c0;
+    --color-muted: #555;
+    --color-rule: #ccc;
+}
+
+/* ============ level-high.css ============ */
+body { font-family: 'Source Serif Pro', 'Georgia', 'Times New Roman', serif; font-size: 10.5pt; line-height: 1.55; }
+h1, h2, h3, .part-header { font-family: 'Libre Baskerville', 'Georgia', serif; }
+.header { text-align: center; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid var(--color-header-border); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 7px 3px; font-weight: bold; border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+h1 { font-size: 15pt; margin: 6px 0 8px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 4px; color: var(--color-muted); }
+.part-header { font-size: 13pt; font-weight: bold; color: var(--color-primary); margin: 22px 0 6px 0; padding-bottom: 3px; border-bottom: 1.5px solid var(--color-primary); }
+.directions { font-size: 10pt; font-style: italic; color: #333; margin-bottom: 12px; line-height: 1.5; }
+.directions strong { color: #000; font-style: normal; }
+.problem { margin: 28px 0; font-size: 10.5pt; line-height: 1.6; padding-left: 8px; border-left: 3px solid var(--color-primary); page-break-inside: avoid; break-inside: avoid; }
+.q-num { display: inline-block; min-width: 26px; font-weight: bold; color: var(--color-primary); }
+.ans-line { display: inline-block; border-bottom: 1.5px solid #000; min-width: 80px; height: 18px; margin: 0 4px; vertical-align: bottom; }
+.concept-box { border: 1.5px solid var(--color-accent); background: transparent; padding: 10px 14px; margin: 12px 0; font-size: 10pt; border-left-width: 4px; }
+.concept-box .title { font-weight: bold; color: var(--color-accent); margin-bottom: 4px; }
+.reminder { border: 1.5px solid var(--color-warning); padding: 8px 14px; margin: 14px 0; font-size: 10pt; }
+.reminder .rem-title { font-weight: bold; color: var(--color-warning); margin-bottom: 4px; }
+.footer { font-size: 7.5pt; color: var(--color-muted); text-align: center; margin-top: 30px; padding-top: 6px; border-top: 1px solid var(--color-rule); }
+
+/* ============ editor-widget.css ============ */
+:root {
+  --ed-accent: #1565c0;
+  --ed-bg: #fff;
+  --ed-border: #e0e0e0;
+  --ed-shadow: rgba(0,0,0,0.12);
+  --ed-sticky-bg: #fef9c3;
+  --ed-sticky-border: #f59e0b;
+  --ed-sticky-handle: #fde68a;
+  --ed-bar-bg: #1e2d3d;
+  --ed-bar-text: #e2e8f0;
+  --ed-btn-hover: rgba(255,255,255,0.12);
+  --ed-radius: 5px;
+}
+.ed-commentable { position: relative; }
+.ed-comment-btn { position: absolute; top: 3px; right: -30px; width: 22px; height: 22px; padding: 0; display: inline-flex; align-items: center; justify-content: center; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; color: #64748b; cursor: pointer; font-size: 12px; opacity: 0; transition: opacity 0.15s ease; z-index: 10; line-height: 1; }
+.ed-commentable:hover .ed-comment-btn { opacity: 0.75; }
+.ed-comment-btn:hover { opacity: 1 !important; color: var(--ed-accent); background: #e0ecff; border-color: var(--ed-accent); }
+.ed-comment-btn.has-comment { opacity: 1; background: #fef3c7; border-color: #f59e0b; color: #92400e; }
+.ed-commentable.has-ed-comment { border-left: 3px solid #f59e0b; padding-left: 10px; background: rgba(245,158,11,0.05); border-radius: 3px; }
+.ed-dot { position: absolute; top: 1px; right: -12px; width: 7px; height: 7px; border-radius: 50%; background: #3b82f6; pointer-events: none; }
+.ed-dot[hidden] { display: none; }
+.ed-comment-box { margin: 6px 0 10px; padding: 10px 12px; background: #fafafa; border: 1px solid #e2e8f0; border-radius: var(--ed-radius); box-shadow: 0 2px 8px var(--ed-shadow); display: none; z-index: 20; }
+.ed-comment-box.open { display: block; }
+.ed-comment-box textarea { width: 100%; min-height: 64px; padding: 7px 9px; background: #fff; border: 1px solid #d1d5db; border-radius: 4px; color: #1e293b; font-family: 'Times New Roman', serif; font-size: 11pt; line-height: 1.5; resize: vertical; }
+.ed-comment-box textarea:focus { outline: none; border-color: var(--ed-accent); }
+.ed-comment-box-actions { margin-top: 6px; display: flex; gap: 6px; justify-content: flex-end; }
+.ed-comment-box-actions button { padding: 4px 12px; font-size: 11px; cursor: pointer; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; color: #475569; font-family: 'Times New Roman', serif; }
+.ed-comment-box-actions button.ed-save { background: var(--ed-accent); color: #fff; border-color: var(--ed-accent); }
+mark.ed-annotation { background: rgba(245,158,11,0.25); color: inherit; padding: 0 2px; border-radius: 2px; border-bottom: 2px solid #f59e0b; cursor: pointer; }
+.ed-sel-popup { position: absolute; z-index: 1010; background: #1e2d3d; border: 1px solid #334155; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); padding: 3px; }
+.ed-sel-btn { padding: 5px 10px; font-size: 12px; cursor: pointer; background: transparent; border: none; color: #e2e8f0; display: inline-flex; align-items: center; gap: 5px; border-radius: 4px; white-space: nowrap; font-family: inherit; }
+.ed-sel-btn:hover { background: rgba(255,255,255,0.1); color: #fbbf24; }
+.ed-sel-comment-box { position: absolute; width: 300px; z-index: 1011; background: #fafafa; border: 1px solid #e2e8f0; border-radius: var(--ed-radius); box-shadow: 0 4px 16px rgba(0,0,0,0.18); padding: 10px 12px; }
+.ed-sel-preview { font-size: 11px; color: #64748b; margin-bottom: 8px; padding: 5px 8px; background: rgba(245,158,11,0.1); border-left: 2px solid #f59e0b; border-radius: 3px; line-height: 1.4; font-family: 'Times New Roman', serif; }
+.ed-sticky { position: absolute; z-index: 990; width: 240px; min-height: 110px; background: var(--ed-sticky-bg); border: 1px solid var(--ed-sticky-border); border-radius: 5px; box-shadow: 2px 3px 8px rgba(0,0,0,0.18); display: flex; flex-direction: column; }
+.ed-sticky-handle { padding: 5px 9px; cursor: move; font-size: 10px; font-weight: 700; color: #78350f; background: var(--ed-sticky-handle); border-bottom: 1px solid var(--ed-sticky-border); border-radius: 5px 5px 0 0; user-select: none; display: flex; align-items: center; justify-content: space-between; }
+.ed-sticky textarea { flex: 1; padding: 7px 9px; border: none; background: transparent; color: #1e293b; font-family: 'Times New Roman', serif; font-size: 11pt; line-height: 1.4; resize: none; outline: none; min-height: 70px; }
+.ed-sticky-close { background: transparent; border: none; color: #92400e; cursor: pointer; font-size: 14px; line-height: 1; padding: 0; }
+.ed-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 1000; height: 38px; background: var(--ed-bar-bg); border-top: 1px solid #334155; display: flex; align-items: center; gap: 4px; padding: 0 12px; box-shadow: 0 -2px 8px rgba(0,0,0,0.2); font-family: ui-sans-serif, system-ui, sans-serif; }
+.ed-bar-label { font-size: 10px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em; margin-right: 6px; white-space: nowrap; }
+.ed-bar-btn { height: 26px; padding: 0 10px; font-size: 11px; cursor: pointer; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 4px; color: var(--ed-bar-text); display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; transition: all 0.12s ease; font-family: inherit; }
+.ed-bar-btn:hover { background: var(--ed-btn-hover); }
+.ed-bar-btn.ed-bar-primary { background: var(--ed-accent); border-color: var(--ed-accent); color: #fff; }
+.ed-bar-count { background: #3b82f6; color: #fff; border-radius: 9px; font-size: 10px; font-weight: 700; min-width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center; padding: 0 4px; }
+.ed-bar-sep { width: 1px; height: 20px; background: rgba(255,255,255,0.12); margin: 0 4px; }
+.ed-bar-spacer { flex: 1; }
+.ed-bar-status { font-size: 10px; color: #64748b; white-space: nowrap; }
+body { padding-bottom: 46px; }
+body.ed-dragover .page { outline: 3px dashed var(--ed-accent); outline-offset: 4px; }
+.ed-video-embed { margin: 12px 0; position: relative; padding-top: 56.25%; border-radius: var(--ed-radius); overflow: hidden; border: 1px solid var(--ed-border); }
+.ed-video-embed iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+@media print {
+  .ed-bar, .ed-comment-btn, .ed-comment-box, .ed-dot, .ed-sticky, .ed-sel-popup, .ed-sel-comment-box { display: none !important; }
+  body { padding-bottom: 0 !important; }
+  .ed-commentable.has-ed-comment { border-left: none !important; padding-left: 0 !important; background: transparent !important; }
+  mark.ed-annotation { background: transparent !important; border-bottom: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ==============================================================
+       HEADER
+       ============================================================== -->
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">PRE-CALCULUS &nbsp;|&nbsp; HOMEWORK &mdash; PART 2</div>
+    <h1>Mathematical Induction: Inequalities &amp; Fibonacci</h1>
+    <div class="info">
+      <span><strong>Student:</strong> Justin Koo</span>
+      <span><strong>Date:</strong> 2026-05-10</span>
+    </div>
+    <div class="standard">
+      <strong>Topics:</strong> Inequality proofs by induction (Wider Scope Tactic) &middot; Fibonacci identities.
+      &nbsp; Total: 7 problems.
+    </div>
+  </div>
+
+  <!-- Kenny Reminder Box -->
+  <div class="kenny-reminder" style="border:2px solid #1565c0;background:#e3f2fd;padding:14px 18px;margin:16px 0 18px 0;border-left-width:6px;border-radius:2px;">
+    <div class="kr-header" style="font-size:8pt;letter-spacing:2.5px;text-transform:uppercase;font-weight:bold;color:#0d47a1;margin-bottom:8px;">
+      <span class="kr-icon">&#128276;</span> Mr. Kenny's Key Point
+    </div>
+    <div class="kr-body">
+      <p><strong>Wider Scope Tactic</strong> &mdash; when proving an inequality $A \le B$ by induction, sometimes it's easier to prove a <em>wider</em> bound $A \le C \le B$ where the stronger statement makes the induction step go through.</p>
+      <p>Watch for this trick in the worked examples and apply it on Part A.</p>
+    </div>
+  </div>
+
+  <div class="reminder">
+    <div class="rem-title">Before You Start</div>
+    Every proof must include: (1) a clearly stated <strong>Base Case</strong> with arithmetic check,
+    (2) the <strong>Inductive Hypothesis</strong> written out, and (3) a <strong>chain of inequalities / equalities</strong>
+    in the Inductive Step with a reason for each link ([by IH], [since $k \ge \ldots$], etc.).
+    Write your answers in the work space below each problem.
+  </div>
+
+  <!-- ==============================================================
+       PART A — Inequality Proofs
+       ============================================================== -->
+  <div class="part-header">Part A — Inequality Proofs by Induction</div>
+  <div class="directions">
+    Prove each inequality using mathematical induction. In the inductive step,
+    identify where the <strong>Wider Scope Tactic</strong> (if any) is used.
+  </div>
+
+  <div class="problem">
+    <span class="q-num">1.</span>
+    Prove: &nbsp; $n^2 \ge 2n + 1$ &nbsp; for all integers $n \ge 3$.
+    <br>
+    <small style="color:#555; font-style:italic; margin-left: 26px;">
+      Hint: in the inductive step, expand $(k+1)^2$ and use the IH to replace $k^2$.
+    </small>
+  </div>
+  <div class="work-space"></div>
+
+  <div class="problem">
+    <span class="q-num">2.</span>
+    Prove: &nbsp; $2^n &gt; n$ &nbsp; for all integers $n \ge 1$.
+    <br>
+    <small style="color:#555; font-style:italic; margin-left: 26px;">
+      Hint: multiply the IH by 2, then show $2k \ge k + 1$ for $k \ge 1$.
+    </small>
+  </div>
+  <div class="work-space"></div>
+
+  <div class="problem">
+    <span class="q-num">3.</span>
+    Prove: &nbsp; $n! \ge 2^{n-1}$ &nbsp; for all integers $n \ge 1$.
+    <br>
+    <small style="color:#555; font-style:italic; margin-left: 26px;">
+      Hint: in the inductive step, write $(k+1)! = (k+1) \cdot k!$ and use the IH.
+      You need $(k+1) \ge 2$ — is that always true?
+    </small>
+  </div>
+  <div class="work-space"></div>
+
+  <div class="problem">
+    <span class="q-num">4.</span>
+    Prove Bernoulli's Inequality: &nbsp; $(1 + x)^n \ge 1 + nx$ &nbsp; for all integers $n \ge 1$ and any real $x \ge 0$.
+    <br>
+    <small style="color:#555; font-style:italic; margin-left: 26px;">
+      Hint: $(1+x)^{k+1} = (1+x)^k \cdot (1+x)$.
+      Apply the IH, expand, then drop a non-negative term.
+      Identify which term you drop — that is the Wider Scope Tactic.
+    </small>
+  </div>
+  <div class="work-space"></div>
+
+  <div class="footer">Newton School &mdash; 2026-05-10 &copy; Copyright &nbsp;|&nbsp; Page 1 of 2</div>
+
+  <!-- ==============================================================
+       PART B — Fibonacci Identities
+       ============================================================== -->
+  <div class="page-break"></div>
+
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">PRE-CALCULUS &nbsp;|&nbsp; HOMEWORK &mdash; PART 2</div>
+    <h1>Mathematical Induction: Inequalities &amp; Fibonacci</h1>
+    <div class="info">
+      <span><strong>Student:</strong> Justin Koo</span>
+      <span><strong>Date:</strong> 2026-05-10</span>
+    </div>
+  </div>
+
+  <div class="part-header">Part B — Fibonacci Identities</div>
+
+  <div class="concept-box">
+    <div class="title">Fibonacci Sequence Definition</div>
+    <p>
+      $F_1 = 1, \quad F_2 = 1, \quad F_n = F_{n-1} + F_{n-2}$ &nbsp; for $n \ge 3$.
+    </p>
+    <p>
+      First several terms: &nbsp; $1,\ 1,\ 2,\ 3,\ 5,\ 8,\ 13,\ 21,\ 34,\ 55,\ 89,\ \ldots$
+    </p>
+    <p>
+      The recurrence $F_{n+1} = F_n + F_{n-1}$ is your main tool in the inductive step for all three problems below.
+    </p>
+  </div>
+
+  <div class="directions">
+    Prove each identity by induction. Use the Fibonacci recurrence wherever needed.
+    The proofs below are <em>structural</em> — you do not need the Binet formula or generating functions;
+    the recurrence alone is sufficient.
+  </div>
+
+  <div class="problem">
+    <span class="q-num">5.</span>
+    <strong>Problem 10.</strong> &nbsp; Prove: &nbsp;
+    $F_1 + F_2 + \cdots + F_n = F_{n+2} - 1$ &nbsp; for all $n \ge 1$.
+    <br>
+    <small style="color:#555; font-style:italic; margin-left: 26px;">
+      Hint: in the inductive step, the LHS for $n = k+1$ equals the LHS for $n = k$ plus $F_{k+1}$.
+      Use the IH to replace the first part, then apply the recurrence $F_{k+3} = F_{k+2} + F_{k+1}$.
+    </small>
+  </div>
+  <div class="work-space"></div>
+
+  <div class="problem">
+    <span class="q-num">6.</span>
+    <strong>Problem 11 — Cassini's Identity.</strong> &nbsp; Prove: for all $n \ge 2$,
+    $$F_{n-1} \cdot F_{n+1} - F_n^2 = (-1)^n.$$
+    <small style="color:#555; font-style:italic; margin-left: 26px;">
+      Hint: this is a "strong" induction feel but works with simple induction.
+      In the step, write $F_{k+2} = F_{k+1} + F_k$ and expand.
+      You will need $(-1)^{k+1} = -(-1)^k$.
+    </small>
+  </div>
+  <div class="work-space"></div>
+
+  <div class="problem">
+    <span class="q-num">7.</span>
+    <strong>Problem 12.</strong> &nbsp; Prove: &nbsp;
+    $F_1 F_2 + F_2 F_3 + \cdots + F_{2n-1} F_{2n} = (F_{2n})^2$ &nbsp; for all $n \ge 1$.
+    <br>
+    <small style="color:#555; font-style:italic; margin-left: 26px;">
+      Hint: the step increases $n$ by 1, so the LHS gains the term $F_{2k+1} F_{2k+2}$.
+      Use the IH to replace the partial sum, then expand $(F_{2k+2})^2 = (F_{2k+1} + F_{2k})^2$ and
+      apply the recurrence to simplify.
+    </small>
+  </div>
+  <div class="work-space"></div>
+
+  <div class="footer">Newton School &mdash; 2026-05-10 &copy; Copyright &nbsp;|&nbsp; Page 2 of 2</div>
+
+</div>
+<script>
+(function () {
+  'use strict';
+  var pageSlug = (function () {
+    var s = window.location.pathname.split('/').pop() || 'worksheet';
+    return s.replace(/\.[^.]+$/, '').replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 60);
+  })();
+  var C_PREFIX = 'hw_comment_' + pageSlug + '_';
+  var A_KEY    = 'hw_annot_' + pageSlug;
+  var S_KEY    = 'hw_sticky_' + pageSlug;
+  function lsGet(k) { try { return localStorage.getItem(k); } catch(e){ return null; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, v); } catch(e){} }
+  function lsRm(k)  { try { localStorage.removeItem(k); } catch(e){} }
+  function lsGetJSON(k) { try { return JSON.parse(lsGet(k) || '[]'); } catch(e){ return []; } }
+  function lsSetJSON(k, v) { lsSet(k, JSON.stringify(v)); }
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  var counter = 0;
+  function nextBid() { return 'b' + (++counter); }
+  function wrapCommentable(el) {
+    if (el.classList.contains('ed-commentable')) return;
+    var bid = nextBid(); el.classList.add('ed-commentable'); el.setAttribute('data-bid', bid);
+    var btn = document.createElement('button'); btn.className = 'ed-comment-btn'; btn.type = 'button'; btn.title = 'Add comment'; btn.textContent = '✏';
+    btn.addEventListener('click', function () { toggleCommentBox(el, bid); }); el.appendChild(btn);
+    var dot = document.createElement('span'); dot.className = 'ed-dot'; dot.hidden = true; el.appendChild(dot);
+    var saved = lsGet(C_PREFIX + bid);
+    if (saved && saved.trim()) { dot.hidden = false; btn.classList.add('has-comment'); el.classList.add('has-ed-comment'); }
+  }
+  function initCommentableBlocks() { ['.problem','.answer-block','.example','.part-header'].forEach(function(sel){ document.querySelectorAll(sel).forEach(wrapCommentable); }); }
+  function toggleCommentBox(el, bid) {
+    var existing = el.querySelector('.ed-comment-box');
+    if (existing) { existing.classList.toggle('open'); if (existing.classList.contains('open')) existing.querySelector('textarea').focus(); return; }
+    var saved = lsGet(C_PREFIX + bid) || '';
+    var box = document.createElement('div'); box.className = 'ed-comment-box open';
+    box.innerHTML = '<textarea placeholder="Comment on this block..."></textarea><div class="ed-comment-box-actions"><button type="button" class="ed-cancel">Cancel</button><button type="button" class="ed-save">Save</button></div>';
+    el.appendChild(box); var ta = box.querySelector('textarea'); ta.value = saved; ta.focus();
+    box.querySelector('.ed-cancel').addEventListener('click', function(){ box.classList.remove('open'); });
+    box.querySelector('.ed-save').addEventListener('click', function(){ saveBlockComment(el, bid, ta.value.trim()); box.classList.remove('open'); updateBarStatus(); });
+  }
+  function saveBlockComment(el, bid, txt) {
+    var dot = el.querySelector('.ed-dot'); var btn = el.querySelector('.ed-comment-btn');
+    if (txt) { lsSet(C_PREFIX+bid, txt); if(dot) dot.hidden=false; if(btn) btn.classList.add('has-comment'); el.classList.add('has-ed-comment'); }
+    else { lsRm(C_PREFIX+bid); if(dot) dot.hidden=true; if(btn) btn.classList.remove('has-comment'); el.classList.remove('has-ed-comment'); }
+    updateBarStatus();
+  }
+  var _selPopup = null;
+  function hideSelPopup() { if (_selPopup) { _selPopup.remove(); _selPopup = null; } }
+  document.addEventListener('mouseup', function(e){ if(e.target.closest('.ed-sel-popup,.ed-comment-box,.ed-sticky,.ed-bar,.ed-comment-btn')) return; setTimeout(function(){ var sel=window.getSelection(); if(!sel||sel.isCollapsed||!sel.rangeCount){hideSelPopup();return;} var text=sel.toString().trim(); if(!text||text.length<2){hideSelPopup();return;} var range=sel.getRangeAt(0); var container=range.commonAncestorContainer; var node=container.nodeType===1?container:container.parentElement; if(!node||!node.closest('.page, article')) return; var rect=range.getBoundingClientRect(); showSelPopup(rect,text); },10); });
+  document.addEventListener('mousedown', function(e){ if(!e.target.closest('.ed-sel-popup')) hideSelPopup(); });
+  function showSelPopup(rect,text){ hideSelPopup(); var p=document.createElement('div'); p.className='ed-sel-popup'; p.style.top=(window.scrollY+rect.bottom+6)+'px'; p.style.left=(window.scrollX+rect.left)+'px'; var btn=document.createElement('button'); btn.className='ed-sel-btn'; btn.textContent='✏ Annotate selection'; btn.addEventListener('click',function(){ openSelCommentBox(rect,text); hideSelPopup(); }); p.appendChild(btn); document.body.appendChild(p); _selPopup=p; }
+  function openSelCommentBox(rect,selectedText){ var box=document.createElement('div'); box.className='ed-sel-comment-box'; box.style.top=(window.scrollY+rect.bottom+6)+'px'; box.style.left=Math.min(window.scrollX+rect.left,window.scrollX+window.innerWidth-320)+'px'; var preview=selectedText.length>80?selectedText.slice(0,80)+'…':selectedText; box.innerHTML='<div class="ed-sel-preview">📌 "'+esc(preview)+'"</div><textarea placeholder="Annotate this selection..."></textarea><div class="ed-comment-box-actions"><button type="button" class="ed-cancel">Cancel</button><button type="button" class="ed-save">Save</button></div>'; document.body.appendChild(box); var ta=box.querySelector('textarea'); ta.focus(); box.querySelector('.ed-cancel').addEventListener('click',function(){ box.remove(); }); box.querySelector('.ed-save').addEventListener('click',function(){ var txt=ta.value.trim(); if(!txt){box.remove();return;} var id='a'+Date.now()+Math.random().toString(36).slice(2,5); var list=lsGetJSON(A_KEY); list.push({id:id,text:selectedText,comment:txt,ts:Date.now()}); lsSetJSON(A_KEY,list); highlightAnnotation(id,selectedText); box.remove(); updateBarStatus(); }); }
+  function highlightAnnotation(id,text){ var page=document.querySelector('.page, article'); if(!page) return; var walker=document.createTreeWalker(page,NodeFilter.SHOW_TEXT,null); var node; while((node=walker.nextNode())){ var idx=node.nodeValue.indexOf(text); if(idx!==-1){ try{ var range=document.createRange(); range.setStart(node,idx); range.setEnd(node,idx+text.length); var mark=document.createElement('mark'); mark.className='ed-annotation'; mark.setAttribute('data-aid',id); mark.title='Annotated — click to see comment'; range.surroundContents(mark); mark.addEventListener('click',function(){ var a=lsGetJSON(A_KEY).find(function(x){return x.id===id;}); if(a) alert('Annotation:\n'+a.comment); }); }catch(e){} break; } } }
+  lsGetJSON(A_KEY).forEach(function(a){ highlightAnnotation(a.id,a.text); });
+  function buildStickyDOM(id,x,y,text){ var note=document.createElement('div'); note.className='ed-sticky'; note.setAttribute('data-sid',id); note.style.top=y+'px'; note.style.left=x+'px'; note.innerHTML='<div class="ed-sticky-handle">📌 Note <button class="ed-sticky-close" title="Delete">✕</button></div><textarea placeholder="Free note..."></textarea>'; var ta=note.querySelector('textarea'); ta.value=text; ta.addEventListener('input',function(){ var list=lsGetJSON(S_KEY); var item=list.find(function(s){return s.id===id;}); if(item){item.text=ta.value;lsSetJSON(S_KEY,list);} }); note.querySelector('.ed-sticky-close').addEventListener('click',function(){ lsSetJSON(S_KEY,lsGetJSON(S_KEY).filter(function(s){return s.id!==id;})); note.remove(); updateBarStatus(); }); makeDraggable(note,note.querySelector('.ed-sticky-handle'),id); return note; }
+  function makeDraggable(el,handle,id){ var sx,sy,ox,oy,dragging=false; handle.addEventListener('mousedown',function(e){ if(e.target.classList.contains('ed-sticky-close')) return; dragging=true; sx=e.pageX; sy=e.pageY; ox=parseInt(el.style.left)||0; oy=parseInt(el.style.top)||0; e.preventDefault(); }); document.addEventListener('mousemove',function(e){ if(!dragging) return; el.style.left=Math.max(0,ox+(e.pageX-sx))+'px'; el.style.top=Math.max(0,oy+(e.pageY-sy))+'px'; }); document.addEventListener('mouseup',function(){ if(!dragging) return; dragging=false; var list=lsGetJSON(S_KEY); var item=list.find(function(s){return s.id===id;}); if(item){item.x=parseInt(el.style.left)||0;item.y=parseInt(el.style.top)||0;lsSetJSON(S_KEY,list);} }); }
+  lsGetJSON(S_KEY).forEach(function(s){ document.body.appendChild(buildStickyDOM(s.id,s.x,s.y,s.text)); });
+  function addSticky(){ var x=window.scrollX+Math.max(60,window.innerWidth/2-120); var y=window.scrollY+100; var id='s'+Date.now()+Math.random().toString(36).slice(2,5); var note=buildStickyDOM(id,x,y,''); document.body.appendChild(note); var list=lsGetJSON(S_KEY); list.push({id:id,x:x,y:y,text:''}); lsSetJSON(S_KEY,list); var ta=note.querySelector('textarea'); if(ta) ta.focus(); updateBarStatus(); }
+  function countAllComments(){ var n=0; for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf(C_PREFIX)===0&&(lsGet(k)||'').trim()) n++;} n+=lsGetJSON(A_KEY).length; lsGetJSON(S_KEY).forEach(function(s){if(s.text&&s.text.trim())n++;}); return n; }
+  function updateBarStatus(){ var n=countAllComments(); var countEl=document.getElementById('ed-bar-count'); if(countEl) countEl.textContent=n; var statusEl=document.getElementById('ed-bar-status'); if(statusEl) statusEl.textContent=n>0?n+' comment'+(n!==1?'s':'')+' saved':'No comments yet'; }
+  function copyAllComments(){ var items=[]; document.querySelectorAll('.ed-commentable[data-bid]').forEach(function(el){ var bid=el.getAttribute('data-bid'); var val=(lsGet(C_PREFIX+bid)||'').trim(); if(!val) return; var clone=el.cloneNode(true); clone.querySelectorAll('.ed-comment-btn,.ed-dot,.ed-comment-box').forEach(function(n){n.remove();}); var ctx=(clone.innerText||clone.textContent||'').trim().slice(0,200); items.push({type:'block',ctx:ctx,comment:val}); }); lsGetJSON(A_KEY).forEach(function(a){items.push({type:'annotation',ctx:a.text.slice(0,200),comment:a.comment});}); lsGetJSON(S_KEY).forEach(function(s){if(s.text&&s.text.trim()) items.push({type:'sticky',ctx:'(free note)',comment:s.text.trim()});}); if(items.length===0){alert('No comments to copy.');return;} var out='[Homework Comments] '+document.title+'\n'; out+='('+items.length+' comment'+(items.length!==1?'s':'')+')'+'\n\n'; items.forEach(function(it,i){ out+='--- #'+(i+1)+' ['+it.type+'] ---\n'; out+='Context: '+it.ctx.replace(/\n+/g,' / ')+'\n'; out+='Comment: '+it.comment+'\n\n'; }); out+='---\nPlease apply feedback to the source file.\n'; navigator.clipboard.writeText(out).then(function(){ var btn=document.getElementById('ed-bar-copy'); if(btn){var orig=btn.textContent;btn.textContent='Copied!';setTimeout(function(){btn.textContent=orig;},1800);}}).catch(function(err){alert('Copy failed: '+err.message);}); }
+  function clearAllComments(){ var btn=document.getElementById('ed-bar-clear'); if(!btn) return; if(btn.getAttribute('data-armed')!=='1'){btn.setAttribute('data-armed','1');var orig=btn.textContent;btn.textContent='Click again to confirm';setTimeout(function(){btn.removeAttribute('data-armed');btn.textContent=orig;},3000);return;} btn.removeAttribute('data-armed'); var toRm=[]; for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf(C_PREFIX)===0) toRm.push(k);} toRm.forEach(function(k){lsRm(k);}); lsRm(A_KEY); lsRm(S_KEY); document.querySelectorAll('.ed-commentable').forEach(function(el){el.classList.remove('has-ed-comment');var dot=el.querySelector('.ed-dot');var cbtn=el.querySelector('.ed-comment-btn');var box=el.querySelector('.ed-comment-box');if(dot)dot.hidden=true;if(cbtn)cbtn.classList.remove('has-comment');if(box)box.remove();}); document.querySelectorAll('mark.ed-annotation').forEach(function(mark){var p=mark.parentNode;while(mark.firstChild)p.insertBefore(mark.firstChild,mark);p.removeChild(mark);}); document.querySelectorAll('.ed-sticky').forEach(function(n){n.remove();}); updateBarStatus(); }
+  function buildBar(){ var bar=document.createElement('div'); bar.className='ed-bar'; bar.id='ed-bar'; bar.innerHTML='<span class="ed-bar-label">Editor</span><button class="ed-bar-btn ed-bar-primary" id="ed-bar-sticky">+ Note</button><button class="ed-bar-btn" id="ed-bar-img">+ Image</button><span class="ed-bar-sep"></span><button class="ed-bar-btn" id="ed-bar-copy">Copy comments</button><button class="ed-bar-btn" id="ed-bar-clear">Clear all</button><span class="ed-bar-spacer"></span><span class="ed-bar-status" id="ed-bar-status">No comments yet</span><span class="ed-bar-sep"></span><span class="ed-bar-count" id="ed-bar-count">0</span>'; document.body.appendChild(bar); document.getElementById('ed-bar-sticky').addEventListener('click',addSticky); document.getElementById('ed-bar-img').addEventListener('click',function(){var input=document.createElement('input');input.type='file';input.accept='image/*';input.style.display='none';document.body.appendChild(input);input.addEventListener('change',function(){if(!input.files||!input.files.length){input.remove();return;}var reader=new FileReader();reader.onload=function(ev){var page=document.querySelector('.page');if(!page)return;var img=document.createElement('img');img.src=ev.target.result;img.style.cssText='max-width:100%;display:block;margin:10px 0;border:1px solid #e2e8f0;border-radius:4px;cursor:pointer;';img.title='Click to remove image';img.addEventListener('click',function(){if(confirm('Remove this image?'))img.remove();});page.appendChild(img);};reader.readAsDataURL(input.files[0]);input.remove();});input.click();}); document.getElementById('ed-bar-copy').addEventListener('click',copyAllComments); document.getElementById('ed-bar-clear').addEventListener('click',clearAllComments); }
+  function init(){initCommentableBlocks();buildBar();updateBarStatus();}
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){setTimeout(init,500);});}else{setTimeout(init,500);}
+})();
+</script>
+</body>
+</html>

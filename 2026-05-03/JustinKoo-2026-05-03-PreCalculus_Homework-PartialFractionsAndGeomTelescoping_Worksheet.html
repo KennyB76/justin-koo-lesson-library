@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pre-Calculus Homework: Partial Fractions, Geometric Series &amp; Telescoping (v2)</title>
+<script>
+window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+    startup: { ready: () => { MathJax.startup.defaultReady(); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Source Serif Pro', 'Georgia', 'Times New Roman', serif; color: #000; font-size: 10.5pt; line-height: 1.55; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+    html, body { background: #fff; }
+    .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+    .problem, .example { page-break-inside: avoid; break-inside: avoid; }
+    .part-header, .directions, h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+    .page-break { page-break-before: always; break-before: page; }
+    * { background: transparent !important; }
+}
+:root {
+    --color-primary: #1565c0;
+    --color-accent: #00838f;
+    --color-final-answer: #2e7d32;
+    --color-warning: #c62828;
+    --color-muted: #555;
+    --color-rule: #ccc;
+}
+h1, h2, h3, .part-header { font-family: 'Libre Baskerville', 'Georgia', serif; }
+.header { text-align: center; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid var(--color-primary); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 7px 3px; font-weight: bold; border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+h1 { font-size: 15pt; margin: 6px 0 8px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 4px; color: var(--color-muted); }
+.part-header { font-size: 12pt; font-weight: bold; color: var(--color-primary); margin: 18px 0 4px 0; padding-bottom: 3px; border-bottom: 1.5px solid var(--color-primary); }
+.directions { font-size: 9.5pt; font-style: italic; color: #333; margin-bottom: 10px; line-height: 1.45; }
+.directions strong { color: #000; font-style: normal; }
+.problem { margin: 12px 0; font-size: 10.5pt; line-height: 1.6; padding-left: 10px; border-left: 3px solid var(--color-primary); }
+.q-num { display: inline-block; min-width: 26px; font-weight: bold; color: var(--color-primary); }
+.work-space { min-height: 105px; margin-left: 24px; margin-top: 6px; }
+.work-space.tall { min-height: 140px; }
+.work-space.short { min-height: 75px; }
+.example { border: 2px solid var(--color-final-answer); padding: 10px 14px; margin: 12px 0; }
+.example-title { font-weight: bold; color: var(--color-final-answer); margin-bottom: 6px; font-size: 10.5pt; }
+.example-problem { font-size: 10.5pt; margin-bottom: 6px; }
+.example-solution { border-left: 3px solid var(--color-final-answer); padding-left: 12px; margin-top: 6px; font-size: 9.5pt; }
+.example-solution p { margin: 5px 0; line-height: 1.55; }
+.example-solution .final { font-weight: bold; color: var(--color-final-answer); margin-top: 6px; }
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid var(--color-rule); margin-top: 20px; padding-top: 6px; }
+.tip { font-size: 9.5pt; color: var(--color-warning); font-style: italic; margin-top: 4px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">PRE-CALCULUS</div>
+    <h1>Homework: Partial Fractions, Geometric Series &amp; Telescoping</h1>
+    <div class="info">
+        <span><strong>Student:</strong> Justin Koo</span>
+        <span><strong>Date:</strong> 2026-05-03</span>
+    </div>
+    <div class="standard"><strong>Standard:</strong> CCSS.MATH.CONTENT.HSA-SSE.B.4 / HSA-APR.D.6 — Partial fraction decomposition; finite/infinite geometric series; telescoping sums.</div>
+</div>
+
+<!-- ====================== PART 1 ====================== -->
+<div class="part-header">Part 1 — Algebra Foundations: Complex Fractions &amp; Partial Fractions</div>
+<div class="directions"><strong>Why this part comes first:</strong> every infinite geometric sum lands in the shape $\dfrac{g_0}{1-r}$, which is a complex fraction. And every telescoping sum starts with a partial-fraction split. Master both before moving on. <strong>Strategy for complex fractions:</strong> simplify <em>inside-out</em> — innermost fraction first, then outward.</div>
+
+<div class="example">
+<div class="example-title">Example 1 — Complex fraction with sums in numerator and denominator</div>
+<div class="example-problem">Simplify $\;\displaystyle\frac{\frac{1}{3} + \frac{1}{6}}{1 - \frac{1}{4}}$.</div>
+<div class="example-solution">
+    <p><strong>Inside-out:</strong> compute each layer separately first.</p>
+    <p>Numerator: $\;\tfrac{1}{3} + \tfrac{1}{6} = \tfrac{2}{6} + \tfrac{1}{6} = \tfrac{3}{6} = \tfrac{1}{2}$.</p>
+    <p>Denominator: $\;1 - \tfrac{1}{4} = \tfrac{3}{4}$.</p>
+    <p>Now divide: $\;\dfrac{1/2}{3/4} = \tfrac{1}{2} \cdot \tfrac{4}{3} = \tfrac{4}{6} = \tfrac{2}{3}$.</p>
+    <p class="final">Answer: $\dfrac{2}{3}$.</p>
+</div>
+</div>
+
+<div class="example">
+<div class="example-title">Example 2 — Partial fraction decomposition</div>
+<div class="example-problem">Find $A,B$ so that $\;\displaystyle\frac{1}{n(n+3)} = \frac{A}{n} + \frac{B}{n+3}$.</div>
+<div class="example-solution">
+    <p>Combine the right side over $n(n+3)$: &nbsp; $\dfrac{A(n+3) + Bn}{n(n+3)} = \dfrac{1}{n(n+3)}$.</p>
+    <p>Numerators must match for all $n$: $\;A(n+3) + Bn = 1 \;\Rightarrow\; (A+B)n + 3A = 1$.</p>
+    <p>Match coefficients: &nbsp;$n$-coeff: $A + B = 0$. &nbsp; constant: $3A = 1 \Rightarrow A = \tfrac{1}{3}$, so $B = -\tfrac{1}{3}$.</p>
+    <p class="final">$A = \tfrac{1}{3},\;\; B = -\tfrac{1}{3}$.</p>
+</div>
+</div>
+
+<div class="problem">
+    <span class="q-num">1.</span> Simplify $\;\displaystyle\frac{\frac{2}{5} + \frac{1}{4}}{1 - \frac{3}{10}}$. &nbsp; <em>(Inside-out: numerator and denominator separately first.)</em>
+    <div class="work-space short"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">2.</span> Simplify the nested complex fraction $\;\displaystyle\frac{1}{1 - \dfrac{1}{1 + \dfrac{1}{3}}}$. &nbsp; <em>(Three layers — start at the innermost $1 + \tfrac{1}{3}$ and work your way out.)</em>
+    <div class="work-space"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">3.</span> Find $A, B$ such that $\;\displaystyle \frac{1}{n(n+2)} = \frac{A}{n} + \frac{B}{n+2}$. &nbsp; <em>(Note the gap of $2$ between factors.)</em>
+    <div class="work-space"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">4.</span> Find $A, B$ such that $\;\displaystyle \frac{1}{(3n-1)(3n+2)} = \frac{A}{3n-1} + \frac{B}{3n+2}$.
+    <div class="work-space"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">5.</span> First factor the denominator, then find $A, B$: $\;\displaystyle\frac{1}{n^2 + 4n + 3} = \frac{A}{?} + \frac{B}{?}$. &nbsp; <em>(Hint: $n^2 + 4n + 3$ factors as $(n+1)(n+3)$.)</em>
+    <div class="work-space"></div>
+</div>
+
+<!-- ====================== PART 2 ====================== -->
+<div class="part-header page-break">Part 2 — Geometric Series (Finite &amp; Infinite)</div>
+<div class="directions"><strong>Reminder.</strong> Finite: $\displaystyle\sum_{k=0}^{n} g_0 r^k = g_0 \cdot \dfrac{1 - r^{\,n+1}}{1 - r}$ &nbsp; (works for any $r \ne 1$). &nbsp;&nbsp; Infinite: $\displaystyle\sum_{k=0}^{\infty} g_0 r^k = \dfrac{g_0}{1-r}$ &nbsp; only when $|r|&lt;1$ (else write DIVERGES).</div>
+
+<div class="example">
+<div class="example-title">Example 1 — Repeating decimal as a geometric series</div>
+<div class="example-problem">Express $\;0.\overline{27} = 0.272727\ldots\;$ as an exact fraction.</div>
+<div class="example-solution">
+    <p>Split into chunks of two digits: $\;0.\overline{27} = 0.27 + 0.0027 + 0.000027 + \cdots$</p>
+    <p>This is geometric with first term $g_0 = \tfrac{27}{100}$ and ratio $r = \tfrac{1}{100}$ (each chunk is $1/100$ of the previous).</p>
+    <p>Since $|r| = 1/100 &lt; 1$:
+    $$S_\infty = \frac{27/100}{1 - 1/100} = \frac{27/100}{99/100} = \frac{27}{99} = \frac{3}{11}$$</p>
+    <p>Check: $3 \div 11 = 0.272727\ldots$ ✓</p>
+    <p class="final">Answer: $\;0.\overline{27} = \dfrac{3}{11}$.</p>
+    <p class="tip">This trick works for any repeating decimal — pick a chunk length equal to the repeat block.</p>
+</div>
+</div>
+
+<div class="example">
+<div class="example-title">Example 2 — Finite geometric sum starting at index $\ne 0$ (use a shift)</div>
+<div class="example-problem">Compute $\;\displaystyle\sum_{k=2}^{6} \left(\tfrac{1}{2}\right)^k$.</div>
+<div class="example-solution">
+    <p><strong>Method (shift to start at $0$):</strong> let $j = k - 2$, so $k = j+2$. Then $(1/2)^k = (1/2)^{j+2} = \tfrac{1}{4}(1/2)^j$. The sum becomes
+    $$\sum_{j=0}^{4} \tfrac{1}{4}(1/2)^j = \tfrac{1}{4} \cdot \frac{1 - (1/2)^5}{1 - 1/2} = \tfrac{1}{4} \cdot \frac{1 - 1/32}{1/2} = \tfrac{1}{4} \cdot 2 \cdot \tfrac{31}{32} = \tfrac{31}{64}$$</p>
+    <p><em>Sanity check (direct):</em> $\;\tfrac{1}{4} + \tfrac{1}{8} + \tfrac{1}{16} + \tfrac{1}{32} + \tfrac{1}{64} = \tfrac{16+8+4+2+1}{64} = \tfrac{31}{64}$ ✓</p>
+    <p class="final">Answer: $\;\dfrac{31}{64}$.</p>
+</div>
+</div>
+
+<div class="problem">
+    <span class="q-num">1.</span> Compute the finite sum $\;\displaystyle\sum_{k=0}^{5} 6\left(\tfrac{2}{3}\right)^k$ as an exact fraction.
+    <div class="work-space"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">2.</span> Compute the infinite sum $\;\displaystyle\sum_{k=0}^{\infty} 6\left(\tfrac{2}{3}\right)^k$. &nbsp;Then state the gap between this and your answer to #1.
+    <div class="work-space"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">3.</span> Compute $\;\displaystyle\sum_{k=3}^{8}\left(\tfrac{1}{2}\right)^k$. &nbsp;<em>(Use the shift trick from Example 2.)</em>
+    <div class="work-space"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">4.</span> Compute $\;\displaystyle\sum_{k=0}^{\infty} 8\left(-\tfrac{3}{4}\right)^k$. &nbsp;<em>(Watch the sign in $1 - r$.)</em>
+    <div class="work-space"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">5.</span> Express the repeating decimal $\;0.\overline{135} = 0.135135135\ldots\;$ as an exact fraction <strong>using a geometric series</strong> (not by guessing).
+    <div class="work-space"></div>
+</div>
+
+<!-- ====================== PART 3 ====================== -->
+<div class="part-header page-break">Part 3 — Telescoping Series &amp; Power Series IoC (Final Challenge)</div>
+<div class="directions"><strong>Strategy.</strong> Telescoping series come from partial-fraction splits (Part 1). Write $S_N$ explicitly, watch what cancels in pairs, take $N \to \infty$. The very last problem (#5) introduces a <em>power series</em> — same recipe as a geometric series, but the ratio contains $x$, so you must find the values of $x$ where $|r(x)| &lt; 1$ (the IoC).</div>
+
+<div class="example">
+<div class="example-title">Example 1 — Basic telescoping</div>
+<div class="example-problem">Evaluate $\;\displaystyle\sum_{n=1}^{\infty} \frac{1}{n(n+1)}$.</div>
+<div class="example-solution">
+    <p>Partial fractions: $\;\dfrac{1}{n(n+1)} = \dfrac{1}{n} - \dfrac{1}{n+1}$ (verify: $\tfrac{(n+1)-n}{n(n+1)} = \tfrac{1}{n(n+1)}$ ✓).</p>
+    <p>Build $S_N$ explicitly:
+    $$S_N = \Big(1 - \tfrac{1}{2}\Big) + \Big(\tfrac{1}{2} - \tfrac{1}{3}\Big) + \Big(\tfrac{1}{3} - \tfrac{1}{4}\Big) + \cdots + \Big(\tfrac{1}{N} - \tfrac{1}{N+1}\Big)$$</p>
+    <p>Every middle piece cancels (the $-\tfrac{1}{2}$ kills the next $+\tfrac{1}{2}$, etc.). Only the very first $1$ and the very last $-\tfrac{1}{N+1}$ survive: $\;S_N = 1 - \tfrac{1}{N+1}$.</p>
+    <p>Take $N \to \infty$: $\;\tfrac{1}{N+1} \to 0$, so $S_\infty = 1$.</p>
+    <p class="final">Answer: $\;1$.</p>
+</div>
+</div>
+
+<div class="example">
+<div class="example-title">Example 2 — Power series with $x$ in the ratio: find IoC and sum function</div>
+<div class="example-problem">Find the Interval of Convergence and the sum function $P(x)$ for $\;\displaystyle\sum_{k=0}^{\infty}\left(-\tfrac{2}{x}\right)^k$.</div>
+<div class="example-solution">
+    <p><strong>Step 1 — Identify $g_0$ and $r(x)$.</strong> At $k=0$, term is $1$, so $g_0 = 1$. Ratio $r(x) = -\tfrac{2}{x}$.</p>
+    <p><strong>Step 2 — Convergence: $|r(x)| &lt; 1$.</strong>
+    $$\left|-\tfrac{2}{x}\right| &lt; 1 \;\Longrightarrow\; \frac{2}{|x|} &lt; 1 \;\Longrightarrow\; |x| &gt; 2 \;\Longrightarrow\; x &gt; 2 \text{ or } x &lt; -2$$
+    IoC $= (-\infty, -2) \cup (2, \infty)$.</p>
+    <p><strong>Step 3 — Sum function (clean up the complex fraction!).</strong>
+    $$P(x) = \frac{g_0}{1 - r(x)} = \frac{1}{1 - (-2/x)} = \frac{1}{1 + 2/x}$$
+    Multiply numerator and denominator by $x$ (Part-1 trick):
+    $$P(x) = \frac{1 \cdot x}{(1 + 2/x) \cdot x} = \frac{x}{x + 2}$$</p>
+    <p class="final">IoC: $(-\infty,-2)\cup(2,\infty)$, &nbsp; $P(x) = \dfrac{x}{x+2}$.</p>
+    <p class="tip">Step 3 is exactly the inside-out complex-fraction trick from Part 1. Now you see why we drilled it.</p>
+</div>
+</div>
+
+<div class="problem">
+    <span class="q-num">1.</span> Evaluate $\;\displaystyle\sum_{n=1}^{\infty} \frac{1}{(2n-1)(2n+1)}$. &nbsp;<em>(Use Part 1 #4: $A = \tfrac{1}{2}, B = -\tfrac{1}{2}$.)</em>
+    <div class="work-space tall"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">2.</span> Evaluate $\;\displaystyle\sum_{n=1}^{\infty} \frac{1}{(3n-1)(3n+2)}$. &nbsp;<em>(Use Part 1 #4-style: find $A,B$ first if needed, then telescope.)</em>
+    <div class="work-space tall"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">3.</span> Evaluate $\;\displaystyle\sum_{n=1}^{\infty} \frac{1}{n^2 + 4n + 3}$. &nbsp;<em>(Hint: factor first — Part 1 #5. Watch out: this is a <strong>gap-2</strong> telescope, so <strong>two</strong> terms survive at the start.)</em>
+    <div class="work-space tall"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">4.</span> Evaluate $\;\displaystyle\sum_{n=1}^{\infty} \frac{1}{n(n+2)}$. &nbsp;<em>(Use Part 1 #3 result. Same gap-2 telescoping pattern as #3.)</em>
+    <div class="work-space tall"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">5.</span> <strong>FINAL CHALLENGE.</strong> Find the Interval of Convergence and the sum function $P(x)$ for $\;\displaystyle\sum_{k=0}^{\infty}\left(\tfrac{x}{2}\right)^k$. &nbsp;<em>(Same recipe as Part 3 Example 2 — identify $r(x)$, solve $|r(x)|&lt;1$, then build and clean up $P(x)$.)</em>
+    <div class="work-space tall"></div>
+</div>
+
+<div class="footer">
+    Created by Newton School &nbsp;|&nbsp; 2026-05-03 &nbsp;|&nbsp; Pre-Calculus Homework — Justin Koo &copy; Copyright
+</div>
+
+</div>
+</body>
+</html>

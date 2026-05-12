@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pre-Calculus Homework: Mathematical Induction</title>
+<script>
+window.MathJax = {
+    tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']]
+    },
+    startup: { ready: () => { MathJax.startup.defaultReady(); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+/* ===== base-print.css ===== */
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Century Schoolbook', 'Times New Roman', serif; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+    html, body { background: #fff; }
+    .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+    .problem, .answer-block, .reminder, .parent-note, .example, .word-problem {
+        page-break-inside: avoid; break-inside: avoid;
+    }
+    .part-header, .directions, .problem-header, h1, h2, h3 {
+        page-break-after: avoid; break-after: avoid;
+    }
+    .page-break { page-break-before: always; break-before: page; }
+}
+
+/* ===== theme-boy.css ===== */
+:root {
+    --color-primary:        #1565c0;
+    --color-primary-dark:   #0d47a1;
+    --color-accent:         #00838f;
+    --color-header-border:  #1565c0;
+    --color-final-answer:   #2e7d32;
+    --color-warning:        #c62828;
+    --color-parent-note:    #283593;
+    --color-tag-bg:         transparent;
+    --color-tag-border:     #1565c0;
+    --color-tag-text:       #1565c0;
+    --color-muted:          #555;
+    --color-rule:           #ccc;
+}
+
+/* ===== level-high.css ===== */
+body { font-family: 'Source Serif Pro', 'Georgia', 'Times New Roman', serif; font-size: 10.5pt; line-height: 1.55; }
+h1, h2, h3, .part-header { font-family: 'Libre Baskerville', 'Georgia', serif; }
+.header { text-align: center; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid var(--color-header-border); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 7px 3px; font-weight: bold; border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+h1 { font-size: 15pt; margin: 6px 0 8px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 4px; color: var(--color-muted); }
+.part-header { font-size: 13pt; font-weight: bold; color: var(--color-primary); margin: 22px 0 6px 0; padding-bottom: 3px; border-bottom: 1.5px solid var(--color-primary); }
+.directions { font-size: 10pt; font-style: italic; color: #333; margin-bottom: 12px; line-height: 1.5; }
+.directions strong { color: #000; font-style: normal; }
+.problem { margin: 14px 0; font-size: 10.5pt; line-height: 1.6; padding-left: 8px; border-left: 3px solid var(--color-primary); }
+.q-num { display: inline-block; min-width: 26px; font-weight: bold; color: var(--color-primary); }
+.work-space { min-height: 220px; margin-left: 8px; margin-top: 10px; border-bottom: 1px solid #ddd; }
+.concept-box { border: 1.5px solid var(--color-accent); background: transparent; padding: 10px 14px; margin: 12px 0; font-size: 10pt; border-left-width: 4px; }
+.concept-box .title { font-weight: bold; color: var(--color-accent); margin-bottom: 4px; }
+.example { border: 2px solid var(--color-final-answer); padding: 12px 16px; margin: 14px 0; page-break-inside: avoid; break-inside: avoid; }
+.example-title { font-weight: bold; color: var(--color-final-answer); margin-bottom: 6px; font-size: 11pt; }
+.example-problem { font-size: 10.5pt; margin-bottom: 6px; }
+.example-solution { border-left: 3px solid var(--color-final-answer); padding-left: 12px; margin-top: 8px; font-size: 10pt; }
+.example-solution p { margin: 5px 0; line-height: 1.6; }
+.example-solution .final { font-weight: bold; color: var(--color-final-answer); margin-top: 6px; }
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid var(--color-rule); margin-top: 20px; padding-top: 6px; }
+
+/* ===== Problem-per-page layout ===== */
+.prob-page { min-height: 9in; display: flex; flex-direction: column; }
+.prob-page .work-space { flex: 1; min-height: 260px; }
+.induction-steps {
+    margin: 10px 0 10px 16px;
+    font-size: 10pt;
+    line-height: 1.8;
+}
+.step-label {
+    font-weight: bold;
+    color: var(--color-primary);
+    display: inline-block;
+    min-width: 120px;
+}
+.step-box {
+    border: 1px solid #bbb;
+    padding: 6px 10px;
+    margin: 6px 0 6px 16px;
+    min-height: 40px;
+}
+.step-box.tall { min-height: 70px; }
+@media print {
+    .prob-page { min-height: auto; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============================================================
+       COVER / PAGE 1 — Problem 1 (Sum of First n Integers)
+       ============================================================ -->
+  <div class="prob-page">
+    <div class="header">
+      <div class="school-name">NEWTON SCHOOL</div>
+      <div class="subject-tag">PRE-CALCULUS</div>
+      <h1>Mathematical Induction: Sum Formulas &amp; Proof by Induction</h1>
+      <div class="info">
+        <span><strong>Student:</strong> Justin Koo</span>
+        <span><strong>Date:</strong> 2026-05-10</span>
+      </div>
+      <div class="standard">
+        <strong>Standard:</strong> CCSS.MATH.CONTENT.HSA-APR &mdash;
+        Use mathematical induction to prove statements about sums, divisibility, and inequalities;
+        write rigorous base case + inductive step arguments.
+      </div>
+    </div>
+
+    <div class="concept-box">
+      <div class="title">Proof by Mathematical Induction — Two-Step Framework</div>
+      <p><strong>Step 1 — Base Case:</strong> Show the statement $P(n)$ is true for $n = 1$ (or the first relevant integer).</p>
+      <p><strong>Step 2 — Inductive Step:</strong> Assume $P(k)$ is true (inductive hypothesis). Then <em>prove</em> $P(k+1)$ is true.</p>
+      <p><strong>Conclusion:</strong> By the Principle of Mathematical Induction, $P(n)$ is true for all $n \ge 1$.</p>
+    </div>
+
+    <div class="part-header">Problem 1 &mdash; Sum of First <em>n</em> Positive Integers</div>
+    <div class="directions"><strong>Difficulty: Introductory.</strong> Follow the template below. Write each step clearly.</div>
+
+    <div class="example">
+      <div class="example-title">Worked Example &mdash; Sum of First <em>n</em> Odd Numbers</div>
+      <div class="example-problem">
+        Prove by induction: $\displaystyle 1 + 3 + 5 + \cdots + (2n-1) = n^2$ for all $n \ge 1$.
+      </div>
+      <div class="example-solution">
+        <p><strong>Base Case</strong> ($n = 1$): LHS $= 1$. &nbsp; RHS $= 1^2 = 1$. &nbsp; $\checkmark$</p>
+        <p><strong>Inductive Hypothesis:</strong> Assume $1 + 3 + \cdots + (2k-1) = k^2$ for some $k \ge 1$.</p>
+        <p><strong>Inductive Step</strong> (prove for $n = k+1$):</p>
+        <p style="margin-left:16px;">
+          $1 + 3 + \cdots + (2k-1) + (2(k+1)-1)$<br>
+          $= k^2 + (2k+1)$ &nbsp;&nbsp; (by inductive hypothesis)<br>
+          $= (k+1)^2$ &nbsp;&nbsp; (factor)
+        </p>
+        <p class="final">Conclusion: The statement holds for all $n \ge 1$. $\blacksquare$</p>
+      </div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">1.</span>
+      Prove by mathematical induction that for all integers $n \ge 1$:
+      $$1 + 2 + 3 + \cdots + n \;=\; \frac{n(n+1)}{2}$$
+    </div>
+
+    <div class="induction-steps">
+      <div><span class="step-label">Base Case ($n=1$):</span></div>
+      <div class="step-box tall"></div>
+
+      <div><span class="step-label">Inductive Hypothesis:</span></div>
+      <div class="step-box">Assume the formula holds for $n = k$, i.e., $\displaystyle\sum_{i=1}^{k} i = $&nbsp;<span style="border-bottom:1px solid #000;display:inline-block;min-width:80px;">&nbsp;</span></div>
+
+      <div style="margin-top:8px;"><span class="step-label">Inductive Step:</span> Show it holds for $n = k+1$.</div>
+      <div class="step-box tall"></div>
+
+      <div><span class="step-label">Conclusion:</span></div>
+      <div class="step-box"></div>
+    </div>
+
+    <div class="footer">Newton School &mdash; 2026-05-10 &copy; Copyright &nbsp;|&nbsp; Problem 1 of 5</div>
+  </div>
+
+  <!-- ============================================================
+       PAGE 2 — Problem 2 (Sum of Squares)
+       ============================================================ -->
+  <div class="page-break"></div>
+  <div class="prob-page">
+
+    <div class="header">
+      <div class="school-name">NEWTON SCHOOL</div>
+      <div class="subject-tag">PRE-CALCULUS</div>
+      <h1>Mathematical Induction: Sum Formulas &amp; Proof by Induction</h1>
+      <div class="info">
+        <span><strong>Student:</strong> Justin Koo</span>
+        <span><strong>Date:</strong> 2026-05-10</span>
+      </div>
+    </div>
+
+    <div class="part-header">Problem 2 &mdash; Sum of Squares</div>
+    <div class="directions"><strong>Difficulty: Easy.</strong> The algebra in the inductive step requires careful factoring. Show every line.</div>
+
+    <div class="example">
+      <div class="example-title">Worked Example &mdash; Sum of First <em>n</em> Even Numbers</div>
+      <div class="example-problem">
+        Prove by induction: $\displaystyle 2 + 4 + 6 + \cdots + 2n = n(n+1)$ for all $n \ge 1$.
+      </div>
+      <div class="example-solution">
+        <p><strong>Base Case</strong> ($n=1$): LHS $= 2$. &nbsp; RHS $= 1 \cdot 2 = 2$. &nbsp; $\checkmark$</p>
+        <p><strong>Inductive Hypothesis:</strong> Assume $2 + 4 + \cdots + 2k = k(k+1)$.</p>
+        <p><strong>Inductive Step:</strong></p>
+        <p style="margin-left:16px;">
+          $2 + 4 + \cdots + 2k + 2(k+1)$<br>
+          $= k(k+1) + 2(k+1)$ &nbsp;&nbsp; (by inductive hypothesis)<br>
+          $= (k+1)(k + 2)$ &nbsp;&nbsp; (factor out $(k+1)$)<br>
+          $= (k+1)\bigl((k+1)+1\bigr)$ &nbsp;&nbsp; $\checkmark$
+        </p>
+        <p class="final">Conclusion: $P(n)$ holds for all $n \ge 1$. $\blacksquare$</p>
+      </div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">2.</span>
+      Prove by mathematical induction that for all integers $n \ge 1$:
+      $$1^2 + 2^2 + 3^2 + \cdots + n^2 \;=\; \frac{n(n+1)(2n+1)}{6}$$
+    </div>
+
+    <div class="induction-steps">
+      <div><span class="step-label">Base Case ($n=1$):</span></div>
+      <div class="step-box tall"></div>
+
+      <div><span class="step-label">Inductive Hypothesis:</span></div>
+      <div class="step-box"></div>
+
+      <div style="margin-top:8px;"><span class="step-label">Inductive Step:</span></div>
+      <div class="step-box" style="min-height:120px;"></div>
+
+      <div><span class="step-label">Conclusion:</span></div>
+      <div class="step-box"></div>
+    </div>
+
+    <div class="footer">Newton School &mdash; 2026-05-10 &copy; Copyright &nbsp;|&nbsp; Problem 2 of 5</div>
+  </div>
+
+  <!-- ============================================================
+       PAGE 3 — Problem 3 (Geometric Series)
+       ============================================================ -->
+  <div class="page-break"></div>
+  <div class="prob-page">
+
+    <div class="header">
+      <div class="school-name">NEWTON SCHOOL</div>
+      <div class="subject-tag">PRE-CALCULUS</div>
+      <h1>Mathematical Induction: Sum Formulas &amp; Proof by Induction</h1>
+      <div class="info">
+        <span><strong>Student:</strong> Justin Koo</span>
+        <span><strong>Date:</strong> 2026-05-10</span>
+      </div>
+    </div>
+
+    <div class="part-header">Problem 3 &mdash; Geometric Series Sum</div>
+    <div class="directions"><strong>Difficulty: Medium.</strong> The geometric series formula connects directly to the convergence topics from last week. Watch the algebra when multiplying both sides.</div>
+
+    <div class="example">
+      <div class="example-title">Worked Example &mdash; Powers of 2</div>
+      <div class="example-problem">
+        Prove by induction: $\displaystyle 1 + 2 + 4 + \cdots + 2^{n-1} = 2^n - 1$ for all $n \ge 1$.
+      </div>
+      <div class="example-solution">
+        <p><strong>Base Case</strong> ($n=1$): LHS $= 2^0 = 1$. &nbsp; RHS $= 2^1 - 1 = 1$. &nbsp; $\checkmark$</p>
+        <p><strong>Inductive Hypothesis:</strong> Assume $1 + 2 + \cdots + 2^{k-1} = 2^k - 1$.</p>
+        <p><strong>Inductive Step:</strong></p>
+        <p style="margin-left:16px;">
+          $1 + 2 + \cdots + 2^{k-1} + 2^k$<br>
+          $= (2^k - 1) + 2^k$ &nbsp;&nbsp; (by inductive hypothesis)<br>
+          $= 2 \cdot 2^k - 1 = 2^{k+1} - 1$ &nbsp;&nbsp; $\checkmark$
+        </p>
+        <p class="final">Conclusion: $P(n)$ holds for all $n \ge 1$. $\blacksquare$</p>
+      </div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">3.</span>
+      Prove by mathematical induction that for all integers $n \ge 1$ and $r \ne 1$:
+      $$1 + r + r^2 + \cdots + r^{n-1} \;=\; \frac{r^n - 1}{r - 1}$$
+      <br>
+      <em>(Hint: in the inductive step, add $r^k$ to both sides and factor.)</em>
+    </div>
+
+    <div class="induction-steps">
+      <div><span class="step-label">Base Case ($n=1$):</span></div>
+      <div class="step-box tall"></div>
+
+      <div><span class="step-label">Inductive Hypothesis:</span></div>
+      <div class="step-box"></div>
+
+      <div style="margin-top:8px;"><span class="step-label">Inductive Step:</span></div>
+      <div class="step-box" style="min-height:130px;"></div>
+
+      <div><span class="step-label">Conclusion:</span></div>
+      <div class="step-box"></div>
+    </div>
+
+    <div class="footer">Newton School &mdash; 2026-05-10 &copy; Copyright &nbsp;|&nbsp; Problem 3 of 5</div>
+  </div>
+
+  <!-- ============================================================
+       PAGE 4 — Problem 4 (Divisibility)
+       ============================================================ -->
+  <div class="page-break"></div>
+  <div class="prob-page">
+
+    <div class="header">
+      <div class="school-name">NEWTON SCHOOL</div>
+      <div class="subject-tag">PRE-CALCULUS</div>
+      <h1>Mathematical Induction: Sum Formulas &amp; Proof by Induction</h1>
+      <div class="info">
+        <span><strong>Student:</strong> Justin Koo</span>
+        <span><strong>Date:</strong> 2026-05-10</span>
+      </div>
+    </div>
+
+    <div class="part-header">Problem 4 &mdash; Divisibility Proof</div>
+    <div class="directions"><strong>Difficulty: Medium-Hard.</strong> Divisibility proofs use a different structure than sum proofs. The key move is writing $f(k+1)$ in terms of $f(k)$.</div>
+
+    <div class="example">
+      <div class="example-title">Worked Example &mdash; Divisibility by 3</div>
+      <div class="example-problem">
+        Prove by induction: $n^3 - n$ is divisible by 3 for all $n \ge 1$.
+      </div>
+      <div class="example-solution">
+        <p><strong>Base Case</strong> ($n=1$): $1^3 - 1 = 0 = 3 \cdot 0$. &nbsp; Divisible by 3. &nbsp; $\checkmark$</p>
+        <p><strong>Inductive Hypothesis:</strong> Assume $k^3 - k = 3m$ for some integer $m$.</p>
+        <p><strong>Inductive Step:</strong></p>
+        <p style="margin-left:16px;">
+          $(k+1)^3 - (k+1)$<br>
+          $= k^3 + 3k^2 + 3k + 1 - k - 1$<br>
+          $= (k^3 - k) + 3k^2 + 3k$<br>
+          $= 3m + 3(k^2 + k)$ &nbsp;&nbsp; (by inductive hypothesis)<br>
+          $= 3(m + k^2 + k)$, which is divisible by 3. &nbsp; $\checkmark$
+        </p>
+        <p class="final">Conclusion: $3 \mid (n^3 - n)$ for all $n \ge 1$. $\blacksquare$</p>
+      </div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">4.</span>
+      Prove by mathematical induction that $6 \mid (n^3 - n)$ for all integers $n \ge 1$.
+      <br><br>
+      That is, prove that $n^3 - n$ is always divisible by 6.
+      <br>
+      <em>(Hint: factor $n^3 - n = n(n-1)(n+1)$ first. In the inductive step, write $(k+1)^3 - (k+1)$ and separate it into $f(k) +$ extra terms.)</em>
+    </div>
+
+    <div class="induction-steps">
+      <div><span class="step-label">Base Case ($n=1$):</span></div>
+      <div class="step-box tall"></div>
+
+      <div><span class="step-label">Inductive Hypothesis:</span></div>
+      <div class="step-box"></div>
+
+      <div style="margin-top:8px;"><span class="step-label">Inductive Step:</span></div>
+      <div class="step-box" style="min-height:130px;"></div>
+
+      <div><span class="step-label">Conclusion:</span></div>
+      <div class="step-box"></div>
+    </div>
+
+    <div class="footer">Newton School &mdash; 2026-05-10 &copy; Copyright &nbsp;|&nbsp; Problem 4 of 5</div>
+  </div>
+
+  <!-- ============================================================
+       PAGE 5 — Problem 5 (Inequality Proof)
+       ============================================================ -->
+  <div class="page-break"></div>
+  <div class="prob-page">
+
+    <div class="header">
+      <div class="school-name">NEWTON SCHOOL</div>
+      <div class="subject-tag">PRE-CALCULUS</div>
+      <h1>Mathematical Induction: Sum Formulas &amp; Proof by Induction</h1>
+      <div class="info">
+        <span><strong>Student:</strong> Justin Koo</span>
+        <span><strong>Date:</strong> 2026-05-10</span>
+      </div>
+    </div>
+
+    <div class="part-header">Problem 5 &mdash; Inequality Proof</div>
+    <div class="directions"><strong>Difficulty: Hard.</strong> Inequality induction requires careful reasoning about the direction of the inequality at each step. Justify every inequality sign.</div>
+
+    <div class="example">
+      <div class="example-title">Worked Example &mdash; Exponential vs. Linear</div>
+      <div class="example-problem">
+        Prove by induction: $2^n > n$ for all $n \ge 1$.
+      </div>
+      <div class="example-solution">
+        <p><strong>Base Case</strong> ($n=1$): $2^1 = 2 > 1$. &nbsp; $\checkmark$</p>
+        <p><strong>Inductive Hypothesis:</strong> Assume $2^k > k$ for some $k \ge 1$.</p>
+        <p><strong>Inductive Step:</strong></p>
+        <p style="margin-left:16px;">
+          $2^{k+1} = 2 \cdot 2^k > 2k$ &nbsp;&nbsp; (by inductive hypothesis, multiply both sides by 2)<br>
+          $2k = k + k \ge k + 1$ &nbsp;&nbsp; (since $k \ge 1$)<br>
+          Therefore $2^{k+1} > k + 1$. &nbsp; $\checkmark$
+        </p>
+        <p class="final">Conclusion: $2^n > n$ for all $n \ge 1$. $\blacksquare$</p>
+      </div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">5.</span>
+      Prove by mathematical induction that for all integers $n \ge 4$:
+      $$2^n \;\ge\; n^2$$
+      <em>(Note: the base case starts at $n = 4$, not $n = 1$. Check $n=1,2,3$ to see why they fail.)</em>
+      <br>
+      <em>(Hint for inductive step: show $2^{k+1} = 2 \cdot 2^k \ge 2k^2$, then compare $2k^2$ with $(k+1)^2 = k^2+2k+1$.)</em>
+    </div>
+
+    <div class="induction-steps">
+      <div><span class="step-label">Base Case ($n=4$):</span></div>
+      <div class="step-box tall"></div>
+
+      <div><span class="step-label">Inductive Hypothesis:</span></div>
+      <div class="step-box"></div>
+
+      <div style="margin-top:8px;"><span class="step-label">Inductive Step:</span></div>
+      <div class="step-box" style="min-height:140px;"></div>
+
+      <div><span class="step-label">Conclusion:</span></div>
+      <div class="step-box"></div>
+    </div>
+
+    <div class="footer">Newton School &mdash; 2026-05-10 &copy; Copyright &nbsp;|&nbsp; Problem 5 of 5</div>
+  </div>
+
+</div>
+</body>
+</html>

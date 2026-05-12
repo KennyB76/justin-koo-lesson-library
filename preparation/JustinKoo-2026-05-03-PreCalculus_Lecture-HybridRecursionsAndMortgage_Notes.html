@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pre-Calculus Lecture: Hybrid Recursions, Fixed Points &amp; Mortgage Application</title>
+<script>
+window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+    startup: { ready: () => { MathJax.startup.defaultReady(); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+/* ============ base-print.css ============ */
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Century Schoolbook', 'Times New Roman', serif; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+    html, body { background: #fff; }
+    .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+    .problem, .answer-block, .reminder, .parent-note, .example, .word-problem,
+    .concept-box, .practice-block { page-break-inside: avoid; break-inside: avoid; }
+    .part-header, .directions, .problem-header, h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+    .page-break { page-break-before: always; break-before: page; }
+    * { background: transparent !important; }
+}
+
+/* ============ theme-boy.css ============ */
+:root {
+    --color-primary: #1565c0;
+    --color-primary-dark: #0d47a1;
+    --color-accent: #00838f;
+    --color-header-border: #1565c0;
+    --color-final-answer: #2e7d32;
+    --color-warning: #c62828;
+    --color-parent-note: #283593;
+    --color-tag-border: #1565c0;
+    --color-tag-text: #1565c0;
+    --color-muted: #555;
+    --color-rule: #ccc;
+}
+
+/* ============ level-high.css ============ */
+body { font-family: 'Source Serif Pro', 'Georgia', 'Times New Roman', serif; font-size: 10.5pt; line-height: 1.55; }
+h1, h2, h3, .part-header { font-family: 'Libre Baskerville', 'Georgia', serif; }
+.header { text-align: center; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid var(--color-header-border); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 7px 3px; font-weight: bold; border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+h1 { font-size: 16pt; margin: 6px 0 8px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 4px; color: var(--color-muted); }
+.part-header { font-size: 13pt; font-weight: bold; color: var(--color-primary); margin: 22px 0 6px 0; padding-bottom: 3px; border-bottom: 1.5px solid var(--color-primary); }
+.directions { font-size: 10pt; font-style: italic; color: #333; margin-bottom: 12px; line-height: 1.5; }
+.directions strong { color: #000; font-style: normal; }
+
+.concept-box { border: 1.5px solid var(--color-accent); background: transparent; padding: 12px 16px; margin: 14px 0; font-size: 10.5pt; border-left-width: 4px; }
+.concept-box .title { font-weight: bold; color: var(--color-accent); margin-bottom: 6px; font-size: 11pt; }
+.concept-box ul { margin: 6px 0 6px 20px; padding: 0; }
+.concept-box li { margin: 4px 0; }
+
+.example { border: 2px solid var(--color-final-answer); padding: 12px 16px; margin: 14px 0; }
+.example-title { font-weight: bold; color: var(--color-final-answer); margin-bottom: 6px; font-size: 11pt; }
+.example-problem { font-size: 10.5pt; margin-bottom: 8px; }
+.example-solution { border-left: 3px solid var(--color-final-answer); padding-left: 12px; margin-top: 8px; font-size: 10pt; }
+.example-solution p { margin: 6px 0; line-height: 1.6; }
+.example-solution .final { font-weight: bold; color: var(--color-final-answer); margin-top: 8px; }
+
+.practice-block { margin: 18px 0; }
+.practice-problem { padding: 8px 12px; border-left: 3px solid var(--color-primary); margin-bottom: 4px; font-size: 10.5pt; }
+.practice-problem .q-num { display: inline-block; min-width: 26px; font-weight: bold; color: var(--color-primary); }
+.practice-answer { margin: 4px 0 0 16px; padding: 8px 14px; border-left: 3px solid var(--color-final-answer); font-size: 10pt; line-height: 1.6; }
+.practice-answer .ans-label { font-weight: bold; color: var(--color-final-answer); margin-right: 6px; letter-spacing: 1px; }
+.practice-answer p { margin: 4px 0; }
+.practice-answer .final { font-weight: bold; color: var(--color-final-answer); }
+.practice-spacer { height: 14px; }
+
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid var(--color-rule); margin-top: 20px; padding-top: 6px; }
+.kenny-tip { font-size: 9.5pt; color: var(--color-warning); font-style: italic; margin: 6px 0 0 0; }
+
+/* Trace table for recursion */
+.trace-table { border-collapse: collapse; margin: 10px auto; font-size: 10pt; }
+.trace-table th, .trace-table td { border: 1px solid #888; padding: 4px 12px; text-align: center; }
+.trace-table th { color: var(--color-primary); font-weight: bold; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">PRE-CALCULUS</div>
+    <h1>Hybrid Recursions, Fixed Points &amp; Mortgage Application</h1>
+    <div class="info">
+        <span><strong>Student:</strong> Justin Koo</span>
+        <span><strong>Date:</strong> 2026-05-03</span>
+    </div>
+    <div class="standard"><strong>Standard:</strong> CCSS.MATH.CONTENT.HSF-BF.A.1 / HSF-LE.A.2 — Build recursive and explicit formulas for sequences modeling real-world phenomena (finance, biology, decay).</div>
+</div>
+
+<!-- =================== CONCEPT INSIGHTS =================== -->
+<div class="part-header">1. Concept Insights — Why "Hybrid"?</div>
+
+<div class="concept-box">
+<div class="title">The recursion zoo</div>
+<p>Most recursions you've seen come in two flavors:</p>
+<ul>
+    <li><strong>Geometric</strong> ($b = 0$): $\;T_n = a \cdot T_{n-1}$. &nbsp; Each term is a multiple of the last. (Compound interest with no payments.)</li>
+    <li><strong>Arithmetic</strong> ($a = 1$): $\;T_n = T_{n-1} + b$. &nbsp; Add a constant each step.</li>
+</ul>
+<p>But the real world is messier. What if both happen — multiply by $a$ <em>and</em> add $b$? That's a <strong>hybrid recursion</strong>:</p>
+<p style="text-align:center;"><strong>$\displaystyle T_n = a\,T_{n-1} + b, \quad T_0 \text{ given}, \quad a \ne 0,\; b \ne 0$</strong></p>
+<p>Real models that need this:</p>
+<ul>
+    <li><strong>Biology:</strong> population grows by factor $a$ per year, then $b$ animals migrate in (or out).</li>
+    <li><strong>Pharmacology:</strong> body retains fraction $a$ of drug each day, then patient takes a dose $b$.</li>
+    <li><strong>Finance:</strong> loan balance grows by factor $a = 1+r$, then monthly payment $-p$ knocks it down.</li>
+</ul>
+</div>
+
+<div class="concept-box">
+<div class="title">The Explicit Formula — derived by unrolling</div>
+<p>Iterate the recursion starting from $T_0$:</p>
+<p>$T_1 = aT_0 + b$ <br>
+$T_2 = a(aT_0+b)+b = a^2 T_0 + ab + b$ <br>
+$T_3 = a^3 T_0 + a^2 b + ab + b$ <br>
+$\;\vdots$ <br>
+$T_n = a^n T_0 + b(1 + a + a^2 + \cdots + a^{n-1})$</p>
+<p>The bracketed part is a finite geometric sum $= \dfrac{1-a^n}{1-a}$. So:</p>
+<p style="text-align:center;"><strong>$\displaystyle T_n = a^n\,T_0 + b\cdot\frac{1-a^n}{1-a}$</strong></p>
+<p class="kenny-tip">First piece = "geometric growth of the seed." Second piece = "accumulated effect of all the $b$'s, geometrically discounted."</p>
+</div>
+
+<div class="concept-box">
+<div class="title">The Fixed Point (Equilibrium) — when nothing changes</div>
+<p>Suppose the sequence ever reaches a value $T^*$ where the next term equals the previous: $T_n = T_{n-1} = T^*$. Plug in:</p>
+<p style="text-align:center;">$T^* = a T^* + b \;\;\Longrightarrow\;\; T^*(1 - a) = b \;\;\Longrightarrow\;\; \boxed{\,T^* = \dfrac{b}{1-a}\,}$</p>
+<p>Long-run behavior:</p>
+<ul>
+    <li>$|a|&lt;1$: every starting $T_0$ funnels <strong>toward</strong> $T^*$ (stable equilibrium).</li>
+    <li>$|a|&gt;1$: any deviation from $T^*$ <strong>blows up</strong> (unstable).</li>
+</ul>
+</div>
+
+<!-- =================== SIMPLE EXAMPLE =================== -->
+<div class="part-header">2. Worked Example — Simple</div>
+
+<div class="example">
+<div class="example-title">Example 1 — Find the fixed point and the closed-form formula</div>
+<div class="example-problem">Let $T_0 = 100$ and $T_n = 0.5\,T_{n-1} + 30$. Find $T_5$ exactly, the explicit formula, and the long-run equilibrium.</div>
+<div class="example-solution">
+    <p><strong>Step 1 — Identify $a$ and $b$.</strong> $a = 0.5$, $b = 30$, $T_0 = 100$.</p>
+    <p><strong>Step 2 — Equilibrium.</strong> $T^* = \dfrac{b}{1-a} = \dfrac{30}{1 - 0.5} = \dfrac{30}{0.5} = 60$.</p>
+    <p><strong>Step 3 — Explicit formula.</strong>
+    $$T_n = (0.5)^n(100) + 30 \cdot \frac{1 - (0.5)^n}{1 - 0.5} = (0.5)^n(100) + 60\big(1 - (0.5)^n\big)$$
+    Simplify: $T_n = 60 + (0.5)^n(100 - 60) = 60 + 40\,(0.5)^n$.</p>
+    <p><strong>Step 4 — Plug $n=5$.</strong> $T_5 = 60 + 40\,(0.5)^5 = 60 + 40 \cdot \tfrac{1}{32} = 60 + 1.25 = 61.25$.</p>
+    <p class="final">$T_n = 60 + 40\,(0.5)^n$, &nbsp; $T_5 = 61.25$, &nbsp; $T^* = 60$ (stable since $|0.5|&lt;1$).</p>
+    <p class="kenny-tip">Notice the elegant form $T_n = T^* + (T_0 - T^*)a^n$ — every hybrid solution is "equilibrium + decaying offset." This is the most insightful way to remember it.</p>
+</div>
+</div>
+
+<!-- =================== HARDER EXAMPLE =================== -->
+<div class="part-header page-break">3. Worked Example — Harder (Mortgage Payment)</div>
+
+<div class="example">
+<div class="example-title">Example 2 — Paying off a 30-year, $500,000 mortgage at 6% APR</div>
+<div class="example-problem">A $\$500{,}000$ home loan is to be paid off in $30$ years ($= 360$ monthly payments) at an annual interest rate of $r = 6\%$. The bank applies $\tfrac{r}{12} = 0.005$ monthly interest to the unpaid balance, then deducts the monthly payment $p$. Find $p$ so that the balance hits $0$ after 360 months.</div>
+<div class="example-solution">
+
+    <p><strong>Step 1 — Set up the recursion.</strong> Let $B_n$ be the balance after $n$ months. Each month: balance grows by $(1 + 0.005)$, then $p$ is paid:
+    $$B_n = (1.005)\,B_{n-1} - p, \qquad B_0 = 500{,}000$$
+    Here $a = 1.005$, $b = -p$.</p>
+
+    <p><strong>Step 2 — Apply the explicit formula.</strong>
+    $$B_n = (1.005)^n (500{,}000) + (-p)\cdot \frac{1 - (1.005)^n}{1 - 1.005} = (1.005)^n (500{,}000) - p \cdot \frac{(1.005)^n - 1}{0.005}$$</p>
+
+    <p><strong>Step 3 — Set $B_{360} = 0$ and solve for $p$.</strong>
+    $$0 = (1.005)^{360}(500{,}000) - p \cdot \frac{(1.005)^{360} - 1}{0.005}$$
+    $$p = \frac{(1.005)^{360}(500{,}000) \cdot 0.005}{(1.005)^{360} - 1} = (500{,}000) \cdot \frac{0.005 \cdot (1.005)^{360}}{(1.005)^{360} - 1}$$</p>
+
+    <p><strong>Step 4 — Numerics.</strong> $(1.005)^{360} \approx 6.0226$. So:
+    $$p \approx 500{,}000 \cdot \frac{0.005 \cdot 6.0226}{6.0226 - 1} = 500{,}000 \cdot \frac{0.030113}{5.0226} \approx 500{,}000 \cdot 0.0059955 \approx 2997.75$$</p>
+
+    <p class="final">Monthly payment $\boxed{p \approx \$2{,}997.75}$ for 360 months.</p>
+
+    <p class="kenny-tip">General mortgage formula (worth memorizing): $\;\; p = L \cdot \dfrac{(r/12)(1 + r/12)^{12y}}{(1 + r/12)^{12y} - 1}\;$ where $L$ = loan, $r$ = annual rate, $y$ = years.</p>
+</div>
+</div>
+
+<!-- =================== PRACTICE =================== -->
+<div class="part-header page-break">4. Practice — 5 Problems with Answers Below</div>
+<div class="directions">Cover the green block, work each one out, then check.</div>
+
+<!-- ----- Problem 1 ----- -->
+<div class="practice-block">
+    <div class="practice-problem">
+        <span class="q-num">1.</span> Let $T_0 = 20$ and $T_n = 3\,T_{n-1} + 4$. Compute $T_3$ directly from the recursion (no closed form).
+    </div>
+    <div class="practice-answer">
+        <span class="ans-label">ANSWER</span>
+        <p>$T_1 = 3(20)+4 = 64$. &nbsp; $T_2 = 3(64)+4 = 196$. &nbsp; $T_3 = 3(196)+4 = 592$.</p>
+        <table class="trace-table">
+            <tr><th>$n$</th><td>0</td><td>1</td><td>2</td><td>3</td></tr>
+            <tr><th>$T_n$</th><td>20</td><td>64</td><td>196</td><td>592</td></tr>
+        </table>
+        <p class="final">$T_3 = 592$</p>
+    </div>
+</div>
+
+<div class="practice-spacer"></div>
+
+<!-- ----- Problem 2 ----- -->
+<div class="practice-block">
+    <div class="practice-problem">
+        <span class="q-num">2.</span> For $T_0 = 10$ and $T_n = 0.8\,T_{n-1} + 6$, find the equilibrium $T^*$ and describe the long-run behavior of $T_n$.
+    </div>
+    <div class="practice-answer">
+        <span class="ans-label">ANSWER</span>
+        <p>$T^* = \dfrac{b}{1-a} = \dfrac{6}{1 - 0.8} = \dfrac{6}{0.2} = 30$.</p>
+        <p>Since $|a| = 0.8 &lt; 1$, the equilibrium is <strong>stable</strong>. Starting from $T_0 = 10 &lt; 30$, the sequence rises and approaches $30$ from below.</p>
+        <p>Closed form: $T_n = 30 + (10 - 30)(0.8)^n = 30 - 20(0.8)^n$. As $n \to \infty$, $\;T_n \to 30$.</p>
+        <p class="final">$T^* = 30$, &nbsp; $T_n \to 30$ (rises from 10, never exceeds 30)</p>
+    </div>
+</div>
+
+<div class="practice-spacer"></div>
+
+<!-- ----- Problem 3 ----- -->
+<div class="practice-block">
+    <div class="practice-problem">
+        <span class="q-num">3.</span> <strong>Drug dosing model.</strong> Each day, the body retains $80\%$ of the drug already in the bloodstream, and the patient takes a fresh $50$ mg dose. Find the long-run steady-state concentration $T^*$ in mg.
+    </div>
+    <div class="practice-answer">
+        <span class="ans-label">ANSWER</span>
+        <p>Recursion: $T_n = 0.8\,T_{n-1} + 50$. So $a = 0.8$, $b = 50$.</p>
+        <p>$T^* = \dfrac{50}{1 - 0.8} = \dfrac{50}{0.2} = 250$ mg.</p>
+        <p>Stable since $|a|&lt;1$ — regardless of the starting concentration, the level approaches $250$ mg.</p>
+        <p class="final">Steady-state $= 250$ mg</p>
+        <p style="font-size:9.5pt;color:#555;"><em>Insight:</em> the steady state is much higher than a single dose ($50$ mg) because residue accumulates. This is why doctors care about half-lives.</p>
+    </div>
+</div>
+
+<div class="practice-spacer"></div>
+
+<!-- ----- Problem 4 ----- -->
+<div class="practice-block">
+    <div class="practice-problem">
+        <span class="q-num">4.</span> <strong>Car loan.</strong> $\$30{,}000$ borrowed for $5$ years ($= 60$ months) at annual rate $4.8\%$. Find the monthly payment $p$.
+    </div>
+    <div class="practice-answer">
+        <span class="ans-label">ANSWER</span>
+        <p>Monthly rate: $\tfrac{0.048}{12} = 0.004$. So $a = 1.004$, recursion $B_n = 1.004\,B_{n-1} - p$.</p>
+        <p>Set $B_{60} = 0$:
+        $$p = 30{,}000 \cdot \frac{0.004 \cdot (1.004)^{60}}{(1.004)^{60} - 1}$$</p>
+        <p>$(1.004)^{60} \approx 1.27049$. &nbsp; Numerator: $30{,}000 \cdot 0.004 \cdot 1.27049 \approx 152.46$. &nbsp; Denom: $0.27049$.</p>
+        <p>$p \approx \dfrac{152.46}{0.27049} \approx 563.61$.</p>
+        <p class="final">$p \approx \$563.61$ per month</p>
+    </div>
+</div>
+
+<div class="practice-spacer"></div>
+
+<!-- ----- Problem 5 ----- -->
+<div class="practice-block">
+    <div class="practice-problem">
+        <span class="q-num">5.</span> <strong>Population with harvesting.</strong> A fish population grows by $5\%$ per year ($a = 1.05$), but $10$ fish are caught and removed at year-end ($b = -10$). Start with $T_0 = 200$ fish. Find $T^*$ and explain whether the population stabilizes, grows, or crashes — then compute $T_{10}$.
+    </div>
+    <div class="practice-answer">
+        <span class="ans-label">ANSWER</span>
+        <p><strong>Equilibrium:</strong> $T^* = \dfrac{-10}{1 - 1.05} = \dfrac{-10}{-0.05} = 200$.</p>
+        <p>$T_0$ already equals $T^*$! So the population stays at exactly $200$ forever. Let's verify with the formula.</p>
+        <p>$T_n = T^* + (T_0 - T^*)a^n = 200 + (200 - 200)(1.05)^n = 200 + 0 = 200$ for all $n$.</p>
+        <p><strong>$T_{10} = 200$.</strong></p>
+        <p class="final">$T^* = 200$, &nbsp; $T_n = 200$ for all $n$ (perfectly balanced)</p>
+        <p style="font-size:9.5pt;color:#555;"><em>Stability warning:</em> $|a| = 1.05 &gt; 1$, so this equilibrium is <strong>unstable</strong>. If $T_0 = 199$ (just below), the population would slowly crash toward 0; if $T_0 = 201$, it would slowly grow without bound. Sustainable harvest is razor-thin.</p>
+    </div>
+</div>
+
+<div class="footer">
+    Created by Newton School &nbsp;|&nbsp; 2026-05-03 &nbsp;|&nbsp; Pre-Calculus Lecture Material — Justin Koo &copy; Copyright
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Justin Koo — Pre-Calculus Homework: Recursion (Hanoi & Characteristic Equation) (2026-04-26)</title>
+<script>
+  window.MathJax = { tex: { inlineMath:[['$','$'],['\\(','\\)']], displayMath:[['$$','$$'],['\\[','\\]']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin:0; padding:0; background:#fafafa; }
+body { font-family:'Source Serif Pro','Libre Baskerville','Georgia','Times New Roman',serif; color:#000; }
+.page { max-width:740px; margin:0 auto; padding:60px 50px 40px 50px; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+  html,body{background:#fff}
+  .page{max-width:none; padding:.55in .55in .45in .55in; margin:0; box-shadow:none}
+  .problem,.example,.concept-box,.theorem-box,.formula-box,.diagram-row{page-break-inside:avoid; break-inside:avoid}
+  .part-header,.directions,h1,h2,h3{page-break-after:avoid; break-after:avoid}
+  .page-break{page-break-before:always; break-before:page}
+}
+:root{
+  --color-primary:#1565c0; --color-primary-dark:#0d47a1; --color-accent:#00838f;
+  --color-header-border:#1565c0; --color-final-answer:#2e7d32; --color-warning:#c62828;
+  --color-tag-border:#1565c0; --color-tag-text:#1565c0; --color-muted:#555; --color-rule:#ccc;
+  --color-theorem:#6a1b9a;
+}
+body{font-size:10.5pt; line-height:1.55}
+h1,h2,h3,.part-header{font-family:'Libre Baskerville','Georgia',serif}
+.header{text-align:center; padding-bottom:10px; margin-bottom:16px; border-bottom:2px solid var(--color-header-border)}
+.school-name{font-size:9pt; letter-spacing:4px; color:var(--color-primary); font-weight:bold}
+.subject-tag,.key-tag{display:inline-block; padding:2px 10px; font-size:8pt; letter-spacing:2px; margin:5px 3px 7px 3px; font-weight:bold}
+.subject-tag{border:1.5px solid var(--color-primary); color:var(--color-primary)}
+.key-tag{border:1.5px solid var(--color-warning); color:var(--color-warning)}
+h1{font-size:16pt; margin:6px 0 8px 0; font-weight:bold; line-height:1.3}
+.info{display:flex; justify-content:space-between; font-size:10pt; margin-top:6px; flex-wrap:wrap; gap:6px}
+.standard{font-size:8pt; font-style:italic; margin-top:4px; color:var(--color-muted)}
+.part-header{font-size:13pt; font-weight:bold; color:var(--color-primary); margin:22px 0 6px 0; padding-bottom:3px; border-bottom:1.5px solid var(--color-primary)}
+.directions{font-size:10pt; font-style:italic; color:#333; margin-bottom:12px; line-height:1.5}
+.directions strong{color:#000; font-style:normal}
+.problem{margin:14px 0; font-size:10.5pt; line-height:1.6; padding:8px 12px; border-left:3px solid var(--color-primary)}
+.q-num{display:inline-block; min-width:26px; font-weight:bold; color:var(--color-primary)}
+.ans-line{display:inline-block; border-bottom:1.5px solid #000; min-width:80px; height:18px; margin:0 4px; vertical-align:bottom}
+.work-space{min-height:120px; margin-left:24px; margin-top:6px}
+.work-space.lg{min-height:180px}
+.work-space.xl{min-height:240px}
+.concept-box{border:1.5px solid var(--color-accent); padding:10px 14px; margin:12px 0; font-size:10pt; border-left-width:4px}
+.concept-box .title{font-weight:bold; color:var(--color-accent); margin-bottom:4px}
+.theorem-box{border:2px solid var(--color-theorem); padding:12px 16px; margin:14px 0; font-size:10.5pt; background:rgba(106,27,154,.04); border-left-width:5px; border-radius:4px}
+.theorem-box .t-label{display:inline-block; font-weight:bold; color:var(--color-theorem); letter-spacing:1.5px; font-size:9pt; margin-bottom:4px}
+.theorem-box .t-name{font-weight:bold; color:#000; font-style:italic; margin-left:6px}
+.theorem-box ol{margin:6px 0 0 22px; padding:0; line-height:1.7}
+.theorem-box li{margin-bottom:3px}
+.theorem-box .t-body{margin-top:6px}
+.recap-table{border-collapse:collapse; width:100%; margin:8px 0; font-size:9.5pt}
+.recap-table th,.recap-table td{border:1px solid #ccc; padding:5px 8px; text-align:left}
+.recap-table th{color:var(--color-primary); font-weight:bold; background:transparent}
+.subpart{margin:6px 0 6px 24px; line-height:1.7}
+.subpart-label{font-weight:bold; color:var(--color-accent); display:inline-block; min-width:30px}
+.footer{text-align:center; font-size:8pt; color:#666; border-top:1px solid var(--color-rule); margin-top:20px; padding-top:6px}
+.formula-box{background:transparent; border:1.5px solid #888; padding:6px 12px; margin:6px 0; text-align:center; font-size:11pt; border-radius:4px}
+
+/* Worked example (sample solved problem) */
+.worked-box{border:2px solid var(--color-accent); padding:12px 16px; margin:14px 0 18px; font-size:10pt; background:rgba(0,131,143,.04); border-left-width:5px; border-radius:4px}
+.worked-box .w-label{display:inline-block; font-weight:bold; color:var(--color-accent); letter-spacing:1.5px; font-size:9pt}
+.worked-box .w-name{font-weight:bold; color:#000; font-style:italic; margin-left:6px}
+.worked-box .w-step{margin:4px 0; line-height:1.7}
+.worked-box .w-step-label{font-weight:bold; color:var(--color-accent); margin-right:4px}
+.worked-final{background:rgba(46,125,50,.08); border:1.5px solid var(--color-final-answer); border-radius:4px; padding:5px 12px; margin:8px 0 0; font-weight:bold; color:var(--color-final-answer); text-align:center; font-size:10.5pt}
+
+/* Hanoi diagram styling */
+.diagram-row{display:flex; gap:18px; justify-content:center; margin:10px 0 6px; flex-wrap:wrap}
+.diagram-card{flex:1; min-width:280px; max-width:340px; border:1px solid #cfd8dc; border-radius:6px; padding:8px 10px; background:#fafcff}
+.diagram-card .d-title{font-weight:bold; color:var(--color-primary); text-align:center; font-size:10.5pt; margin-bottom:4px; font-family:'Libre Baskerville','Georgia',serif}
+.diagram-card .d-sub{text-align:center; font-size:9pt; color:#555; font-style:italic; margin-bottom:4px}
+.diagram-card svg{display:block; margin:0 auto}
+.diagram-card .d-rec{text-align:center; font-size:10.5pt; margin-top:6px; padding-top:6px; border-top:1px dashed #cfd8dc}
+
+/* === Visual -c Comment System === */
+mark.user-hl{background:linear-gradient(120deg,rgba(255,235,59,.5),rgba(255,235,59,.7)); padding:0 2px; border-radius:2px; cursor:pointer; position:relative; transition:background .15s ease}
+mark.user-hl:hover{background:linear-gradient(120deg,rgba(255,193,7,.6),rgba(255,193,7,.8))}
+mark.user-hl.has-comment{background:linear-gradient(120deg,rgba(56,189,248,.45),rgba(56,189,248,.65)); border-bottom:2px dashed #38bdf8}
+mark.user-hl.has-comment:hover{background:linear-gradient(120deg,rgba(14,165,233,.55),rgba(14,165,233,.75))}
+.hl-popup{position:absolute; z-index:9999; background:#1f2937; color:#f3f4f6; border:1px solid #374151; border-radius:8px; padding:6px; display:flex; gap:4px; box-shadow:0 4px 12px rgba(0,0,0,.4); font-size:13px; user-select:none; font-family:'Trebuchet MS',sans-serif}
+.hl-popup button{background:transparent; color:inherit; border:1px solid transparent; border-radius:5px; padding:5px 10px; cursor:pointer; font-size:13px; font-family:inherit}
+.hl-popup button:hover{background:#374151; border-color:#4b5563}
+.hl-comment-editor{position:absolute; z-index:9999; background:#1f2937; color:#f3f4f6; border:1px solid #374151; border-radius:8px; padding:10px; width:300px; box-shadow:0 4px 16px rgba(0,0,0,.5); font-family:'Trebuchet MS',sans-serif}
+.hl-comment-editor .quote{font-style:italic; opacity:.75; font-size:11.5px; margin-bottom:8px; max-height:60px; overflow:hidden}
+.hl-comment-editor textarea{width:100%; min-height:80px; background:#111827; color:#f3f4f6; border:1px solid #374151; border-radius:5px; padding:6px 8px; font-family:inherit; font-size:13px; resize:vertical; margin-bottom:8px; box-sizing:border-box; outline:none}
+.hl-comment-editor .actions{display:flex; gap:6px; justify-content:flex-end}
+.hl-comment-editor button{background:#374151; color:#f3f4f6; border:1px solid #4b5563; border-radius:5px; padding:5px 12px; cursor:pointer; font-size:12px; font-family:inherit}
+.hl-comment-editor button.primary{background:#2563eb; border-color:#1d4ed8}
+.hl-comment-editor button:hover{filter:brightness(1.15)}
+.tools-sidebar{position:fixed; top:14px; right:14px; width:300px; max-height:calc(100vh - 28px); overflow-y:auto; z-index:100; background:#1f2937; color:#f3f4f6; border:1px solid #374151; border-radius:12px; padding:34px 12px 10px; font-size:12px; font-family:'Trebuchet MS',sans-serif; box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.tools-sidebar.collapsed{width:44px; height:44px; padding:0; overflow:hidden; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:20px}
+.tools-sidebar.collapsed .ts-body,.tools-sidebar.collapsed .ts-title,.tools-sidebar.collapsed .ts-toggle,.tools-sidebar.collapsed .ts-actions,.tools-sidebar.collapsed #hlList{display:none}
+.tools-sidebar.collapsed::after{content:'💬'; font-size:22px}
+.ts-toggle{position:absolute; top:6px; right:8px; background:transparent; border:1px solid #4b5563; border-radius:4px; color:#f3f4f6; font-size:11px; padding:2px 8px; cursor:pointer; font-family:inherit}
+.ts-title{font-weight:bold; font-size:13px; color:#fbbf24; margin-bottom:6px; padding:0 2px}
+.ts-actions{display:flex; gap:4px; margin:6px 2px 8px}
+.ts-actions button{flex:1; background:#374151; color:#f3f4f6; border:1px solid #4b5563; border-radius:5px; padding:5px 8px; cursor:pointer; font-size:11px; font-family:inherit}
+.ts-actions button:hover{filter:brightness(1.15)}
+.ts-actions button.danger:hover{background:#7f1d1d; border-color:#991b1b}
+.ts-empty{text-align:center; opacity:.55; padding:20px 8px; font-style:italic; font-size:11px}
+.hl-panel-item{border-left:3px solid #fbbf24; padding:6px 8px; margin-bottom:6px; background:rgba(255,255,255,.03); border-radius:0 4px 4px 0; cursor:pointer; font-size:11px; line-height:1.4; position:relative}
+.hl-panel-item.has-comment{border-left-color:#38bdf8}
+.hl-panel-item.type-block{border-left-color:#a78bfa}
+.hl-panel-item:hover{background:rgba(255,255,255,.08)}
+.hl-panel-item .hl-quote{font-style:italic; opacity:.78; display:block; margin-bottom:3px; font-size:10.5px}
+.hl-panel-item .hl-comment{font-size:11px; opacity:.98; white-space:pre-wrap}
+.hl-panel-item .hl-num{font-weight:bold; color:#fbbf24; margin-right:4px}
+.hl-panel-item.has-comment .hl-num{color:#38bdf8}
+.hl-panel-item.type-block .hl-num{color:#a78bfa}
+.hl-panel-item .hl-del{position:absolute; top:4px; right:4px; background:transparent; border:none; color:#9ca3af; cursor:pointer; padding:2px 5px; font-size:11px; border-radius:3px; line-height:1}
+.hl-panel-item .hl-del:hover{background:#7f1d1d; color:#fff}
+.block-comment-host{position:relative}
+.block-comment-btn{position:absolute; left:-32px; top:6px; width:24px; height:24px; padding:0; border:1px solid #d0d8e8; background:#fff; border-radius:50%; cursor:pointer; opacity:0; transition:opacity .15s, transform .15s, background .15s; font-size:12px; line-height:1; display:flex; align-items:center; justify-content:center; z-index:10}
+.block-comment-host:hover .block-comment-btn,.block-comment-btn.has-comment{opacity:1}
+.block-comment-btn.has-comment{background:#0ea5e9; border-color:#0ea5e9; color:#fff}
+.block-comment-btn:hover{transform:scale(1.15)}
+.block-comment-host.has-block-comment{box-shadow:inset 3px 0 0 rgba(56,189,248,.55)}
+@media print{
+  .hl-popup,.hl-comment-editor,.tools-sidebar,.block-comment-btn{display:none !important}
+  mark.user-hl{background:rgba(255,235,59,.4) !important; color:#000}
+  mark.user-hl.has-comment{background:rgba(56,189,248,.3) !important; border-bottom:1px dashed #0ea5e9 !important}
+  .block-comment-host.has-block-comment{box-shadow:inset 3px 0 0 #0ea5e9 !important}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="header">
+  <div class="school-name">NEWTON SCHOOL</div>
+  <span class="subject-tag">PRE-CALCULUS</span>
+  <span class="key-tag">HOMEWORK</span>
+  <h1>Recursion: Tower of Hanoi &amp; Characteristic Equation</h1>
+  <div class="info">
+    <span><strong>Student:</strong> Justin Koo</span>
+    <span><strong>Date:</strong> 2026-04-26</span>
+    <span><strong>Due:</strong> 2026-05-03</span>
+  </div>
+  <div class="standard"><strong>Standards:</strong> CCSS.MATH.CONTENT.HSF-IF.A.3 (recursive sequences) · HSF-BF.A.2 (translate recursive ↔ closed form). Today's focus: <em>shift trick</em> for non-homogeneous, and <em>characteristic equation</em> for homogeneous.</div>
+</div>
+
+<!-- ================================================================
+     PROBLEM 1 — Hanoi: original vs adjacent + shift-trick (twice)
+     ================================================================ -->
+
+<div class="part-header">Problem 1 · Tower of Hanoi — Two Variants &amp; the Shift Trick</div>
+
+<div class="concept-box">
+  <div class="title">📘 Setup — Compare the two variants</div>
+  <div>Both versions use 3 pegs <strong>A — B — C</strong> with $n$ disks (largest at the bottom). Move one disk at a time, never a larger disk onto a smaller one. The <strong>only</strong> difference is which moves are <em>legal</em>:</div>
+
+  <div class="diagram-row">
+    <div class="diagram-card">
+      <div class="d-title">Original Hanoi</div>
+      <div class="d-sub">disks may move <strong>between any two pegs</strong></div>
+      <svg width="280" height="160" viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg">
+        <line x1="40" y1="135" x2="270" y2="135" stroke="#7d5a2a" stroke-width="3"/>
+        <line x1="60" y1="50" x2="60" y2="135" stroke="#5d4037" stroke-width="3"/>
+        <line x1="155" y1="50" x2="155" y2="135" stroke="#5d4037" stroke-width="3"/>
+        <line x1="250" y1="50" x2="250" y2="135" stroke="#5d4037" stroke-width="3"/>
+        <text x="60" y="148" text-anchor="middle" font-size="11" font-weight="bold">A</text>
+        <text x="155" y="148" text-anchor="middle" font-size="11" font-weight="bold">B</text>
+        <text x="250" y="148" text-anchor="middle" font-size="11" font-weight="bold">C</text>
+        <rect x="42" y="125" width="36" height="8" fill="#42a5f5" stroke="#1976d2" rx="2"/>
+        <rect x="48" y="115" width="24" height="8" fill="#66bb6a" stroke="#388e3c" rx="2"/>
+        <rect x="52" y="105" width="16" height="8" fill="#ef5350" stroke="#c62828" rx="2"/>
+        <!-- arcs: A↔B, B↔C, A↔C (long arc) -->
+        <path d="M 60 50 Q 107 22 155 50" fill="none" stroke="#1565c0" stroke-width="1.4" marker-end="url(#arrA)" marker-start="url(#arrA)"/>
+        <path d="M 155 50 Q 202 22 250 50" fill="none" stroke="#1565c0" stroke-width="1.4" marker-end="url(#arrA)" marker-start="url(#arrA)"/>
+        <path d="M 60 35 Q 155 -10 250 35" fill="none" stroke="#1565c0" stroke-width="1.4" marker-end="url(#arrA)" marker-start="url(#arrA)"/>
+        <defs>
+          <marker id="arrA" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L8,4 L0,8 z" fill="#1565c0"/></marker>
+        </defs>
+      </svg>
+      <div class="d-rec">$T_n = 2 T_{n-1} + 1, \;\; T_1 = 1$</div>
+    </div>
+
+    <div class="diagram-card">
+      <div class="d-title">Adjacent-Only Hanoi</div>
+      <div class="d-sub">disks move only <strong>between adjacent pegs</strong> (no A↔C)</div>
+      <svg width="280" height="160" viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg">
+        <line x1="40" y1="135" x2="270" y2="135" stroke="#7d5a2a" stroke-width="3"/>
+        <line x1="60" y1="50" x2="60" y2="135" stroke="#5d4037" stroke-width="3"/>
+        <line x1="155" y1="50" x2="155" y2="135" stroke="#5d4037" stroke-width="3"/>
+        <line x1="250" y1="50" x2="250" y2="135" stroke="#5d4037" stroke-width="3"/>
+        <text x="60" y="148" text-anchor="middle" font-size="11" font-weight="bold">A</text>
+        <text x="155" y="148" text-anchor="middle" font-size="11" font-weight="bold">B</text>
+        <text x="250" y="148" text-anchor="middle" font-size="11" font-weight="bold">C</text>
+        <rect x="42" y="125" width="36" height="8" fill="#42a5f5" stroke="#1976d2" rx="2"/>
+        <rect x="48" y="115" width="24" height="8" fill="#66bb6a" stroke="#388e3c" rx="2"/>
+        <rect x="52" y="105" width="16" height="8" fill="#ef5350" stroke="#c62828" rx="2"/>
+        <path d="M 60 50 Q 107 22 155 50" fill="none" stroke="#2e7d32" stroke-width="1.4" marker-end="url(#arrB)" marker-start="url(#arrB)"/>
+        <path d="M 155 50 Q 202 22 250 50" fill="none" stroke="#2e7d32" stroke-width="1.4" marker-end="url(#arrB)" marker-start="url(#arrB)"/>
+        <!-- forbidden A-C: dashed red strikeout -->
+        <path d="M 60 35 Q 155 -10 250 35" fill="none" stroke="#c62828" stroke-width="1.2" stroke-dasharray="4,3" opacity=".75"/>
+        <line x1="148" y1="2" x2="166" y2="14" stroke="#c62828" stroke-width="2.5"/>
+        <text x="190" y="14" font-size="10" fill="#c62828" font-style="italic">no A↔C</text>
+        <defs>
+          <marker id="arrB" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L8,4 L0,8 z" fill="#2e7d32"/></marker>
+        </defs>
+      </svg>
+      <div class="d-rec">$A_n = 3 A_{n-1} + 2, \;\; A_1 = 2$</div>
+    </div>
+  </div>
+
+  <div style="margin-top:8px"><strong>Why the recurrences differ:</strong> In <em>original</em> Hanoi, the largest disk moves once (A → C directly). In <em>adjacent-only</em>, it must hop A → B → C (two moves), and the smaller stack has to be moved out of the way <strong>twice</strong> (A→C, then C→A) before the big disk lands at C. That gives $3 A_{n-1} + 2$ instead of $2 T_{n-1} + 1$.</div>
+</div>
+
+<div class="problem">
+  <span class="q-num">1a.</span> <strong>Sketch a 3-disk move count.</strong> Using the diagrams above, fill in:
+  <div class="subpart">Original $T_3 = 2 T_2 + 1 = 2(\;$<span class="ans-line"></span>$\;) + 1 = $ <span class="ans-line"></span></div>
+  <div class="subpart">Adjacent $A_3 = 3 A_2 + 2 = 3(\;$<span class="ans-line"></span>$\;) + 2 = $ <span class="ans-line"></span></div>
+  <div class="subpart" style="font-size:9.5pt; color:#666">(use $T_2 = 3$ and $A_2 = 8$ from the recurrences)</div>
+
+  <span class="q-num" style="display:block; margin-top:14px">1b.</span> <strong>Solve $A_n$ via the shift trick.</strong> The recurrence is $A_n = 3 A_{n-1} + 2,\; A_1 = 2$.
+  <div class="subpart"><span class="subpart-label">Step 1.</span> Substitute $U_n = A_n + c$. Plug into the recurrence and find the value of $c$ that <em>kills the constant</em>.</div>
+  <div class="work-space"></div>
+  <div class="subpart"><span class="subpart-label">Step 2.</span> With your $c$, the recurrence on $U_n$ becomes pure geometric. Compute $U_1$, then write $U_n$ in closed form.</div>
+  <div class="work-space"></div>
+  <div class="subpart"><span class="subpart-label">Step 3.</span> Un-substitute → $A_n = $ <span class="ans-line" style="min-width:200px"></span></div>
+  <div class="subpart"><span class="subpart-label">Step 4.</span> Verify $A_2$ and $A_3$ against your closed form.</div>
+  <div class="work-space"></div>
+
+  <span class="q-num" style="display:block; margin-top:14px">1c.</span> <strong>New shift-trick exercise (different recurrence).</strong> A delivery scheduler has $Q_n = 4 Q_{n-1} + 3$ with $Q_1 = 5$. Find the closed form using the same 4 steps.
+  <div class="subpart"><span class="subpart-label">Step 1.</span> Find $c$ in $U_n = Q_n + c$ that kills the constant.</div>
+  <div class="work-space"></div>
+  <div class="subpart"><span class="subpart-label">Step 2.</span> Solve the geometric $U_n$ (compute $U_1$ first).</div>
+  <div class="work-space"></div>
+  <div class="subpart"><span class="subpart-label">Step 3.</span> Un-substitute → $Q_n = $ <span class="ans-line" style="min-width:200px"></span></div>
+  <div class="subpart"><span class="subpart-label">Step 4.</span> Verify by computing $Q_2$ from the recurrence and from your closed form.</div>
+  <div class="work-space"></div>
+</div>
+
+<!-- ================================================================
+     PROBLEM 2 — Characteristic Equation theorem + 2 examples
+     ================================================================ -->
+
+<div class="part-header page-break">Problem 2 · Characteristic Equation Method</div>
+
+<div class="theorem-box">
+  <div><span class="t-label">THEOREM</span><span class="t-name">Characteristic Equation for 2nd-Order Linear Homogeneous Recurrence</span></div>
+  <div class="t-body">For the recurrence $\;a_n = p \cdot a_{n-1} + q \cdot a_{n-2}\;$ with given $a_0, a_1$:</div>
+  <ol>
+    <li>Write the <strong>characteristic equation</strong>: $\;x^2 - p\, x - q = 0\;$.</li>
+    <li>Solve for roots $r_1, r_2$ (use the quadratic formula or factor).</li>
+    <li><strong>Distinct roots</strong> ($r_1 \neq r_2$): general solution is $\;a_n = C_1\, r_1^n + C_2\, r_2^n\;$.</li>
+    <li>Plug in $a_0, a_1$ to get a 2×2 system → solve for $C_1, C_2$.</li>
+    <li>Substitute back. The resulting closed form lets you compute $a_n$ for any $n$ <strong>without</strong> the recurrence.</li>
+  </ol>
+  <div style="margin-top:8px; font-size:9.5pt; color:#666"><em>Repeated root case ($r_1 = r_2 = r$): use $a_n = (C_1 + C_2 n) r^n$.</em></div>
+</div>
+
+<div class="worked-box">
+  <div><span class="w-label">🧪 WORKED EXAMPLE</span><span class="w-name">Distinct integer roots — apply the 5-step method</span></div>
+  <div class="w-step" style="margin-top:6px">Solve $\;a_n = 3 a_{n-1} - 2 a_{n-2}\;$ with $\;a_0 = 1, \; a_1 = 3$.</div>
+  <div class="w-step"><span class="w-step-label">Step 1.</span> $p = 3, \; q = -2$. Characteristic equation: $\;x^2 - 3x + 2 = 0$.</div>
+  <div class="w-step"><span class="w-step-label">Step 2.</span> Factor: $(x - 1)(x - 2) = 0 \;\Rightarrow\; r_1 = 1, \; r_2 = 2$.</div>
+  <div class="w-step"><span class="w-step-label">Step 3.</span> General solution: $\;a_n = C_1 (1)^n + C_2 (2)^n = C_1 + C_2 \cdot 2^n$.</div>
+  <div class="w-step"><span class="w-step-label">Step 4.</span> Plug in $a_0, a_1$:</div>
+  <div class="w-step" style="margin-left:18px">$a_0 = 1$:&nbsp; $C_1 + C_2 = 1$ &nbsp;…(i)</div>
+  <div class="w-step" style="margin-left:18px">$a_1 = 3$:&nbsp; $C_1 + 2 C_2 = 3$ &nbsp;…(ii)</div>
+  <div class="w-step" style="margin-left:18px">Subtract (i) from (ii): $\;C_2 = 2 \;\Rightarrow\; C_1 = -1$.</div>
+  <div class="w-step"><span class="w-step-label">Step 5.</span> Closed form: $\;a_n = -1 + 2 \cdot 2^n = 2^{n+1} - 1$.</div>
+  <div class="worked-final">$\boxed{\; a_n = 2^{n+1} - 1 \;}$</div>
+  <div class="w-step" style="margin-top:6px; font-size:9.5pt; color:#666"><strong>Sanity check:</strong> $a_2$ from recurrence: $3(3) - 2(1) = 7$.&nbsp; Closed form: $2^3 - 1 = 7$ ✓</div>
+  <div class="w-step" style="font-size:9.5pt; color:#666; font-style:italic; margin-top:4px">→ Now apply the same 5 steps in 2a and 2b below. Show all your work.</div>
+</div>
+
+<div class="problem">
+  <span class="q-num">2a.</span> <strong>Apply to Lego/Fibonacci-shifted recurrence.</strong> Solve $L_n = L_{n-1} + L_{n-2}$ with $L_0 = L_1 = 1$.
+  <div class="subpart"><span class="subpart-label">Step 1.</span> Identify $p, q$. Write the characteristic equation.</div>
+  <div class="work-space" style="min-height:120px"></div>
+  <div class="subpart"><span class="subpart-label">Step 2.</span> Solve. Roots (call them $\varphi$ and $\psi$):</div>
+  <div class="work-space xl"></div>
+  <div class="subpart"><span class="subpart-label">Step 3.</span> Write the general solution in <strong>three equivalent forms</strong>:</div>
+  <div class="formula-box" style="text-align:left">
+    <strong>Symbolic form:</strong> &nbsp; $L_n = C_1\, \varphi^n + C_2\, \psi^n$ &nbsp;&nbsp; (using $\varphi, \psi$ as names for the roots)
+  </div>
+  <div class="formula-box" style="text-align:left">
+    <strong>Radical form:</strong> &nbsp; $L_n = C_1 \left(\dfrac{1+\sqrt{5}}{2}\right)^{\!n} + C_2 \left(\dfrac{1-\sqrt{5}}{2}\right)^{\!n}$
+  </div>
+  <div class="formula-box" style="text-align:left">
+    <strong>Decimal (for sanity checks):</strong> &nbsp; $L_n \approx C_1 (1.6180)^n + C_2 (-0.6180)^n$
+  </div>
+  <div class="subpart"><span class="subpart-label">Step 4.</span> Solve for $C_1, C_2$ using $L_0 = 1$ and $L_1 = 1$.</div>
+  <div class="work-space" style="min-height:280px"></div>
+  <div class="subpart"><span class="subpart-label">Step 5.</span> Final closed form (Binet-shifted): $L_n = $ <span class="ans-line" style="min-width:280px"></span></div>
+  <div class="subpart"><strong>Sanity check:</strong> compute $L_5$ from your closed form (use the decimal form). Does it equal 8 (from recurrence build-up $1,1,2,3,5,8$)? <span class="ans-line"></span></div>
+  <div class="work-space" style="min-height:160px"></div>
+</div>
+
+<div class="problem">
+  <span class="q-num">2b.</span> <strong>New characteristic-equation exercise.</strong> Solve $a_n = 5\, a_{n-1} - 6\, a_{n-2}$ with $a_0 = 0, \; a_1 = 1$.
+  <div class="subpart"><span class="subpart-label">Step 1.</span> Identify $p, q$ and write the characteristic equation.</div>
+  <div class="work-space" style="min-height:100px"></div>
+  <div class="subpart"><span class="subpart-label">Step 2.</span> <strong>Factor</strong> the quadratic (it factors over the integers — find the two roots).</div>
+  <div class="work-space xl"></div>
+  <div class="subpart"><span class="subpart-label">Step 3.</span> General solution: $a_n = $ <span class="ans-line" style="min-width:200px"></span></div>
+  <div class="subpart"><span class="subpart-label">Step 4.</span> Use $a_0 = 0, a_1 = 1$ to solve for $C_1, C_2$.</div>
+  <div class="work-space xl"></div>
+  <div class="subpart"><span class="subpart-label">Step 5.</span> Closed form: $a_n = $ <span class="ans-line" style="min-width:200px"></span></div>
+  <div class="subpart"><strong>Verify:</strong> compute $a_2, a_3, a_4$ from the recurrence and from your closed form. Match?</div>
+  <div class="work-space" style="min-height:200px"></div>
+</div>
+
+<div class="concept-box" style="border-color:var(--color-warning)">
+  <div class="title" style="color:var(--color-warning)">📋 Submission Checklist</div>
+  <ul style="margin:4px 0 0 18px; padding:0">
+    <li>Show every step of the shift trick / 5-step method — partial credit for setup, full credit for clean derivations.</li>
+    <li><strong>Box every final answer.</strong></li>
+    <li>State which method you're using at the start of each problem.</li>
+    <li>Always do the sanity check — small arithmetic catches big errors.</li>
+  </ul>
+</div>
+
+<div class="footer">Created by Newton School 2026-04-26 &copy; Copyright</div>
+
+</div>
+
+<script>
+/* ============================================================
+   Visual -c Comment System (self-contained)
+   ============================================================ */
+(function(){
+  const PAGE_KEY = 'JustinKoo_2026-04-26_Worksheet';
+  const ANNOT_KEY = 'visual_annot_' + PAGE_KEY;
+  const BLOCK_KEY = 'visual_block_' + PAGE_KEY;
+
+  const root = document.querySelector('.page');
+  if(!root) return;
+
+  const load = (k) => { try { return JSON.parse(localStorage.getItem(k) || '[]'); } catch(e){ return []; } };
+  const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+
+  const sidebar = document.createElement('aside');
+  sidebar.className = 'tools-sidebar';
+  sidebar.innerHTML =
+    '<button class="ts-toggle" type="button">— hide</button>' +
+    '<div class="ts-title">💬 Comments <span id="hlCount" style="opacity:.7">(0)</span></div>' +
+    '<div class="ts-actions">' +
+      '<button id="hlExport" type="button">📋 Export</button>' +
+      '<button id="hlClear" class="danger" type="button">🗑 Clear</button>' +
+    '</div>' +
+    '<div id="hlList"></div>';
+  document.body.appendChild(sidebar);
+
+  sidebar.querySelector('.ts-toggle').addEventListener('click', (e) => { e.stopPropagation(); sidebar.classList.toggle('collapsed'); });
+  sidebar.addEventListener('click', () => { if(sidebar.classList.contains('collapsed')) sidebar.classList.remove('collapsed'); });
+
+  root.querySelectorAll('.problem, .concept-box, .theorem-box, .part-header').forEach((el, i) => {
+    el.classList.add('block-comment-host');
+    el.setAttribute('data-block-id', 'b' + i);
+    const btn = document.createElement('button');
+    btn.className = 'block-comment-btn';
+    btn.type = 'button';
+    btn.title = 'Comment on this block';
+    btn.textContent = '💬';
+    btn.addEventListener('click', (e) => { e.stopPropagation(); openBlockEditor(el); });
+    el.appendChild(btn);
+  });
+
+  let popup = null, editor = null;
+  const removePopup = () => { if(popup){ popup.remove(); popup = null; } };
+  const removeEditor = () => { if(editor){ editor.remove(); editor = null; } };
+
+  document.addEventListener('mousedown', (e) => {
+    if(!e.target.closest('.hl-popup, .hl-comment-editor, .tools-sidebar, mark.user-hl, .block-comment-btn')) {
+      removePopup(); removeEditor();
+    }
+  });
+
+  document.addEventListener('mouseup', (e) => {
+    if(e.target.closest('.hl-popup, .hl-comment-editor, .tools-sidebar, .block-comment-btn')) return;
+    setTimeout(() => {
+      const sel = window.getSelection();
+      if(!sel || sel.isCollapsed || !sel.rangeCount) { removePopup(); return; }
+      const text = sel.toString().trim();
+      if(!text || text.length < 2) { removePopup(); return; }
+      const range = sel.getRangeAt(0);
+      const container = range.commonAncestorContainer;
+      const parent = container.nodeType === 1 ? container : container.parentElement;
+      if(!parent || !parent.closest('.page')) return;
+      if(parent.closest('mark.user-hl')) return;
+      const rect = range.getBoundingClientRect();
+      showPopup(rect, text);
+    }, 10);
+  });
+
+  function showPopup(rect, text){
+    removePopup();
+    const p = document.createElement('div');
+    p.className = 'hl-popup';
+    p.style.top = (window.scrollY + rect.bottom + 6) + 'px';
+    p.style.left = (window.scrollX + rect.left) + 'px';
+    p.innerHTML = '<button data-act="hl">✏️ Highlight</button><button data-act="cmt">💬 + Comment</button>';
+    document.body.appendChild(p);
+    popup = p;
+    p.querySelector('[data-act="hl"]').addEventListener('click', () => {
+      createAnnotation(text, '');
+      removePopup();
+      window.getSelection().removeAllRanges();
+      render();
+    });
+    p.querySelector('[data-act="cmt"]').addEventListener('click', () => {
+      removePopup();
+      openAnnotEditor(rect, text);
+    });
+  }
+
+  function openAnnotEditor(rect, text){
+    removeEditor();
+    const ed = document.createElement('div');
+    ed.className = 'hl-comment-editor';
+    ed.style.top = (window.scrollY + rect.bottom + 6) + 'px';
+    ed.style.left = Math.min(window.scrollX + rect.left, window.scrollX + window.innerWidth - 320) + 'px';
+    const preview = text.length > 80 ? text.slice(0, 80) + '…' : text;
+    ed.innerHTML =
+      '<div class="quote">📌 "' + escHTML(preview) + '"</div>' +
+      '<textarea placeholder="Comment..."></textarea>' +
+      '<div class="actions"><button data-act="cancel">Cancel</button><button class="primary" data-act="save">Save</button></div>';
+    document.body.appendChild(ed);
+    editor = ed;
+    const ta = ed.querySelector('textarea');
+    ta.focus();
+    ed.querySelector('[data-act="cancel"]').addEventListener('click', () => { removeEditor(); window.getSelection().removeAllRanges(); });
+    ed.querySelector('[data-act="save"]').addEventListener('click', () => {
+      const txt = ta.value.trim();
+      createAnnotation(text, txt);
+      removeEditor();
+      window.getSelection().removeAllRanges();
+      render();
+    });
+  }
+
+  function createAnnotation(text, comment){
+    const id = 'a' + Date.now() + Math.random().toString(36).slice(2, 6);
+    const list = load(ANNOT_KEY);
+    list.push({ id, text, comment, ts: Date.now() });
+    save(ANNOT_KEY, list);
+    applyHighlight(id, text, comment);
+    return id;
+  }
+
+  function applyHighlight(id, text, comment){
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: (n) => n.parentElement.closest('mark.user-hl, script, style') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT
+    });
+    let node;
+    while(node = walker.nextNode()){
+      const idx = node.nodeValue.indexOf(text);
+      if(idx !== -1){
+        try {
+          const range = document.createRange();
+          range.setStart(node, idx);
+          range.setEnd(node, idx + text.length);
+          const mark = document.createElement('mark');
+          mark.className = 'user-hl' + (comment ? ' has-comment' : '');
+          mark.dataset.annotId = id;
+          if(comment) mark.title = comment;
+          range.surroundContents(mark);
+          mark.addEventListener('click', (e) => { e.stopPropagation(); scrollToSidebarItem(id); });
+        } catch(e){ /* multi-node */ }
+        return;
+      }
+    }
+  }
+
+  function deleteAnnotation(id){
+    save(ANNOT_KEY, load(ANNOT_KEY).filter(a => a.id !== id));
+    const m = document.querySelector('mark.user-hl[data-annot-id="' + id + '"]');
+    if(m){
+      const parent = m.parentNode;
+      while(m.firstChild) parent.insertBefore(m.firstChild, m);
+      parent.removeChild(m);
+    }
+    render();
+  }
+
+  function openBlockEditor(blockEl){
+    removeEditor();
+    const bid = blockEl.dataset.blockId;
+    const blocks = load(BLOCK_KEY);
+    const existing = blocks.find(b => b.id === bid);
+    const rect = blockEl.getBoundingClientRect();
+    const ed = document.createElement('div');
+    ed.className = 'hl-comment-editor';
+    ed.style.top = (window.scrollY + rect.top + 30) + 'px';
+    ed.style.left = Math.min(window.scrollX + rect.left + 40, window.scrollX + window.innerWidth - 320) + 'px';
+    const preview = (blockEl.textContent || '').trim().slice(0, 80);
+    ed.innerHTML =
+      '<div class="quote">📎 Block: "' + escHTML(preview) + '…"</div>' +
+      '<textarea placeholder="Comment on this block..."></textarea>' +
+      '<div class="actions"><button data-act="cancel">Cancel</button><button class="primary" data-act="save">Save</button></div>';
+    document.body.appendChild(ed);
+    editor = ed;
+    const ta = ed.querySelector('textarea');
+    if(existing) ta.value = existing.comment;
+    ta.focus();
+    ed.querySelector('[data-act="cancel"]').addEventListener('click', removeEditor);
+    ed.querySelector('[data-act="save"]').addEventListener('click', () => {
+      const txt = ta.value.trim();
+      let list = load(BLOCK_KEY).filter(b => b.id !== bid);
+      const btn = blockEl.querySelector(':scope > .block-comment-btn');
+      if(txt){
+        list.push({ id: bid, comment: txt, preview, ts: Date.now() });
+        if(btn) btn.classList.add('has-comment');
+        blockEl.classList.add('has-block-comment');
+      } else {
+        if(btn) btn.classList.remove('has-comment');
+        blockEl.classList.remove('has-block-comment');
+      }
+      save(BLOCK_KEY, list);
+      removeEditor();
+      render();
+    });
+  }
+
+  function render(){
+    const annots = load(ANNOT_KEY);
+    const blocks = load(BLOCK_KEY);
+    const all = [
+      ...annots.map(a => ({ kind:'annot', id:a.id, ctx:a.text, comment:a.comment, ts:a.ts })),
+      ...blocks.map(b => ({ kind:'block', id:b.id, ctx:b.preview, comment:b.comment, ts:b.ts }))
+    ].sort((x,y) => x.ts - y.ts);
+
+    const listEl = sidebar.querySelector('#hlList');
+    const cntEl = sidebar.querySelector('#hlCount');
+    cntEl.textContent = '(' + all.length + ')';
+
+    if(all.length === 0){
+      listEl.innerHTML = '<div class="ts-empty">Drag-select text or hover a block → 💬</div>';
+      return;
+    }
+    listEl.innerHTML = all.map((it, i) => {
+      const cls = it.kind === 'block' ? 'type-block' : (it.comment ? 'has-comment' : '');
+      const ctxShort = (it.ctx || '').length > 90 ? it.ctx.slice(0, 90) + '…' : it.ctx;
+      const cmt = it.comment ? '<div class="hl-comment">' + escHTML(it.comment) + '</div>' : '';
+      const tag = it.kind === 'block' ? '📎 Block' : (it.comment ? '💬' : '✏️');
+      return '<div class="hl-panel-item ' + cls + '" data-id="' + it.id + '" data-kind="' + it.kind + '">' +
+        '<button class="hl-del" data-id="' + it.id + '" data-kind="' + it.kind + '" title="Delete">×</button>' +
+        '<span class="hl-num">' + tag + ' #' + (i+1) + '</span>' +
+        '<span class="hl-quote">' + escHTML(ctxShort) + '</span>' +
+        cmt +
+        '</div>';
+    }).join('');
+
+    listEl.querySelectorAll('.hl-panel-item').forEach(el => {
+      el.addEventListener('click', (e) => {
+        if(e.target.closest('.hl-del')) return;
+        const id = el.dataset.id;
+        const kind = el.dataset.kind;
+        if(kind === 'annot'){
+          const m = document.querySelector('mark.user-hl[data-annot-id="' + id + '"]');
+          if(m){ m.scrollIntoView({behavior:'smooth', block:'center'}); flash(m); }
+        } else {
+          const b = document.querySelector('.block-comment-host[data-block-id="' + id + '"]');
+          if(b){ b.scrollIntoView({behavior:'smooth', block:'center'}); flash(b); }
+        }
+      });
+    });
+    listEl.querySelectorAll('.hl-del').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const id = btn.dataset.id, kind = btn.dataset.kind;
+        if(kind === 'annot') deleteAnnotation(id);
+        else {
+          save(BLOCK_KEY, load(BLOCK_KEY).filter(b => b.id !== id));
+          const blockEl = document.querySelector('.block-comment-host[data-block-id="' + id + '"]');
+          if(blockEl){
+            blockEl.classList.remove('has-block-comment');
+            const bb = blockEl.querySelector(':scope > .block-comment-btn');
+            if(bb) bb.classList.remove('has-comment');
+          }
+          render();
+        }
+      });
+    });
+  }
+
+  function flash(el){
+    const orig = el.style.outline;
+    el.style.outline = '2px solid #f59e0b';
+    el.style.outlineOffset = '4px';
+    setTimeout(() => { el.style.outline = orig; el.style.outlineOffset = ''; }, 1200);
+  }
+
+  function scrollToSidebarItem(id){
+    const it = sidebar.querySelector('.hl-panel-item[data-id="' + id + '"]');
+    if(it){ if(sidebar.classList.contains('collapsed')) sidebar.classList.remove('collapsed'); it.scrollIntoView({block:'nearest'}); flash(it); }
+  }
+
+  sidebar.querySelector('#hlExport').addEventListener('click', () => {
+    const annots = load(ANNOT_KEY);
+    const blocks = load(BLOCK_KEY);
+    const items = [
+      ...annots.map(a => ({ kind:'선택', ctx:a.text, comment:a.comment, ts:a.ts })),
+      ...blocks.map(b => ({ kind:'블록', ctx:b.preview, comment:b.comment, ts:b.ts }))
+    ].sort((x,y) => x.ts - y.ts);
+    if(items.length === 0){ alert('저장된 코멘트가 없습니다.'); return; }
+    let out = '[코멘트 피드백] Justin Koo · 2026-04-26 · Recursion Worksheet\n';
+    out += '(총 ' + items.length + '건 · ' + new Date().toLocaleString() + ')\n\n';
+    items.forEach((it, i) => {
+      out += '═══ #' + (i+1) + ' [' + it.kind + '] ═══\n';
+      out += '원문: ' + (it.ctx || '').replace(/\n+/g, ' / ') + '\n';
+      if(it.comment) out += '코멘트: ' + it.comment + '\n';
+      out += '\n';
+    });
+    out += '---\n위 피드백 반영해서 원본 파일 수정해줘.\n';
+    navigator.clipboard.writeText(out).then(() => alert(items.length + '건 클립보드 복사됨!')).catch(() => {
+      const ta = document.createElement('textarea'); ta.value = out; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+      alert(items.length + '건 복사됨!');
+    });
+  });
+
+  sidebar.querySelector('#hlClear').addEventListener('click', () => {
+    if(!confirm('모든 코멘트를 삭제할까요?')) return;
+    load(ANNOT_KEY).forEach(a => deleteAnnotation(a.id));
+    load(BLOCK_KEY).forEach(b => {
+      const blockEl = document.querySelector('.block-comment-host[data-block-id="' + b.id + '"]');
+      if(blockEl){
+        blockEl.classList.remove('has-block-comment');
+        const bb = blockEl.querySelector(':scope > .block-comment-btn');
+        if(bb) bb.classList.remove('has-comment');
+      }
+    });
+    save(BLOCK_KEY, []);
+    render();
+  });
+
+  load(ANNOT_KEY).forEach(a => applyHighlight(a.id, a.text, a.comment));
+  load(BLOCK_KEY).forEach(b => {
+    const blockEl = document.querySelector('.block-comment-host[data-block-id="' + b.id + '"]');
+    if(blockEl){
+      blockEl.classList.add('has-block-comment');
+      const bb = blockEl.querySelector(':scope > .block-comment-btn');
+      if(bb) bb.classList.add('has-comment');
+    }
+  });
+  render();
+
+  function escHTML(s){ return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+})();
+</script>
+</body>
+</html>

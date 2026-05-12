@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pre-Calculus Lecture Notes Answer Key: Sums and the Dimension Jump</title>
+
+<!-- MathJax -->
+<script>
+window.MathJax = {
+    tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']]
+    },
+    startup: { ready: () => { MathJax.startup.defaultReady(); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+<style>
+/* =========================================================================
+   base-print.css
+   ========================================================================= */
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Century Schoolbook', 'Times New Roman', serif; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+    html, body { background: #fff; }
+    .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+    .answer-block { page-break-inside: avoid; break-inside: avoid; }
+    .part-header, h1, h2 { page-break-after: avoid; break-after: avoid; }
+    .page-break { page-break-before: always; break-before: page; }
+    * { background: transparent !important; }
+}
+
+/* =========================================================================
+   theme-boy.css
+   ========================================================================= */
+:root {
+    --color-primary:        #1565c0;
+    --color-primary-dark:   #0d47a1;
+    --color-accent:         #00838f;
+    --color-header-border:  #1565c0;
+    --color-final-answer:   #2e7d32;
+    --color-warning:        #c62828;
+    --color-tag-bg:         transparent;
+    --color-tag-border:     #1565c0;
+    --color-tag-text:       #1565c0;
+    --color-muted:          #555;
+    --color-rule:           #ccc;
+}
+
+/* =========================================================================
+   level-high.css (answer-key subset)
+   ========================================================================= */
+body { font-family: 'Source Serif Pro', 'Georgia', 'Times New Roman', serif; font-size: 10.5pt; line-height: 1.55; }
+h1, h2, h3, .part-header { font-family: 'Libre Baskerville', 'Georgia', serif; }
+
+.header { text-align: center; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid var(--color-header-border); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 7px 3px; font-weight: bold; border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+.key-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 7px 3px; font-weight: bold; border: 1.5px solid var(--color-warning); color: var(--color-warning); }
+h1 { font-size: 15pt; margin: 6px 0 8px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 4px; color: var(--color-muted); }
+.part-header { font-size: 13pt; font-weight: bold; color: var(--color-primary); margin: 22px 0 6px 0; padding-bottom: 3px; border-bottom: 1.5px solid var(--color-primary); }
+
+/* Answer-key blocks */
+.answer-block { margin: 14px 0; padding: 10px 14px; border: 1px solid #ddd; border-radius: 4px; }
+.problem-header { font-weight: bold; color: var(--color-primary); font-size: 11pt; margin-bottom: 5px; }
+.problem-text { font-size: 10pt; padding: 6px 10px; background: #f7f7f7; border-left: 3px solid #bbb; margin-bottom: 8px; line-height: 1.5; }
+.concept-tag { display: inline-block; font-size: 8pt; padding: 2px 8px; margin: 2px 3px 5px 0; border: 1px solid var(--color-tag-border); color: var(--color-tag-text); border-radius: 10px; }
+.solution { margin: 6px 0; padding-left: 8px; border-left: 3px solid var(--color-final-answer); }
+.solution-step { margin: 5px 0; font-size: 10pt; line-height: 1.65; }
+.solution-step.indent { padding-left: 20px; }
+.final-answer { display: inline-block; border: 2px solid var(--color-final-answer); color: var(--color-final-answer); font-weight: bold; padding: 4px 12px; border-radius: 4px; margin-top: 6px; font-size: 11pt; }
+
+/* Footer */
+.footer { font-size: 7.5pt; color: var(--color-muted); text-align: center; margin-top: 30px; padding-top: 6px; border-top: 1px solid var(--color-rule); }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HEADER -->
+<div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">PRE-CALCULUS</div>
+    <div class="key-tag">ANSWER KEY</div>
+    <h1>Lecture Notes Answer Key: Sums and the Dimension Jump</h1>
+    <div class="info">
+        <span><strong>Student:</strong> Justin Koo</span>
+        <span><strong>Date:</strong> May 10, 2026</span>
+    </div>
+    <div class="standard"><strong>For instructor use.</strong> Full worked solutions to all 10 practice problems.</div>
+</div>
+
+<p style="font-weight:bold; color:var(--color-accent); margin:10px 0 4px 0;">Part A &mdash; Pattern Recognition</p>
+
+<!-- Problem 1 -->
+<div class="answer-block">
+    <div class="problem-header">Problem 1 &mdash; Fill-in Table</div>
+    <div class="problem-text">
+        Complete the dimension-jump table for $n=5$, leading terms, and dimensions.
+    </div>
+    <span class="concept-tag">Power sums</span>
+    <span class="concept-tag">Dimension jump</span>
+    <div class="solution">
+        <div class="solution-step"><strong>Row 1</strong> ($\sum k$, $n=5$): &nbsp; $1+2+3+4+5=15$. &nbsp; Formula: $\frac{5\cdot6}{2}=15$. &nbsp; Leading term: $\dfrac{n^2}{2}$. &nbsp; Dimension: <strong>2D</strong>.</div>
+        <div class="solution-step"><strong>Row 2</strong> ($\sum k^2$, $n=5$): &nbsp; $1+4+9+16+25=55$. &nbsp; Formula: $\frac{5\cdot6\cdot11}{6}=55$. &nbsp; Leading term: $\dfrac{n^3}{3}$. &nbsp; Dimension: <strong>3D</strong>.</div>
+        <div class="solution-step"><strong>Row 3</strong> ($\sum k^3$, $n=5$): &nbsp; $1+8+27+64+125=225$. &nbsp; Formula: $\left(\frac{5\cdot6}{2}\right)^2=15^2=225$. &nbsp; Leading term: $\dfrac{n^4}{4}$. &nbsp; Dimension: <strong>4D</strong>.</div>
+    </div>
+    <div class="final-answer">See completed table above</div>
+</div>
+
+<!-- Problem 2 -->
+<div class="answer-block">
+    <div class="problem-header">Problem 2 &mdash; Predict $\sum k^4$</div>
+    <div class="problem-text">
+        Using $\displaystyle\sum_{k=1}^{n} k^d \approx \dfrac{n^{d+1}}{d+1}$, predict the leading term of $\displaystyle\sum_{k=1}^{n} k^4$.
+    </div>
+    <span class="concept-tag">Pattern extension</span>
+    <span class="concept-tag">$d=4$</span>
+    <div class="solution">
+        <div class="solution-step">Set $d=4$: &nbsp; $\displaystyle\sum_{k=1}^{n} k^4 \approx \frac{n^{4+1}}{4+1} = \frac{n^5}{5}$.</div>
+        <div class="solution-step">The result lives in <strong>5D</strong> (fifth-power leading term).</div>
+    </div>
+    <div class="final-answer">Leading term $\dfrac{n^5}{5}$; result is 5-dimensional</div>
+</div>
+
+<!-- Problem 3 -->
+<div class="answer-block">
+    <div class="problem-header">Problem 3 &mdash; Ratio Check at $n=10$</div>
+    <div class="problem-text">
+        Compute $\sum_{k=1}^{10} k$ and $\sum_{k=1}^{10} k^2$; compare ratio to leading-term ratio.
+    </div>
+    <span class="concept-tag">Numerical check</span>
+    <div class="solution">
+        <div class="solution-step">$\displaystyle\sum_{k=1}^{10} k = \frac{10\cdot11}{2} = 55$.</div>
+        <div class="solution-step">$\displaystyle\sum_{k=1}^{10} k^2 = \frac{10\cdot11\cdot21}{6} = 385$.</div>
+        <div class="solution-step">Exact ratio: $\dfrac{385}{55} = 7$.</div>
+        <div class="solution-step">Leading-term ratio: $\dfrac{n^3/3}{n^2/2} = \dfrac{2n}{3} = \dfrac{2\cdot10}{3} \approx 6.67$.</div>
+        <div class="solution-step">At $n=10$, ratio is 7 vs 6.67. Close (within 5%). As $n \to \infty$, the ratio approaches $\dfrac{2n}{3}$ and the approximation becomes tighter.</div>
+    </div>
+    <div class="final-answer">Exact ratio $= 7$; leading-term ratio $\approx 6.67$</div>
+</div>
+
+<!-- Problem 4 -->
+<div class="answer-block">
+    <div class="problem-header">Problem 4 &mdash; Verify $\sum k^4$ Leading Term</div>
+    <div class="problem-text">
+        Check the claim: leading term of $\sum_{k=1}^{n} k^4$ is $\dfrac{n^5}{5}$. Use exact formula at $n=2, 3$.
+    </div>
+    <span class="concept-tag">Exact formula</span>
+    <span class="concept-tag">Leading term</span>
+    <div class="solution">
+        <div class="solution-step"><strong>Exact formula:</strong> $\dfrac{n(n+1)(2n+1)(3n^2+3n-1)}{30}$.</div>
+        <div class="solution-step"><strong>$n=2$:</strong> &nbsp; $1^4+2^4 = 1+16 = 17$. &nbsp; Formula: $\dfrac{2\cdot3\cdot5\cdot11}{30}=\dfrac{330}{30}=11$. &nbsp; Wait — let me recompute: $3(4)+3(2)-1=12+6-1=17$. &nbsp; $\dfrac{2\cdot3\cdot5\cdot17}{30}=\dfrac{510}{30}=17$. &nbsp; &#10003;</div>
+        <div class="solution-step"><strong>Leading-term prediction at $n=2$:</strong> $\dfrac{2^5}{5}=\dfrac{32}{5}=6.4$. &nbsp; Actual $=17$. Approximation is rough for small $n$.</div>
+        <div class="solution-step"><strong>$n=3$:</strong> &nbsp; $1+16+81=98$. &nbsp; Formula: $3n^2+3n-1=27+9-1=35$. &nbsp; $\dfrac{3\cdot4\cdot7\cdot35}{30}=\dfrac{2940}{30}=98$. &nbsp; &#10003;</div>
+        <div class="solution-step"><strong>Leading-term at $n=3$:</strong> $\dfrac{3^5}{5}=\dfrac{243}{5}=48.6$. &nbsp; Actual $=98$. Ratio $\approx2.0$; approximation improves as $n$ grows.</div>
+        <div class="solution-step">The exact formula confirms the leading coefficient is $\dfrac{n^5}{5}$ (expand the product: highest-degree term $= \dfrac{2\cdot3n^5}{30} = \dfrac{n^5}{5}$). &#10003;</div>
+    </div>
+    <div class="final-answer">Leading term $\dfrac{n^5}{5}$ confirmed; exact formula verified at $n=2$ and $n=3$</div>
+</div>
+
+<!-- PAGE BREAK -->
+<div class="page-break"></div>
+
+<p style="font-weight:bold; color:var(--color-accent); margin:10px 0 4px 0;">Part B &mdash; Nicomachus &amp; Algebraic Verification</p>
+
+<!-- Problem 5 -->
+<div class="answer-block">
+    <div class="problem-header">Problem 5 &mdash; Nicomachus at $n=5$</div>
+    <div class="problem-text">
+        Show $1^3+2^3+3^3+4^3+5^3 = \left(\dfrac{5\cdot6}{2}\right)^2$.
+    </div>
+    <span class="concept-tag">Nicomachus</span>
+    <div class="solution">
+        <div class="solution-step">Left side: $1+8+27+64+125 = 225$.</div>
+        <div class="solution-step">Right side: $\left(\dfrac{30}{2}\right)^2 = 15^2 = 225$. &nbsp; &#10003;</div>
+    </div>
+    <div class="final-answer">Both sides equal 225</div>
+</div>
+
+<!-- Problem 6 -->
+<div class="answer-block">
+    <div class="problem-header">Problem 6 &mdash; Simplify the Ratio</div>
+    <div class="problem-text">
+        Simplify $\dfrac{1^3+2^3+\cdots+n^3}{(1+2+\cdots+n)^2}$ for any $n\ge1$.
+    </div>
+    <span class="concept-tag">Nicomachus</span>
+    <span class="concept-tag">Algebraic simplification</span>
+    <div class="solution">
+        <div class="solution-step">Numerator $= \displaystyle\sum_{k=1}^{n} k^3 = \left[\dfrac{n(n+1)}{2}\right]^2$ &nbsp; (Nicomachus's Theorem).</div>
+        <div class="solution-step">Denominator $= \left(\displaystyle\sum_{k=1}^{n} k\right)^2 = \left[\dfrac{n(n+1)}{2}\right]^2$.</div>
+        <div class="solution-step">Therefore the ratio $= \dfrac{\left[\frac{n(n+1)}{2}\right]^2}{\left[\frac{n(n+1)}{2}\right]^2} = 1$.</div>
+        <div class="solution-step"><strong>Meaning:</strong> By Nicomachus's Theorem, numerator and denominator are always equal, so the ratio is <strong>identically 1</strong> for every $n \ge 1$.</div>
+    </div>
+    <div class="final-answer">The ratio equals $1$ for all $n \ge 1$</div>
+</div>
+
+<!-- Problem 7 -->
+<div class="answer-block">
+    <div class="problem-header">Problem 7 &mdash; Solve for $n$</div>
+    <div class="problem-text">
+        Find $n$ such that $1^3+2^3+\cdots+n^3 = 3025$.
+    </div>
+    <span class="concept-tag">Nicomachus</span>
+    <span class="concept-tag">Equation solving</span>
+    <div class="solution">
+        <div class="solution-step">By Nicomachus: $\left[\dfrac{n(n+1)}{2}\right]^2 = 3025$.</div>
+        <div class="solution-step">Take square root (positive): $\dfrac{n(n+1)}{2} = \sqrt{3025} = 55$.</div>
+        <div class="solution-step">$n(n+1) = 110$. &nbsp; Try $n=10$: $10\cdot11=110$. &#10003;</div>
+    </div>
+    <div class="final-answer">$n = 10$</div>
+</div>
+
+<!-- PAGE BREAK -->
+<div class="page-break"></div>
+
+<p style="font-weight:bold; color:var(--color-accent); margin:10px 0 4px 0;">Part C &mdash; Calculus Connection &amp; Induction</p>
+
+<!-- Problem 8 -->
+<div class="answer-block">
+    <div class="problem-header">Problem 8 &mdash; Integral vs Sum at $n=10$</div>
+    <div class="problem-text">
+        Evaluate $\displaystyle\int_0^{10} x^2\,dx$, compute $\displaystyle\sum_{k=1}^{10}k^2$, find their ratio.
+    </div>
+    <span class="concept-tag">Calculus connection</span>
+    <span class="concept-tag">Riemann sum</span>
+    <div class="solution">
+        <div class="solution-step"><strong>Integral:</strong> $\displaystyle\int_0^{10} x^2\,dx = \dfrac{x^3}{3}\Big|_0^{10} = \dfrac{1000}{3} \approx 333.33$.</div>
+        <div class="solution-step"><strong>Sum:</strong> $\displaystyle\sum_{k=1}^{10} k^2 = \dfrac{10\cdot11\cdot21}{6} = \dfrac{2310}{6} = 385$.</div>
+        <div class="solution-step"><strong>Ratio:</strong> $\dfrac{385}{333.33} \approx 1.155$.</div>
+        <div class="solution-step"><strong>As $n \to \infty$:</strong> The ratio $\dfrac{\sum_{k=1}^{n}k^2}{\int_0^n x^2\,dx} = \dfrac{\frac{n(n+1)(2n+1)}{6}}{\frac{n^3}{3}} = \dfrac{(n+1)(2n+1)}{2n^2} \to \dfrac{2n^2}{2n^2} = 1$. &nbsp; The sum and integral converge to the same value (relatively).</div>
+    </div>
+    <div class="final-answer">Integral $=\dfrac{1000}{3}$; Sum $=385$; Ratio $\approx 1.155$ &rarr; approaches $1$ as $n \to \infty$</div>
+</div>
+
+<!-- Problem 9 -->
+<div class="answer-block">
+    <div class="problem-header">Problem 9 &mdash; Conceptual Explanation</div>
+    <div class="problem-text">
+        Explain in 1-2 sentences: how is $\displaystyle\int x^3\,dx = \dfrac{x^4}{4}+C$ the continuous version of $\displaystyle\sum_{k=1}^{n}k^3 \approx \dfrac{n^4}{4}$?
+    </div>
+    <span class="concept-tag">Conceptual</span>
+    <span class="concept-tag">Riemann integral</span>
+    <div class="solution">
+        <div class="solution-step">
+            <strong>Model answer:</strong> The discrete sum $\sum_{k=1}^{n} k^3$ approximates the area under $y = x^3$ using unit-width rectangles; as the rectangles shrink to width $\frac{1}{n}$ and $n \to \infty$, the sum becomes the Riemann integral $\int_0^n x^3\,dx = \frac{n^4}{4}$.
+            Both the sum and the integral give the same leading term $\frac{n^4}{4}$ because they are measuring the same geometric quantity &mdash; one discretely, one continuously.
+        </div>
+    </div>
+    <div class="final-answer">See model answer above (accept equivalent explanations linking Riemann rectangles to the integral)</div>
+</div>
+
+<!-- Problem 10 -->
+<div class="answer-block">
+    <div class="problem-header">Problem 10 &mdash; Induction Proof of $\displaystyle\sum k^2 = \dfrac{n(n+1)(2n+1)}{6}$</div>
+    <div class="problem-text">
+        Prove by mathematical induction: (a) Base case. (b) Inductive hypothesis. (c) Inductive step.
+    </div>
+    <span class="concept-tag">Mathematical induction</span>
+    <span class="concept-tag">Sum of squares</span>
+    <div class="solution">
+        <div class="solution-step">
+            <strong>(a) Base Case ($n=1$):</strong> &nbsp;
+            LHS $= 1^2 = 1$. &nbsp;
+            RHS $= \dfrac{1 \cdot 2 \cdot 3}{6} = 1$. &nbsp; LHS = RHS. &#10003;
+        </div>
+        <div class="solution-step">
+            <strong>(b) Inductive Hypothesis:</strong> &nbsp;
+            Assume $\displaystyle\sum_{k=1}^{m} k^2 = \dfrac{m(m+1)(2m+1)}{6}$ for some $m \ge 1$.
+        </div>
+        <div class="solution-step">
+            <strong>(c) Inductive Step ($n = m+1$):</strong>
+        </div>
+        <div class="solution-step indent">
+            $\displaystyle\sum_{k=1}^{m+1} k^2
+            = \underbrace{\sum_{k=1}^{m} k^2}_{\frac{m(m+1)(2m+1)}{6}} + (m+1)^2$
+        </div>
+        <div class="solution-step indent">
+            $= \dfrac{m(m+1)(2m+1)}{6} + (m+1)^2$
+        </div>
+        <div class="solution-step indent">
+            $= (m+1)\!\left[\dfrac{m(2m+1)}{6} + (m+1)\right]$
+        </div>
+        <div class="solution-step indent">
+            $= (m+1)\!\left[\dfrac{m(2m+1) + 6(m+1)}{6}\right]$
+        </div>
+        <div class="solution-step indent">
+            $= (m+1)\!\left[\dfrac{2m^2+m+6m+6}{6}\right]$
+        </div>
+        <div class="solution-step indent">
+            $= (m+1)\!\left[\dfrac{2m^2+7m+6}{6}\right]$
+        </div>
+        <div class="solution-step indent">
+            $= (m+1)\!\left[\dfrac{(m+2)(2m+3)}{6}\right]$
+        </div>
+        <div class="solution-step indent">
+            $= \dfrac{(m+1)(m+2)(2m+3)}{6}$
+        </div>
+        <div class="solution-step">
+            This is exactly $\dfrac{n(n+1)(2n+1)}{6}$ with $n = m+1$ (check: $2(m+1)+1 = 2m+3$). &#10003;
+        </div>
+        <div class="solution-step">
+            By PMI, the formula holds for all $n \ge 1$. &nbsp; $\blacksquare$
+        </div>
+    </div>
+    <div class="final-answer">Induction complete — formula proved for all $n \ge 1$</div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    Newton School &nbsp;&bull;&nbsp; 2175 Lemoine Ave Suite 304, Fort Lee, NJ 07024
+    &nbsp;&bull;&nbsp; (201) 252-7252 &nbsp;&bull;&nbsp; www.newtonschool.net
+    &nbsp;&bull;&nbsp; Kenny@newtonschool.net
+    &nbsp;&bull;&nbsp; Created 2026-05-10 &copy; Newton School
+</div>
+
+</div><!-- .page -->
+</body>
+</html>

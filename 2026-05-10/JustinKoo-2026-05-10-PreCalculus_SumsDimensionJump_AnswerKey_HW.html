@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pre-Calculus Homework Answer Key: Sums and the Dimension Jump</title>
+
+<!-- MathJax -->
+<script>
+window.MathJax = {
+    tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']]
+    },
+    startup: { ready: () => { MathJax.startup.defaultReady(); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+<style>
+/* =========================================================================
+   base-print.css
+   ========================================================================= */
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Century Schoolbook', 'Times New Roman', serif; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+    html, body { background: #fff; }
+    .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+    .problem, .answer-block, .reminder, .parent-note, .example, .word-problem {
+        page-break-inside: avoid; break-inside: avoid;
+    }
+    .part-header, .directions, .problem-header, h1, h2, h3 {
+        page-break-after: avoid; break-after: avoid;
+    }
+    .page-break { page-break-before: always; break-before: page; }
+    * { background: transparent !important; }
+}
+
+/* =========================================================================
+   theme-boy.css
+   ========================================================================= */
+:root {
+    --color-primary:        #1565c0;
+    --color-primary-dark:   #0d47a1;
+    --color-accent:         #00838f;
+    --color-header-border:  #1565c0;
+    --color-final-answer:   #2e7d32;
+    --color-warning:        #c62828;
+    --color-parent-note:    #283593;
+    --color-insight:        #6a1b9a;
+    --color-tag-bg:         transparent;
+    --color-tag-border:     #1565c0;
+    --color-tag-text:       #1565c0;
+    --color-muted:          #555;
+    --color-rule:           #ccc;
+}
+
+/* =========================================================================
+   level-high.css
+   ========================================================================= */
+body { font-family: 'Source Serif Pro', 'Georgia', 'Times New Roman', serif; font-size: 10.5pt; line-height: 1.55; }
+h1, h2, h3, .part-header { font-family: 'Libre Baskerville', 'Georgia', serif; }
+
+.header { text-align: center; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid var(--color-header-border); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 7px 3px; font-weight: bold; border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+.key-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 7px 3px; font-weight: bold; border: 1.5px solid var(--color-warning); color: var(--color-warning); }
+h1 { font-size: 15pt; margin: 6px 0 8px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 4px; color: var(--color-muted); }
+
+.part-header { font-size: 12pt; font-weight: bold; color: var(--color-primary); margin: 18px 0 6px 0; padding-bottom: 3px; border-bottom: 1.5px solid var(--color-primary); }
+
+.answer-block { margin: 12px 0; padding: 10px 14px; border: 1px solid #ddd; border-radius: 4px; page-break-inside: avoid; break-inside: avoid; }
+.problem-header { font-weight: bold; color: var(--color-primary); font-size: 11pt; margin-bottom: 5px; }
+.problem-text { font-size: 10pt; padding: 6px 10px; background: #f7f7f7; border-left: 3px solid #bbb; margin-bottom: 8px; line-height: 1.5; }
+.concept-tag { display: inline-block; font-size: 8pt; padding: 2px 8px; margin: 2px 3px 5px 0; border: 1px solid var(--color-tag-border); color: var(--color-tag-text); border-radius: 10px; }
+.solution { margin: 6px 0; padding-left: 8px; border-left: 3px solid var(--color-final-answer); }
+.solution-step { margin: 4px 0; font-size: 10pt; line-height: 1.7; }
+.final-answer { display: inline-block; border: 2px solid var(--color-final-answer); color: var(--color-final-answer); font-weight: bold; padding: 4px 12px; border-radius: 4px; margin-top: 6px; font-size: 11pt; }
+
+.insight-note { border: 1.5px solid var(--color-insight); border-left: 4px solid var(--color-insight); padding: 8px 12px; margin: 8px 0; font-size: 10pt; }
+.insight-note .title { font-weight: bold; color: var(--color-insight); margin-bottom: 4px; }
+
+.footer { font-size: 7.5pt; color: var(--color-muted); text-align: center; margin-top: 30px; padding-top: 6px; border-top: 1px solid var(--color-rule); }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HEADER -->
+<div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">PRE-CALCULUS</div>
+    <div class="key-tag">ANSWER KEY</div>
+    <h1>Sums and the Dimension Jump — Homework</h1>
+    <div class="info">
+        <span><strong>Student:</strong> Justin Koo</span>
+        <span><strong>Date:</strong> May 10, 2026</span>
+    </div>
+</div>
+
+<!-- PART A -->
+<div class="part-header">Part A &mdash; Direct Application of Sum Formulas</div>
+
+<!-- Problem 1 -->
+<div class="answer-block">
+    <div class="problem-header">Problem 1</div>
+    <div class="problem-text">Evaluate $\displaystyle\sum_{k=1}^{20} k$.</div>
+    <span class="concept-tag">sum of integers</span>
+    <span class="concept-tag">formula application</span>
+    <div class="solution">
+        <div class="solution-step">Use $\displaystyle\sum_{k=1}^{n} k = \dfrac{n(n+1)}{2}$ with $n = 20$:</div>
+        <div class="solution-step">$$\frac{20 \cdot 21}{2} = \frac{420}{2} = 210$$</div>
+    </div>
+    <div class="final-answer">210</div>
+</div>
+
+<!-- Problem 2 -->
+<div class="answer-block">
+    <div class="problem-header">Problem 2</div>
+    <div class="problem-text">Evaluate $\displaystyle\sum_{k=1}^{15} k^2$.</div>
+    <span class="concept-tag">sum of squares</span>
+    <span class="concept-tag">formula application</span>
+    <div class="solution">
+        <div class="solution-step">Use $\displaystyle\sum_{k=1}^{n} k^2 = \dfrac{n(n+1)(2n+1)}{6}$ with $n = 15$:</div>
+        <div class="solution-step">$$\frac{15 \cdot 16 \cdot 31}{6} = \frac{7440}{6} = 1240$$</div>
+    </div>
+    <div class="final-answer">1240</div>
+</div>
+
+<!-- Problem 3 -->
+<div class="answer-block">
+    <div class="problem-header">Problem 3</div>
+    <div class="problem-text">Evaluate $\displaystyle\sum_{k=1}^{10} k^3$.</div>
+    <span class="concept-tag">sum of cubes</span>
+    <span class="concept-tag">formula application</span>
+    <div class="solution">
+        <div class="solution-step">Use $\displaystyle\sum_{k=1}^{n} k^3 = \left(\dfrac{n(n+1)}{2}\right)^2$ with $n = 10$:</div>
+        <div class="solution-step">$$\left(\frac{10 \cdot 11}{2}\right)^2 = (55)^2 = 3025$$</div>
+    </div>
+    <div class="final-answer">3025</div>
+</div>
+
+<!-- PART B -->
+<div class="part-header page-break">Part B &mdash; Geometric &amp; Conceptual Reasoning</div>
+
+<!-- Problem 4 -->
+<div class="answer-block">
+    <div class="problem-header">Problem 4</div>
+    <div class="problem-text">A staircase with step widths $1, 2, \ldots, n$ (height 1 each). Total area when $n=12$?</div>
+    <span class="concept-tag">sum of integers</span>
+    <span class="concept-tag">geometric interpretation</span>
+    <div class="solution">
+        <div class="solution-step">Each step $k$ has area $= k \times 1 = k$. Total area $= \displaystyle\sum_{k=1}^{12} k$.</div>
+        <div class="solution-step">The <strong>sum-of-integers</strong> formula applies because each term is $k$ (1-dimensional).</div>
+        <div class="solution-step">$$\sum_{k=1}^{12} k = \frac{12 \cdot 13}{2} = \frac{156}{2} = 78$$</div>
+        <div class="solution-step"><em>Dimension-jump check:</em> summing 1D terms gives a 2D area result &mdash; consistent with the rule.</div>
+    </div>
+    <div class="final-answer">Total area = 78 square units &nbsp; (sum-of-integers formula)</div>
+</div>
+
+<!-- Problem 5 -->
+<div class="answer-block">
+    <div class="problem-header">Problem 5</div>
+    <div class="problem-text">Is $\displaystyle\sum_{k=1}^{100} k^2$ closest to $\dfrac{100^2}{3}$, $\dfrac{100^3}{3}$, or $\dfrac{100^4}{3}$?</div>
+    <span class="concept-tag">dimension-jump rule</span>
+    <span class="concept-tag">estimation</span>
+    <div class="solution">
+        <div class="solution-step"><strong>Answer: $\dfrac{100^3}{3}$.</strong></div>
+        <div class="solution-step">By the Dimension-Jump Rule, $\displaystyle\sum_{k=1}^{n} k^d \approx \dfrac{n^{d+1}}{d+1}$.</div>
+        <div class="solution-step">Here $d = 2$, so the sum $\approx \dfrac{n^{3}}{3} = \dfrac{100^3}{3} \approx 333{,}333$.</div>
+        <div class="solution-step">
+            Check: exact value $= \dfrac{100 \cdot 101 \cdot 201}{6} = 338{,}350$ &mdash; very close to $\dfrac{100^3}{3}$, not to $\dfrac{100^2}{3} \approx 3{,}333$ or $\dfrac{100^4}{3} \approx 33.3$ million.
+        </div>
+    </div>
+    <div class="final-answer">$\dfrac{100^3}{3} \approx 333{,}333$ &nbsp; (exact: 338,350)</div>
+</div>
+
+<!-- Problem 6 -->
+<div class="answer-block">
+    <div class="problem-header">Problem 6</div>
+    <div class="problem-text">Complete: $\displaystyle\sum_{k=1}^{n} k^4 \approx \underline{\hspace{60pt}}$ as $n\to\infty$. What dimension?</div>
+    <span class="concept-tag">dimension-jump rule</span>
+    <span class="concept-tag">generalization</span>
+    <div class="solution">
+        <div class="solution-step">Apply the rule with $d = 4$: &nbsp; $\displaystyle\sum_{k=1}^{n} k^4 \approx \dfrac{n^{5}}{5}$.</div>
+        <div class="solution-step">The leading term is $n^5$, so the result lives in <strong>5 dimensions</strong>.</div>
+        <div class="solution-step"><em>Pattern:</em> summing $k^4$ (4D terms) produces a 5D result &mdash; the dimension always jumps by 1.</div>
+    </div>
+    <div class="final-answer">$\dfrac{n^5}{5}$ &nbsp;&mdash;&nbsp; 5-dimensional</div>
+</div>
+
+<!-- PART C -->
+<div class="part-header page-break">Part C &mdash; Algebra with Sum Linearity</div>
+
+<!-- Problem 7 -->
+<div class="answer-block">
+    <div class="problem-header">Problem 7</div>
+    <div class="problem-text">Compute $\displaystyle\sum_{k=1}^{n} (3k^2 + 2k - 1)$. Leave in terms of $n$.</div>
+    <span class="concept-tag">linearity of summation</span>
+    <span class="concept-tag">algebraic simplification</span>
+    <div class="solution">
+        <div class="solution-step">Split using linearity:
+        $$\sum_{k=1}^{n}(3k^2 + 2k - 1) = 3\sum_{k=1}^{n}k^2 \;+\; 2\sum_{k=1}^{n}k \;-\; \sum_{k=1}^{n}1$$
+        </div>
+        <div class="solution-step">Apply each formula:
+        $$= 3\cdot\frac{n(n+1)(2n+1)}{6} \;+\; 2\cdot\frac{n(n+1)}{2} \;-\; n$$
+        </div>
+        <div class="solution-step">Simplify each term:
+        $$= \frac{n(n+1)(2n+1)}{2} \;+\; n(n+1) \;-\; n$$
+        </div>
+        <div class="solution-step">Factor out $n$ and expand:
+        $$= n\left[\frac{(n+1)(2n+1)}{2} + (n+1) - 1\right]$$
+        </div>
+        <div class="solution-step">Combine over common denominator 2:
+        $$= n\cdot\frac{(n+1)(2n+1) + 2(n+1) - 2}{2} = n\cdot\frac{(n+1)(2n+3) - 2}{2}$$
+        </div>
+        <div class="solution-step">Expand $(n+1)(2n+3) = 2n^2 + 5n + 3$, so numerator $= 2n^2 + 5n + 1$:
+        $$\boxed{= \frac{n(2n^2+5n+1)}{2}}$$
+        </div>
+        <div class="solution-step"><em>Verify with $n=2$: &nbsp; $(3 \cdot 4 + 2 \cdot 2 - 1) + (3 \cdot 1 + 2 \cdot 1 - 1) = 15 + 4 = 19$. &nbsp; Formula: $\frac{2(8+10+1)}{2} = 19$ ✓</em></div>
+    </div>
+    <div class="final-answer">$\dfrac{n(2n^2 + 5n + 1)}{2}$</div>
+</div>
+
+<!-- PART D -->
+<div class="part-header">Part D &mdash; Challenge &amp; Reflection</div>
+
+<!-- Problem 8 -->
+<div class="answer-block">
+    <div class="problem-header">Problem 8 (Challenge)</div>
+    <div class="problem-text">$M = \displaystyle\sum_{k=1}^{n} k^3$. (a) Compute $M$ for $n=8$. (b) Compare to $\left(\frac{n(n+1)}{2}\right)^2$ for $n=8$.</div>
+    <span class="concept-tag">sum of cubes</span>
+    <span class="concept-tag">identity verification</span>
+    <div class="solution">
+        <div class="solution-step"><strong>(a)</strong> Apply $\displaystyle\sum_{k=1}^{n} k^3 = \left(\dfrac{n(n+1)}{2}\right)^2$ with $n=8$:
+        $$M = \left(\frac{8 \cdot 9}{2}\right)^2 = (36)^2 = 1296$$
+        </div>
+        <div class="solution-step"><strong>(b)</strong> $\left(\dfrac{n(n+1)}{2}\right)^2 = (36)^2 = 1296$ for $n=8$.</div>
+        <div class="solution-step">The two values are <strong>identical</strong> &mdash; this is not a coincidence. The formula <em>is</em> $\left(\frac{n(n+1)}{2}\right)^2$; both expressions are the same formula, just written differently. The sum of cubes $1^3 + 2^3 + \cdots + n^3$ always equals the square of the triangular number $\frac{n(n+1)}{2}$.</div>
+    </div>
+    <div class="final-answer">(a) $M = 1296$ &nbsp;|&nbsp; (b) Same value — the formula $\sum k^3 = \left(\frac{n(n+1)}{2}\right)^2$ is exact, not an approximation</div>
+</div>
+
+<!-- Problem 9 -->
+<div class="answer-block">
+    <div class="problem-header">Problem 9 (Reflection)</div>
+    <div class="problem-text">Dimension-Jump Rule: $\sum k^d \approx n^{d+1}/(d+1)$. Power Rule: $\int_0^n x^d\,dx = n^{d+1}/(d+1)$. Coincidence?</div>
+    <span class="concept-tag">Riemann sums</span>
+    <span class="concept-tag">calculus preview</span>
+    <div class="solution">
+        <div class="solution-step"><strong>It is not a coincidence.</strong></div>
+        <div class="solution-step">The sum $\sum_{k=1}^{n} k^d$ can be written as $n^{d+1}\sum_{k=1}^{n}\left(\frac{k}{n}\right)^d \cdot \frac{1}{n}$, which is a <em>Riemann sum</em> approximating $\int_0^1 x^d\,dx \cdot n^{d+1} = \dfrac{n^{d+1}}{d+1}$.</div>
+        <div class="solution-step">In other words, the dimension-jump rule <em>is</em> the Power Rule for integration in disguise: the act of summing infinitely many thin slices is exactly what an integral does, and the $+1$ in the exponent comes from accumulating one extra dimension each time you "sum up" a quantity.</div>
+    </div>
+    <div class="final-answer">Not a coincidence &mdash; $\sum k^d$ is a Riemann sum for $\int_0^n x^d\,dx$; both equal $n^{d+1}/(d+1)$</div>
+    <div class="insight-note" style="margin-top:10px;">
+        <div class="title">Teacher Note</div>
+        This is the conceptual bridge between discrete summation (Algebra/Pre-Calc) and the Fundamental Theorem of Calculus. Students who see this clearly are primed for AP Calculus integration from day one.
+    </div>
+</div>
+
+<div class="footer">Created by Newton School &nbsp;&mdash;&nbsp; May 10, 2026 &nbsp;&copy; Copyright &nbsp;|&nbsp; ANSWER KEY &mdash; Not for distribution to students</div>
+</div>
+</body>
+</html>

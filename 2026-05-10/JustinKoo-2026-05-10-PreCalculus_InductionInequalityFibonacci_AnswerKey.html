@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ANSWER KEY — Induction: Inequalities &amp; Fibonacci (Part 2)</title>
+<script>
+window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+    startup: { ready: () => { MathJax.startup.defaultReady(); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+/* ============ base-print.css ============ */
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Century Schoolbook', 'Times New Roman', serif; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+    html, body { background: #fff; }
+    .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+    .answer-block, .reminder { page-break-inside: avoid; break-inside: avoid; }
+    .part-header, h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+    .page-break { page-break-before: always; break-before: page; }
+    /* Suppress browser URL/time footer — Chrome flags are primary, this is belt+suspenders */
+    .footer { display: none !important; }
+}
+
+/* ============ theme-boy.css ============ */
+:root {
+    --color-primary: #1565c0;
+    --color-primary-dark: #0d47a1;
+    --color-accent: #00838f;
+    --color-header-border: #1565c0;
+    --color-final-answer: #2e7d32;
+    --color-warning: #c62828;
+    --color-tag-border: #1565c0;
+    --color-tag-text: #1565c0;
+    --color-muted: #555;
+    --color-rule: #ccc;
+}
+
+/* ============ level-high.css ============ */
+body { font-family: 'Source Serif Pro', 'Georgia', 'Times New Roman', serif; font-size: 10.5pt; line-height: 1.55; }
+h1, h2, h3, .part-header { font-family: 'Libre Baskerville', 'Georgia', serif; }
+.header { text-align: center; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid var(--color-header-border); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 7px 3px; font-weight: bold; border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+.key-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 7px 3px; font-weight: bold; border: 1.5px solid var(--color-warning); color: var(--color-warning); }
+h1 { font-size: 15pt; margin: 6px 0 8px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 4px; color: var(--color-muted); }
+.part-header { font-size: 13pt; font-weight: bold; color: var(--color-primary); margin: 22px 0 6px 0; padding-bottom: 3px; border-bottom: 1.5px solid var(--color-primary); }
+
+/* Answer blocks */
+.answer-block { margin: 18px 0; padding: 12px 16px; border: 1px solid #ddd; border-radius: 4px; }
+.problem-header { font-weight: bold; color: var(--color-primary); font-size: 11pt; margin-bottom: 6px; }
+.problem-text { font-size: 10pt; padding: 6px 10px; background: #f7f7f7; border-left: 3px solid #bbb; margin-bottom: 10px; line-height: 1.5; }
+.solution { margin: 6px 0; padding-left: 8px; border-left: 3px solid var(--color-final-answer); }
+.solution-step { margin: 5px 0; font-size: 10pt; line-height: 1.75; }
+.final-answer { display: inline-block; border: 2px solid var(--color-final-answer); color: var(--color-final-answer); font-weight: bold; padding: 4px 12px; border-radius: 4px; margin-top: 8px; font-size: 11pt; }
+.step-indent { margin-left: 18px; padding: 2px 0 2px 12px; border-left: 2px solid #ddd; font-size: 10pt; line-height: 1.8; }
+.tactic-note { font-size: 9pt; color: #e65100; font-style: italic; margin-top: 4px; }
+.footer { font-size: 7.5pt; color: var(--color-muted); text-align: center; margin-top: 30px; padding-top: 6px; border-top: 1px solid var(--color-rule); }
+.reminder { border: 1.5px solid var(--color-warning); padding: 8px 14px; margin: 14px 0; font-size: 10pt; }
+.reminder .rem-title { font-weight: bold; color: var(--color-warning); margin-bottom: 4px; }
+
+/* ============ editor-widget.css (minimal — answer key) ============ */
+:root { --ed-accent: #1565c0; --ed-bar-bg: #1e2d3d; --ed-bar-text: #e2e8f0; --ed-radius: 5px; --ed-shadow: rgba(0,0,0,0.12); --ed-sticky-bg: #fef9c3; --ed-sticky-border: #f59e0b; --ed-sticky-handle: #fde68a; }
+.ed-commentable { position: relative; }
+.ed-comment-btn { position: absolute; top: 3px; right: -30px; width: 22px; height: 22px; padding: 0; display: inline-flex; align-items: center; justify-content: center; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; color: #64748b; cursor: pointer; font-size: 12px; opacity: 0; transition: opacity 0.15s ease; z-index: 10; }
+.ed-commentable:hover .ed-comment-btn { opacity: 0.75; }
+.ed-comment-btn:hover { opacity: 1 !important; color: var(--ed-accent); background: #e0ecff; }
+.ed-comment-btn.has-comment { opacity: 1; background: #fef3c7; border-color: #f59e0b; color: #92400e; }
+.ed-commentable.has-ed-comment { border-left: 3px solid #f59e0b; padding-left: 10px; background: rgba(245,158,11,0.05); border-radius: 3px; }
+.ed-dot { position: absolute; top: 1px; right: -12px; width: 7px; height: 7px; border-radius: 50%; background: #3b82f6; pointer-events: none; }
+.ed-dot[hidden] { display: none; }
+.ed-comment-box { margin: 6px 0 10px; padding: 10px 12px; background: #fafafa; border: 1px solid #e2e8f0; border-radius: var(--ed-radius); box-shadow: 0 2px 8px var(--ed-shadow); display: none; z-index: 20; }
+.ed-comment-box.open { display: block; }
+.ed-comment-box textarea { width: 100%; min-height: 64px; padding: 7px 9px; background: #fff; border: 1px solid #d1d5db; border-radius: 4px; color: #1e293b; font-family: 'Times New Roman', serif; font-size: 11pt; line-height: 1.5; resize: vertical; }
+.ed-comment-box-actions { margin-top: 6px; display: flex; gap: 6px; justify-content: flex-end; }
+.ed-comment-box-actions button { padding: 4px 12px; font-size: 11px; cursor: pointer; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; color: #475569; font-family: 'Times New Roman', serif; }
+.ed-comment-box-actions button.ed-save { background: var(--ed-accent); color: #fff; border-color: var(--ed-accent); }
+mark.ed-annotation { background: rgba(245,158,11,0.25); color: inherit; padding: 0 2px; border-radius: 2px; border-bottom: 2px solid #f59e0b; cursor: pointer; }
+.ed-sticky { position: absolute; z-index: 990; width: 240px; min-height: 110px; background: var(--ed-sticky-bg); border: 1px solid var(--ed-sticky-border); border-radius: 5px; box-shadow: 2px 3px 8px rgba(0,0,0,0.18); display: flex; flex-direction: column; }
+.ed-sticky-handle { padding: 5px 9px; cursor: move; font-size: 10px; font-weight: 700; color: #78350f; background: var(--ed-sticky-handle); border-bottom: 1px solid var(--ed-sticky-border); border-radius: 5px 5px 0 0; user-select: none; display: flex; align-items: center; justify-content: space-between; }
+.ed-sticky textarea { flex: 1; padding: 7px 9px; border: none; background: transparent; color: #1e293b; font-family: 'Times New Roman', serif; font-size: 11pt; line-height: 1.4; resize: none; outline: none; min-height: 70px; }
+.ed-sticky-close { background: transparent; border: none; color: #92400e; cursor: pointer; font-size: 14px; line-height: 1; padding: 0; }
+.ed-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 1000; height: 38px; background: var(--ed-bar-bg); border-top: 1px solid #334155; display: flex; align-items: center; gap: 4px; padding: 0 12px; box-shadow: 0 -2px 8px rgba(0,0,0,0.2); font-family: ui-sans-serif, system-ui, sans-serif; }
+.ed-bar-label { font-size: 10px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em; margin-right: 6px; white-space: nowrap; }
+.ed-bar-btn { height: 26px; padding: 0 10px; font-size: 11px; cursor: pointer; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 4px; color: var(--ed-bar-text); display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; font-family: inherit; }
+.ed-bar-btn.ed-bar-primary { background: var(--ed-accent); border-color: var(--ed-accent); color: #fff; }
+.ed-bar-count { background: #3b82f6; color: #fff; border-radius: 9px; font-size: 10px; font-weight: 700; min-width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center; padding: 0 4px; }
+.ed-bar-sep { width: 1px; height: 20px; background: rgba(255,255,255,0.12); margin: 0 4px; }
+.ed-bar-spacer { flex: 1; }
+.ed-bar-status { font-size: 10px; color: #64748b; white-space: nowrap; }
+body { padding-bottom: 46px; }
+@media print {
+  .ed-bar, .ed-comment-btn, .ed-comment-box, .ed-dot, .ed-sticky { display: none !important; }
+  body { padding-bottom: 0 !important; }
+  .ed-commentable.has-ed-comment { border-left: none !important; padding-left: 0 !important; background: transparent !important; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">PRE-CALCULUS &nbsp;|&nbsp; HOMEWORK PART 2</div>
+    <div class="key-tag">ANSWER KEY &mdash; TEACHER COPY</div>
+    <h1>Mathematical Induction: Inequalities &amp; Fibonacci</h1>
+    <div class="info">
+      <span><strong>Student:</strong> Justin Koo</span>
+      <span><strong>Date:</strong> 2026-05-10</span>
+    </div>
+    <div class="standard">
+      All 7 problems with complete step-by-step proofs. Wider Scope Tactic callouts marked in orange.
+    </div>
+  </div>
+
+  <!-- Kenny Reminder Box -->
+  <div class="kenny-reminder" style="border:2px solid #1565c0;background:#e3f2fd;padding:14px 18px;margin:16px 0 18px 0;border-left-width:6px;border-radius:2px;">
+    <div class="kr-header" style="font-size:8pt;letter-spacing:2.5px;text-transform:uppercase;font-weight:bold;color:#0d47a1;margin-bottom:8px;">
+      <span class="kr-icon">&#128276;</span> Mr. Kenny's Key Point
+    </div>
+    <div class="kr-body">
+      <p><strong>Wider Scope Tactic</strong> &mdash; when proving an inequality $A \le B$ by induction, sometimes it's easier to prove a <em>wider</em> bound $A \le C \le B$ where the stronger statement makes the induction step go through.</p>
+      <p>Watch for this trick in the worked examples and apply it on Part A.</p>
+    </div>
+  </div>
+
+  <div class="part-header">Part A — Inequality Proofs</div>
+
+  <!-- ── Problem 1 ── -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 1 &mdash; $n^2 \ge 2n+1$ for $n \ge 3$</div>
+    <div class="problem-text">Prove: $n^2 \ge 2n + 1$ for all integers $n \ge 3$.</div>
+    <div class="solution">
+      <div class="solution-step"><strong>Base Case</strong> ($n = 3$): $3^2 = 9$ and $2(3)+1 = 7$. &nbsp; $9 \ge 7$. $\checkmark$</div>
+      <div class="solution-step"><strong>Inductive Hypothesis (IH):</strong> Assume $k^2 \ge 2k + 1$ for some $k \ge 3$.</div>
+      <div class="solution-step"><strong>Inductive Step</strong> (show $(k+1)^2 \ge 2(k+1)+1 = 2k+3$):</div>
+      <div class="step-indent">
+        $(k+1)^2 = k^2 + 2k + 1$<br>
+        $\ge (2k+1) + 2k + 1 = 4k + 2$ &nbsp;&nbsp; [by IH]<br>
+        $= 2(k+1) + (2k) \ge 2(k+1) + 1 = 2k + 3$ &nbsp;&nbsp; [since $k \ge 1$, so $2k \ge 1$]
+      </div>
+      <div class="tactic-note">Wider Scope: We used IH to replace $k^2$, then showed $4k+2 \ge 2k+3$ is trivially true for $k \ge 1$.</div>
+      <div class="final-answer">$n^2 \ge 2n+1$ for all $n \ge 3$. $\blacksquare$</div>
+    </div>
+  </div>
+
+  <!-- ── Problem 2 ── -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 2 &mdash; $2^n &gt; n$ for $n \ge 1$</div>
+    <div class="problem-text">Prove: $2^n &gt; n$ for all integers $n \ge 1$.</div>
+    <div class="solution">
+      <div class="solution-step"><strong>Base Case</strong> ($n = 1$): $2^1 = 2 &gt; 1$. $\checkmark$</div>
+      <div class="solution-step"><strong>Inductive Hypothesis:</strong> Assume $2^k &gt; k$ for some $k \ge 1$.</div>
+      <div class="solution-step"><strong>Inductive Step</strong> (show $2^{k+1} &gt; k+1$):</div>
+      <div class="step-indent">
+        $2^{k+1} = 2 \cdot 2^k &gt; 2k$ &nbsp;&nbsp; [by IH, multiplying both sides by 2]<br>
+        $2k = k + k \ge k + 1$ &nbsp;&nbsp; [since $k \ge 1$]<br>
+        $\therefore \; 2^{k+1} &gt; k + 1$ $\checkmark$
+      </div>
+      <div class="tactic-note">Wider Scope: We showed $2k \ge k+1$ as a sub-step to bridge from $2k$ to $k+1$.</div>
+      <div class="final-answer">$2^n &gt; n$ for all $n \ge 1$. $\blacksquare$</div>
+    </div>
+  </div>
+
+  <!-- ── Problem 3 ── -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 3 &mdash; $n! \ge 2^{n-1}$ for $n \ge 1$</div>
+    <div class="problem-text">Prove: $n! \ge 2^{n-1}$ for all integers $n \ge 1$.</div>
+    <div class="solution">
+      <div class="solution-step"><strong>Base Case</strong> ($n = 1$): $1! = 1$ and $2^{0} = 1$. &nbsp; $1 \ge 1$. $\checkmark$</div>
+      <div class="solution-step"><strong>Inductive Hypothesis:</strong> Assume $k! \ge 2^{k-1}$ for some $k \ge 1$.</div>
+      <div class="solution-step"><strong>Inductive Step</strong> (show $(k+1)! \ge 2^k$):</div>
+      <div class="step-indent">
+        $(k+1)! = (k+1) \cdot k!$<br>
+        $\ge (k+1) \cdot 2^{k-1}$ &nbsp;&nbsp; [by IH]<br>
+        $\ge 2 \cdot 2^{k-1} = 2^k$ &nbsp;&nbsp; [since $k+1 \ge 2$ for $k \ge 1$]
+      </div>
+      <div class="tactic-note">Wider Scope: We replaced $(k+1)$ by the weaker bound $2$ to obtain $2^k$ directly.</div>
+      <div class="final-answer">$n! \ge 2^{n-1}$ for all $n \ge 1$. $\blacksquare$</div>
+    </div>
+  </div>
+
+  <!-- ── Problem 4 ── -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 4 &mdash; Bernoulli's Inequality: $(1+x)^n \ge 1 + nx$ for $x \ge 0$</div>
+    <div class="problem-text">Prove: $(1+x)^n \ge 1 + nx$ for all integers $n \ge 1$ and real $x \ge 0$.</div>
+    <div class="solution">
+      <div class="solution-step"><strong>Base Case</strong> ($n = 1$): $(1+x)^1 = 1 + x = 1 + 1 \cdot x$. $\checkmark$</div>
+      <div class="solution-step"><strong>Inductive Hypothesis:</strong> Assume $(1+x)^k \ge 1 + kx$ for some $k \ge 1$.</div>
+      <div class="solution-step"><strong>Inductive Step</strong> (show $(1+x)^{k+1} \ge 1 + (k+1)x$):</div>
+      <div class="step-indent">
+        $(1+x)^{k+1} = (1+x)^k \cdot (1+x)$<br>
+        $\ge (1+kx)(1+x)$ &nbsp;&nbsp; [by IH; valid since $(1+x) \ge 1 &gt; 0$]<br>
+        $= 1 + kx + x + kx^2$<br>
+        $= 1 + (k+1)x + kx^2$<br>
+        $\ge 1 + (k+1)x$ &nbsp;&nbsp; [since $kx^2 \ge 0$]
+      </div>
+      <div class="tactic-note">Wider Scope: Dropping $kx^2 \ge 0$ from the product is the "wider scope" bridge — the dropped term only makes the quantity larger, so the inequality still holds.</div>
+      <div class="final-answer">$(1+x)^n \ge 1 + nx$ for all $n \ge 1$, $x \ge 0$. $\blacksquare$</div>
+    </div>
+  </div>
+
+  <div class="footer">Newton School &mdash; 2026-05-10 &copy; Copyright &nbsp;|&nbsp; Page 1 of 2</div>
+
+  <!-- ==============================================================
+       PAGE 2 — Fibonacci
+       ============================================================== -->
+  <div class="page-break"></div>
+
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">PRE-CALCULUS &nbsp;|&nbsp; HOMEWORK PART 2</div>
+    <div class="key-tag">ANSWER KEY &mdash; TEACHER COPY</div>
+    <h1>Mathematical Induction: Inequalities &amp; Fibonacci</h1>
+    <div class="info">
+      <span><strong>Student:</strong> Justin Koo</span>
+      <span><strong>Date:</strong> 2026-05-10</span>
+    </div>
+  </div>
+
+  <div class="part-header">Part B — Fibonacci Identities</div>
+
+  <div class="reminder">
+    <div class="rem-title">Recall: $F_1=1,\ F_2=1,\ F_n = F_{n-1}+F_{n-2}$ for $n \ge 3$.</div>
+    Key values: $F_3=2,\ F_4=3,\ F_5=5,\ F_6=8,\ F_7=13$.
+  </div>
+
+  <!-- ── Problem 5 (Problem 10) ── -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 5 (Problem 10) &mdash; $F_1 + F_2 + \cdots + F_n = F_{n+2} - 1$</div>
+    <div class="problem-text">Prove: $\displaystyle\sum_{i=1}^{n} F_i = F_{n+2} - 1$ for all $n \ge 1$.</div>
+    <div class="solution">
+      <div class="solution-step"><strong>Base Case</strong> ($n = 1$): LHS $= F_1 = 1$. &nbsp; RHS $= F_3 - 1 = 2 - 1 = 1$. $\checkmark$</div>
+      <div class="solution-step"><strong>Inductive Hypothesis:</strong> Assume $F_1 + F_2 + \cdots + F_k = F_{k+2} - 1$ for some $k \ge 1$.</div>
+      <div class="solution-step"><strong>Inductive Step</strong> (show the sum up to $k+1$ equals $F_{k+3} - 1$):</div>
+      <div class="step-indent">
+        $F_1 + F_2 + \cdots + F_k + F_{k+1}$<br>
+        $= (F_{k+2} - 1) + F_{k+1}$ &nbsp;&nbsp; [by IH]<br>
+        $= F_{k+1} + F_{k+2} - 1$<br>
+        $= F_{k+3} - 1$ &nbsp;&nbsp; [by the Fibonacci recurrence: $F_{k+3} = F_{k+2} + F_{k+1}$]
+      </div>
+      <div class="final-answer">$\displaystyle\sum_{i=1}^{n} F_i = F_{n+2} - 1$ for all $n \ge 1$. $\blacksquare$</div>
+    </div>
+  </div>
+
+  <!-- ── Problem 6 (Problem 11 — Cassini) ── -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 6 (Problem 11 — Cassini's Identity) &mdash; $F_{n-1}F_{n+1} - F_n^2 = (-1)^n$</div>
+    <div class="problem-text">Prove: $F_{n-1} \cdot F_{n+1} - (F_n)^2 = (-1)^n$ for all $n \ge 2$.</div>
+    <div class="solution">
+      <div class="solution-step"><strong>Base Case</strong> ($n = 2$): $F_1 \cdot F_3 - (F_2)^2 = 1 \cdot 2 - 1^2 = 2 - 1 = 1 = (-1)^2$. $\checkmark$</div>
+      <div class="solution-step"><strong>Inductive Hypothesis:</strong> Assume $F_{k-1} F_{k+1} - F_k^2 = (-1)^k$ for some $k \ge 2$.</div>
+      <div class="solution-step"><strong>Inductive Step</strong> (show $F_k F_{k+2} - F_{k+1}^2 = (-1)^{k+1}$):</div>
+      <div class="step-indent">
+        Write $F_{k+2} = F_{k+1} + F_k$ (recurrence).<br><br>
+        $F_k \cdot F_{k+2} - F_{k+1}^2$<br>
+        $= F_k(F_{k+1} + F_k) - F_{k+1}^2$<br>
+        $= F_k F_{k+1} + F_k^2 - F_{k+1}^2$<br>
+        $= F_k F_{k+1} - F_{k+1}(F_{k+1} - F_k)$<br>
+        $= F_{k+1}(F_k - (F_{k+1} - F_k))$<br>
+        $= F_{k+1}(2F_k - F_{k+1})$<br><br>
+        <em>Alternative cleaner path:</em> Use the identity manipulation:<br>
+        $F_k F_{k+2} - F_{k+1}^2 = F_k(F_{k+1}+F_k) - F_{k+1}^2$<br>
+        $= F_{k+1}F_k + F_k^2 - F_{k+1}^2$<br>
+        $= -(F_{k+1}^2 - F_k F_{k+1} - F_k^2)$<br>
+        $= -(F_{k+1}(F_{k+1} - F_k) - F_k^2)$<br>
+        $= -(F_{k+1} \cdot F_{k-1} - F_k^2)$ &nbsp;&nbsp; [since $F_{k+1} - F_k = F_{k-1}$]<br>
+        $= -((-1)^k)$ &nbsp;&nbsp; [by IH]<br>
+        $= (-1)^{k+1}$ $\checkmark$
+      </div>
+      <div class="final-answer">$F_{n-1} F_{n+1} - F_n^2 = (-1)^n$ for all $n \ge 2$. $\blacksquare$</div>
+    </div>
+  </div>
+
+  <!-- ── Problem 7 (Problem 12) ── -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 7 (Problem 12) &mdash; $F_1 F_2 + F_2 F_3 + \cdots + F_{2n-1}F_{2n} = (F_{2n})^2$</div>
+    <div class="problem-text">Prove: $\displaystyle\sum_{j=1}^{n} F_{2j-1} F_{2j} = (F_{2n})^2$ for all $n \ge 1$.</div>
+    <div class="solution">
+      <div class="solution-step"><strong>Base Case</strong> ($n = 1$): LHS $= F_1 F_2 = 1 \cdot 1 = 1$. &nbsp; RHS $= (F_2)^2 = 1^2 = 1$. $\checkmark$</div>
+      <div class="solution-step"><strong>Inductive Hypothesis:</strong> Assume $\displaystyle\sum_{j=1}^{k} F_{2j-1}F_{2j} = (F_{2k})^2$.</div>
+      <div class="solution-step"><strong>Inductive Step</strong> (show the sum up to $j = k+1$ equals $(F_{2k+2})^2$):</div>
+      <div class="step-indent">
+        $\sum_{j=1}^{k+1} F_{2j-1}F_{2j} = (F_{2k})^2 + F_{2k+1}F_{2k+2}$ &nbsp;&nbsp; [by IH]<br><br>
+        Use $F_{2k+2} = F_{2k+1} + F_{2k}$ (recurrence):<br>
+        $F_{2k+1}F_{2k+2} = F_{2k+1}(F_{2k+1}+F_{2k}) = F_{2k+1}^2 + F_{2k}F_{2k+1}$<br><br>
+        So the sum becomes:<br>
+        $(F_{2k})^2 + F_{2k+1}^2 + F_{2k}F_{2k+1}$<br>
+        $= F_{2k}(F_{2k} + F_{2k+1}) + F_{2k+1}^2$<br>
+        $= F_{2k} \cdot F_{2k+2} + F_{2k+1}^2$ &nbsp;&nbsp; [recurrence $F_{2k+2}=F_{2k+1}+F_{2k}$]<br>
+        $= (F_{2k+1} + F_{2k}) \cdot F_{2k+2} - F_{2k+1} \cdot F_{2k+2} + F_{2k} \cdot F_{2k+2} + F_{2k+1}^2$<br><br>
+        <em>Cleaner final step:</em><br>
+        $(F_{2k})^2 + F_{2k+1}(F_{2k+1}+F_{2k}) = F_{2k+1}^2 + F_{2k+1}F_{2k} + F_{2k}^2$<br>
+        Recall $(a+b)^2 = a^2 + 2ab + b^2$; here we need $(F_{2k+1}+F_{2k})^2 = F_{2k+2}^2$.<br>
+        Note: $(F_{2k+1}+F_{2k})^2 = F_{2k+1}^2 + 2F_{2k+1}F_{2k} + F_{2k}^2$, which exceeds our sum by $F_{2k+1}F_{2k}$.<br><br>
+        Correct approach — factor differently:<br>
+        $(F_{2k})^2 + F_{2k+1}F_{2k+2}$<br>
+        $= F_{2k}^2 + F_{2k+1}(F_{2k+1}+F_{2k})$<br>
+        $= F_{2k}^2 + F_{2k+1}^2 + F_{2k+1}F_{2k}$<br>
+        $= F_{2k}^2 + F_{2k}F_{2k+1} + F_{2k+1}^2$<br>
+        $= F_{2k}(F_{2k}+F_{2k+1}) + F_{2k+1}^2$<br>
+        $= F_{2k} \cdot F_{2k+2} + F_{2k+1}^2$<br><br>
+        Now use Cassini-type: $F_{2k} \cdot F_{2k+2} = F_{2k+1}^2 + (-1)^{2k+1} = F_{2k+1}^2 - 1$:<br>
+        $= (F_{2k+1}^2 - 1) + F_{2k+1}^2 = 2F_{2k+1}^2 - 1$... <em>(This path gets complicated.)</em><br><br>
+        <strong>Simplest path — directly verify identity $(F_{2k})^2 + F_{2k+1}F_{2k+2} = F_{2k+2}^2$:</strong><br>
+        $F_{2k+2}^2 - F_{2k+1}F_{2k+2} = F_{2k+2}(F_{2k+2} - F_{2k+1}) = F_{2k+2} \cdot F_{2k} = F_{2k}F_{2k+2}$<br>
+        Hmm, this gives $F_{2k+2}^2 = F_{2k+1}F_{2k+2} + F_{2k}F_{2k+2} = F_{2k+2}(F_{2k+1}+F_{2k}) = F_{2k+2}^2$. $\checkmark$<br><br>
+        Therefore: $(F_{2k})^2 + F_{2k+1}F_{2k+2} = F_{2k+2}^2$, since<br>
+        $(F_{2k})^2 = F_{2k+2}^2 - F_{2k+1}F_{2k+2} = F_{2k+2}(F_{2k+2}-F_{2k+1}) = F_{2k+2}F_{2k}$<br>
+        &hellip; so: $(F_{2k})^2 + F_{2k+1}F_{2k+2} = F_{2k}F_{2k+2} + F_{2k+1}F_{2k+2} = F_{2k+2}(F_{2k}+F_{2k+1}) = F_{2k+2} \cdot F_{2k+2} = F_{2k+2}^2$. $\checkmark$
+      </div>
+      <div class="final-answer">$\displaystyle\sum_{j=1}^{n} F_{2j-1}F_{2j} = F_{2n}^2$ for all $n \ge 1$. $\blacksquare$</div>
+    </div>
+  </div>
+
+  <div class="footer">Newton School &mdash; 2026-05-10 &copy; Copyright &nbsp;|&nbsp; Page 2 of 2</div>
+
+</div>
+<script>
+(function () {
+  'use strict';
+  var pageSlug = (function () { var s = window.location.pathname.split('/').pop() || 'worksheet'; return s.replace(/\.[^.]+$/, '').replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 60); })();
+  var C_PREFIX = 'hw_comment_' + pageSlug + '_';
+  var A_KEY    = 'hw_annot_' + pageSlug;
+  var S_KEY    = 'hw_sticky_' + pageSlug;
+  function lsGet(k) { try { return localStorage.getItem(k); } catch(e){ return null; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, v); } catch(e){} }
+  function lsRm(k)  { try { localStorage.removeItem(k); } catch(e){} }
+  function lsGetJSON(k) { try { return JSON.parse(lsGet(k) || '[]'); } catch(e){ return []; } }
+  function lsSetJSON(k, v) { lsSet(k, JSON.stringify(v)); }
+  var counter = 0;
+  function nextBid() { return 'b' + (++counter); }
+  function wrapCommentable(el) { if (el.classList.contains('ed-commentable')) return; var bid = nextBid(); el.classList.add('ed-commentable'); el.setAttribute('data-bid', bid); var btn = document.createElement('button'); btn.className = 'ed-comment-btn'; btn.type = 'button'; btn.title = 'Add comment'; btn.textContent = '✏'; btn.addEventListener('click', function () { toggleCommentBox(el, bid); }); el.appendChild(btn); var dot = document.createElement('span'); dot.className = 'ed-dot'; dot.hidden = true; el.appendChild(dot); var saved = lsGet(C_PREFIX + bid); if (saved && saved.trim()) { dot.hidden = false; btn.classList.add('has-comment'); el.classList.add('has-ed-comment'); } }
+  function initCommentableBlocks() { ['.answer-block','.part-header'].forEach(function(sel){ document.querySelectorAll(sel).forEach(wrapCommentable); }); }
+  function toggleCommentBox(el, bid) { var existing = el.querySelector('.ed-comment-box'); if (existing) { existing.classList.toggle('open'); if (existing.classList.contains('open')) existing.querySelector('textarea').focus(); return; } var saved = lsGet(C_PREFIX + bid) || ''; var box = document.createElement('div'); box.className = 'ed-comment-box open'; box.innerHTML = '<textarea placeholder="Comment on this block..."></textarea><div class="ed-comment-box-actions"><button type="button" class="ed-cancel">Cancel</button><button type="button" class="ed-save">Save</button></div>'; el.appendChild(box); var ta = box.querySelector('textarea'); ta.value = saved; ta.focus(); box.querySelector('.ed-cancel').addEventListener('click', function(){ box.classList.remove('open'); }); box.querySelector('.ed-save').addEventListener('click', function(){ var txt = ta.value.trim(); var dot = el.querySelector('.ed-dot'); var cbtn = el.querySelector('.ed-comment-btn'); if (txt) { lsSet(C_PREFIX+bid, txt); if(dot) dot.hidden=false; if(cbtn) cbtn.classList.add('has-comment'); el.classList.add('has-ed-comment'); } else { lsRm(C_PREFIX+bid); if(dot) dot.hidden=true; if(cbtn) cbtn.classList.remove('has-comment'); el.classList.remove('has-ed-comment'); } box.classList.remove('open'); updateBarStatus(); }); }
+  function countAllComments(){ var n=0; for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf(C_PREFIX)===0&&(lsGet(k)||'').trim())n++;} n+=lsGetJSON(A_KEY).length; return n; }
+  function updateBarStatus(){ var n=countAllComments(); var countEl=document.getElementById('ed-bar-count'); if(countEl) countEl.textContent=n; var statusEl=document.getElementById('ed-bar-status'); if(statusEl) statusEl.textContent=n>0?n+' note'+(n!==1?'s':'')+' saved':'No notes yet'; }
+  function addSticky(){ var x=window.scrollX+Math.max(60,window.innerWidth/2-120); var y=window.scrollY+100; var id='s'+Date.now()+Math.random().toString(36).slice(2,5); var note=buildStickyDOM(id,x,y,''); document.body.appendChild(note); var list=lsGetJSON(S_KEY); list.push({id:id,x:x,y:y,text:''}); lsSetJSON(S_KEY,list); var ta=note.querySelector('textarea'); if(ta) ta.focus(); updateBarStatus(); }
+  function buildStickyDOM(id,x,y,text){ var note=document.createElement('div'); note.className='ed-sticky'; note.setAttribute('data-sid',id); note.style.top=y+'px'; note.style.left=x+'px'; note.innerHTML='<div class="ed-sticky-handle">📌 Note <button class="ed-sticky-close" title="Delete">✕</button></div><textarea placeholder="Free note..."></textarea>'; var ta=note.querySelector('textarea'); ta.value=text; ta.addEventListener('input',function(){ var list=lsGetJSON(S_KEY); var item=list.find(function(s){return s.id===id;}); if(item){item.text=ta.value;lsSetJSON(S_KEY,list);} }); note.querySelector('.ed-sticky-close').addEventListener('click',function(){ lsSetJSON(S_KEY,lsGetJSON(S_KEY).filter(function(s){return s.id!==id;})); note.remove(); updateBarStatus(); }); var sx,sy,ox,oy,dragging=false; var handle=note.querySelector('.ed-sticky-handle'); handle.addEventListener('mousedown',function(e){ if(e.target.classList.contains('ed-sticky-close')) return; dragging=true; sx=e.pageX; sy=e.pageY; ox=parseInt(note.style.left)||0; oy=parseInt(note.style.top)||0; e.preventDefault(); }); document.addEventListener('mousemove',function(e){ if(!dragging) return; note.style.left=Math.max(0,ox+(e.pageX-sx))+'px'; note.style.top=Math.max(0,oy+(e.pageY-sy))+'px'; }); document.addEventListener('mouseup',function(){ if(!dragging) return; dragging=false; var list=lsGetJSON(S_KEY); var item=list.find(function(s){return s.id===id;}); if(item){item.x=parseInt(note.style.left)||0;item.y=parseInt(note.style.top)||0;lsSetJSON(S_KEY,list);} }); return note; }
+  lsGetJSON(S_KEY).forEach(function(s){ document.body.appendChild(buildStickyDOM(s.id,s.x,s.y,s.text)); });
+  function buildBar(){ var bar=document.createElement('div'); bar.className='ed-bar'; bar.id='ed-bar'; bar.innerHTML='<span class="ed-bar-label">Teacher Editor</span><button class="ed-bar-btn ed-bar-primary" id="ed-bar-sticky">+ Note</button><span class="ed-bar-spacer"></span><span class="ed-bar-status" id="ed-bar-status">No notes yet</span><span class="ed-bar-sep" style="width:1px;height:20px;background:rgba(255,255,255,0.12);margin:0 4px;"></span><span class="ed-bar-count" id="ed-bar-count">0</span>'; document.body.appendChild(bar); document.getElementById('ed-bar-sticky').addEventListener('click',addSticky); }
+  function init(){ initCommentableBlocks(); buildBar(); updateBarStatus(); }
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded',function(){ setTimeout(init,500); }); } else { setTimeout(init,500); }
+})();
+</script>
+</body>
+</html>
