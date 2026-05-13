@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pre-Calculus Test Prep — Induction · Recursion · Series · Bernoulli</title>
+<script>
+window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+    startup: { ready: () => { MathJax.startup.defaultReady(); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+/* ============ base-print.css ============ */
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Century Schoolbook', 'Times New Roman', serif; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+    html, body { background: #fff; }
+    .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+    .problem, .answer-block, .reminder, .parent-note, .example, .word-problem,
+    .practice-block, .inline-answer, .concept-box { page-break-inside: avoid; break-inside: avoid; }
+    .part-header, .directions, .problem-header, h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+    .page-break { page-break-before: always; break-before: page; }
+    * { background: transparent !important; }
+}
+
+/* ============ theme-boy.css ============ */
+:root {
+    --color-primary:        #1565c0;
+    --color-primary-dark:   #0d47a1;
+    --color-accent:         #00838f;
+    --color-header-border:  #1565c0;
+    --color-final-answer:   #2e7d32;
+    --color-warning:        #c62828;
+    --color-parent-note:    #283593;
+    --color-tag-border:     #1565c0;
+    --color-tag-text:       #1565c0;
+    --color-muted:          #555;
+    --color-rule:           #ccc;
+    --color-tactic:         #e65100;
+}
+
+/* ============ level-high.css ============ */
+body { font-family: 'Source Serif Pro', 'Georgia', 'Times New Roman', serif; font-size: 10.5pt; line-height: 1.55; }
+h1, h2, h3, .part-header { font-family: 'Libre Baskerville', 'Georgia', serif; }
+
+.header { text-align: center; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid var(--color-header-border); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag, .key-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 7px 3px; font-weight: bold; }
+.subject-tag { border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+.key-tag { border: 1.5px solid var(--color-warning); color: var(--color-warning); }
+h1 { font-size: 16pt; margin: 6px 0 8px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 4px; color: var(--color-muted); }
+
+.part-header { font-size: 13pt; font-weight: bold; color: var(--color-primary); margin: 22px 0 6px 0; padding-bottom: 3px; border-bottom: 1.5px solid var(--color-primary); }
+.directions { font-size: 10pt; font-style: italic; color: #333; margin-bottom: 12px; line-height: 1.5; }
+
+/* ---------- Concept box ---------- */
+.concept-box { border: 1.5px solid var(--color-accent); background: transparent; padding: 12px 16px; margin: 14px 0; font-size: 10.5pt; border-left-width: 4px; }
+.concept-box .title { font-weight: bold; color: var(--color-accent); margin-bottom: 6px; font-size: 11pt; }
+.concept-box ul { margin: 6px 0 6px 22px; padding: 0; }
+.concept-box li { margin: 4px 0; }
+.concept-box p { margin: 6px 0; }
+
+/* ---------- Example block ---------- */
+.example { border: 2px solid var(--color-final-answer); padding: 12px 16px; margin: 14px 0; }
+.example-title { font-weight: bold; color: var(--color-final-answer); margin-bottom: 6px; font-size: 11pt; }
+.example-solution { border-left: 3px solid var(--color-final-answer); padding-left: 12px; margin-top: 8px; font-size: 10.5pt; }
+.example-solution p { margin: 6px 0; }
+
+/* ---------- Footer ---------- */
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid var(--color-rule); margin-top: 24px; padding-top: 6px; }
+
+/* ============ Lecture Note specific ============ */
+
+/* Kenny's Reminder box (orange tactic) */
+.reminder {
+    border: 2px solid var(--color-tactic);
+    background: #fff8f0;
+    padding: 12px 16px;
+    margin: 14px 0;
+    font-size: 10pt;
+    border-left-width: 6px;
+    border-radius: 2px;
+}
+.reminder-label {
+    font-size: 8pt;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: var(--color-tactic);
+    margin-bottom: 5px;
+}
+
+/* Practice + inline answer */
+.practice-sub {
+    font-size: 11pt;
+    font-weight: bold;
+    color: var(--color-primary-dark);
+    margin: 18px 0 6px 0;
+    padding-bottom: 2px;
+    border-bottom: 1px dashed var(--color-primary);
+    letter-spacing: 0.5px;
+}
+.practice-block {
+    margin: 12px 0 4px 0;
+}
+.practice-prob {
+    margin: 6px 0;
+    padding: 8px 12px;
+    border-left: 4px solid var(--color-primary);
+    background: transparent;
+    font-size: 10.5pt;
+    line-height: 1.55;
+}
+.practice-prob .q-num {
+    display: inline-block;
+    min-width: 36px;
+    color: var(--color-primary);
+    font-weight: bold;
+}
+.practice-prob .ref {
+    color: #888;
+    font-size: 9pt;
+    font-style: italic;
+    margin-left: 4px;
+}
+.inline-answer {
+    margin: 4px 0 14px 16px;
+    padding: 10px 14px;
+    border-left: 3px solid var(--color-final-answer);
+    background: #f5faf7;
+    font-size: 10pt;
+    line-height: 1.6;
+}
+.inline-answer-label {
+    display: inline-block;
+    font-size: 8pt;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: var(--color-final-answer);
+    margin-bottom: 6px;
+}
+.inline-answer p { margin: 4px 0; }
+.boxed-final { display: inline-block; border: 1.5px solid var(--color-final-answer); padding: 2px 8px; font-weight: bold; color: var(--color-final-answer); border-radius: 3px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">PRE-CALCULUS</div>
+    <span class="key-tag">TEST PREP</span>
+    <h1>Test Prep — Induction · Recursion · Series · Bernoulli</h1>
+    <div class="info">
+      <span><strong>Student:</strong> Justin Koo · 10th · Horace Mann</span>
+      <span><strong>Date:</strong> 2026-05-13</span>
+    </div>
+    <div class="standard"><strong>Standard:</strong> CCSS.MATH.CONTENT.HSF-IF.A.3 (sequences/recursion) · Mathematical Induction (PCBCH "Mr. Jones" 12-problem handout, 2026-05-07)</div>
+  </div>
+
+  <!-- ============ KENNY'S REMINDER ============ -->
+  <div class="reminder">
+    <div class="reminder-label">⚡ Kenny's Reminder — what this lecture covers</div>
+    Tonight is a <strong>review for the test</strong>, built from the PCBCH (Mr. Jones) 12-problem induction handout (5/7) and our 5/13 board notes. Four topics: <em>Induction</em> · <em>Run-of-Heads recursion</em> · <em>Series (Σ notation, incl. Domain of Convergence)</em> · <em>Bernoulli's Madness</em> (power sums · hockey stick · telescoping · linear recurrence). For each topic: read the concept, work the example, then try each practice problem first — the answer sits right below it, so don't peek.
+  </div>
+
+  <!-- ============================================================
+       TOPIC 1 — MATHEMATICAL INDUCTION
+       ============================================================ -->
+  <div class="part-header">Topic 1 — Mathematical Induction <span style="font-size:9pt; color:#666; font-weight:normal;">(handout level)</span></div>
+
+  <div class="concept-box">
+    <div class="title">The 3-step framework</div>
+    <ul>
+      <li><strong>Base case:</strong> verify at the smallest valid n (usually n = 1, but sometimes n = 2 or n = 4 — when an inequality only starts working past a threshold).</li>
+      <li><strong>Inductive hypothesis:</strong> assume the statement holds for n = k.</li>
+      <li><strong>Inductive step:</strong> show it then holds for n = k + 1, using the hypothesis as your lever.</li>
+    </ul>
+    <p><strong>Patterns you must own from the Mr. Jones handout:</strong></p>
+    <ul>
+      <li>Closed-form sum identities — e.g. $\sum k^3 = n^2(n+1)^2/4$.</li>
+      <li>Divisibility — e.g. $13^n - 5^n$ is a multiple of 8 (the trick: split the larger base as smaller + multiple).</li>
+      <li>Inequalities with a starting value — e.g. $n! > n^2$ from n = 4 onward.</li>
+      <li>Fibonacci identities (#10–12) — these need <em>strong induction</em>: assume true for all n ≤ k, prove for k + 1.</li>
+    </ul>
+  </div>
+
+  <div class="example">
+    <div class="example-title">Worked Example — Σk³ = n²(n+1)²/4 &nbsp;<span style="font-size:9pt; color:#666;">(PCBCH #2)</span></div>
+    <div class="example-solution">
+      <p><strong>Base (n = 1):</strong> LHS $= 1^3 = 1$; RHS $= \dfrac{1^2 \cdot 2^2}{4} = 1$. ✓</p>
+      <p><strong>Hypothesis (n = k):</strong> assume $\;1^3 + 2^3 + \cdots + k^3 = \dfrac{k^2(k+1)^2}{4}$.</p>
+      <p><strong>Step (n = k + 1):</strong> add $(k+1)^3$ to both sides:</p>
+      \[
+      \frac{k^2(k+1)^2}{4} + (k+1)^3
+      = (k+1)^2\!\left[\frac{k^2}{4} + (k+1)\right]
+      = \frac{(k+1)^2(k^2 + 4k + 4)}{4}
+      = \frac{(k+1)^2(k+2)^2}{4}. \;\checkmark
+      \]
+    </div>
+  </div>
+
+  <div class="practice-sub">▸ Practice — Topic 1</div>
+
+  <div class="practice-block">
+    <div class="practice-prob">
+      <span class="q-num">1(a)</span> Prove for every positive integer n: $\;1\cdot 1! + 2\cdot 2! + \cdots + n\cdot n! = (n+1)! - 1$.
+      <span class="ref">— PCBCH #1</span>
+    </div>
+    <div class="inline-answer">
+      <div class="inline-answer-label">Answer — Induction</div>
+      <p><strong>Base (n = 1):</strong> $1 \cdot 1! = 1$ and $2! - 1 = 1$. ✓</p>
+      <p><strong>Hypothesis (n = k):</strong> $\;1\cdot 1! + \cdots + k\cdot k! = (k+1)! - 1$.</p>
+      <p><strong>Step:</strong> add $(k+1)(k+1)!$ to both sides:</p>
+      \[
+      \big[(k+1)! - 1\big] + (k+1)(k+1)!
+      = (k+1)!\big[\,1 + (k+1)\,\big] - 1
+      = (k+1)!(k+2) - 1
+      = (k+2)! - 1. \;\checkmark
+      \]
+    </div>
+  </div>
+
+  <div class="practice-block">
+    <div class="practice-prob">
+      <span class="q-num">1(b)</span> Prove for every positive integer n: $\;13^n - 5^n$ is a multiple of 8.
+      <span class="ref">— PCBCH #3</span>
+    </div>
+    <div class="inline-answer">
+      <div class="inline-answer-label">Answer — Divisibility (split 13 = 5 + 8)</div>
+      <p><strong>Base (n = 1):</strong> $13 - 5 = 8 = 8\cdot 1$. ✓</p>
+      <p><strong>Hypothesis (n = k):</strong> $13^k - 5^k = 8m$ for some integer m.</p>
+      <p><strong>Step:</strong></p>
+      \[
+      13^{k+1} - 5^{k+1}
+      = 13 \cdot 13^k - 5 \cdot 5^k
+      = 13(13^k - 5^k) + 5^k(13 - 5)
+      = 13(8m) + 8\cdot 5^k
+      = 8\big(13m + 5^k\big). \;\checkmark
+      \]
+    </div>
+  </div>
+
+  <div class="practice-block">
+    <div class="practice-prob">
+      <span class="q-num">1(c)</span> Find the obvious starting value, then prove: $\;n! > n^2$ from that point on.
+      <span class="ref">— PCBCH #5</span>
+    </div>
+    <div class="inline-answer">
+      <div class="inline-answer-label">Answer — Inequality with starting value</div>
+      <p><strong>Try small n:</strong> $3! = 6 < 9 = 3^2$ (fails), but $4! = 24 > 16 = 4^2$ (works). Starting value <strong>n = 4</strong>.</p>
+      <p><strong>Hypothesis (n = k, k ≥ 4):</strong> $k! > k^2$.</p>
+      <p><strong>Step:</strong></p>
+      \[
+      (k+1)! = (k+1)\cdot k! > (k+1)\cdot k^2.
+      \]
+      <p>It is enough to show $(k+1)k^2 \ge (k+1)^2$, i.e. $k^2 \ge k+1$, i.e. $k^2 - k - 1 \ge 0$. For $k \ge 2$: $k(k-1) \ge 2 > 1$, so the inequality holds (and definitely for $k \ge 4$). Thus $(k+1)! > (k+1)^2$. ✓</p>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       TOPIC 2 — RUN-OF-HEADS RECURSION
+       ============================================================ -->
+  <div class="part-header page-break">Topic 2 — Run-of-Heads Recursion</div>
+
+  <div class="concept-box">
+    <div class="title">Condition on the last block</div>
+    <ul>
+      <li>Let $p(n) =$ probability of <strong>no run of $k$ heads</strong> in $n$ fair flips.</li>
+      <li>Look at the <em>tail</em> of the sequence. It must end in one of these blocks (otherwise a run of k forms): T, HT, HHT, …, $\underbrace{H \cdots H}_{k-1}\,T$.</li>
+      <li>Each tail of length $j$ has probability $1/2^{\,j}$, and the rest (length $n - j$) must independently have <strong>no run of k</strong>.</li>
+      <li><strong>Recursion:</strong></li>
+    </ul>
+    \[
+    p(n) \;=\; \tfrac12\,p(n-1) \;+\; \tfrac14\,p(n-2) \;+\; \cdots \;+\; \tfrac{1}{2^{\,k}}\,p(n-k).
+    \]
+    <p><strong>Initial conditions:</strong> $p(0) = p(1) = \cdots = p(k-1) = 1$ (too few flips to even form a run of k).</p>
+  </div>
+
+  <div class="example">
+    <div class="example-title">Worked Example — Run of 2 heads &nbsp;<span style="font-size:9pt; color:#666;">(k = 2)</span></div>
+    <div class="example-solution">
+      <p><strong>Recursion:</strong> $\;p(n) = \tfrac12\,p(n-1) + \tfrac14\,p(n-2)$ for $n \ge 2$.</p>
+      <p><strong>Initial:</strong> $p(0) = 1$, $p(1) = 1$.</p>
+      <p><strong>Table:</strong></p>
+      \[
+      p(2) = \tfrac12(1) + \tfrac14(1) = \tfrac34, \qquad
+      p(3) = \tfrac12\!\cdot\!\tfrac34 + \tfrac14\!\cdot\!1 = \tfrac58, \qquad
+      p(4) = \tfrac12\!\cdot\!\tfrac58 + \tfrac14\!\cdot\!\tfrac34 = \tfrac{5}{16} + \tfrac{3}{16} = \tfrac12.
+      \]
+      <p><em>Sanity check:</em> of the 4 length-2 sequences only HH is bad, so $p(2) = 3/4$. ✓</p>
+    </div>
+  </div>
+
+  <div class="practice-sub">▸ Practice — Topic 2</div>
+
+  <div class="practice-block">
+    <div class="practice-prob">
+      <span class="q-num">2(a)</span> Set up the recursion for "no run of 3 heads" in n flips of a fair coin.
+    </div>
+    <div class="inline-answer">
+      <div class="inline-answer-label">Answer</div>
+      <p>Tail must end in one of: T, HT, HHT. So</p>
+      \[
+      p(n) \;=\; \tfrac12\,p(n-1) \;+\; \tfrac14\,p(n-2) \;+\; \tfrac18\,p(n-3), \qquad n \ge 3.
+      \]
+    </div>
+  </div>
+
+  <div class="practice-block">
+    <div class="practice-prob">
+      <span class="q-num">2(b)</span> Give the initial conditions $p(0), p(1), p(2)$ for the "no run of 3 heads" problem.
+    </div>
+    <div class="inline-answer">
+      <div class="inline-answer-label">Answer</div>
+      <p>$\;p(0) = p(1) = p(2) = 1$. With fewer than 3 flips you can never produce a run of 3 heads.</p>
+    </div>
+  </div>
+
+  <div class="practice-block">
+    <div class="practice-prob">
+      <span class="q-num">2(c)</span> Compute $p(5)$ for the "no run of 2 heads" problem.
+    </div>
+    <div class="inline-answer">
+      <div class="inline-answer-label">Answer — extend the example's table</div>
+      <p>From the example: $p(0) = 1,\; p(1) = 1,\; p(2) = \tfrac34,\; p(3) = \tfrac58,\; p(4) = \tfrac12$. Then</p>
+      \[
+      p(5) = \tfrac12\,p(4) + \tfrac14\,p(3) = \tfrac12 \cdot \tfrac12 + \tfrac14 \cdot \tfrac58 = \tfrac{1}{4} + \tfrac{5}{32} = \tfrac{8+5}{32} = \;\fbox{$\dfrac{13}{32}$}\,.
+      \]
+    </div>
+  </div>
+
+  <!-- ============================================================
+       TOPIC 3 — SERIES (Σ NOTATION)
+       ============================================================ -->
+  <div class="part-header page-break">Topic 3 — Series (Σ notation)</div>
+
+  <div class="concept-box">
+    <div class="title">Four formulas you must own</div>
+    <ul>
+      <li><strong>Arithmetic:</strong> $\;S_n = \dfrac{(a_1 + a_n)\,n}{2} = \dfrac{n}{2}\big(2a_1 + (n-1)d\big)$.</li>
+      <li><strong>Geometric (finite):</strong> $\;S_n = a_1\cdot\dfrac{1 - r^{\,n}}{1 - r}\;\;(r \ne 1)$.</li>
+      <li><strong>Infinite geometric:</strong> if $|r| < 1$, $\;S_\infty = \dfrac{a_1}{1 - r}$. If $|r| \ge 1$, the series diverges.</li>
+      <li><strong>Domain of Convergence:</strong> when $r = f(x)$, solve $|f(x)| < 1$ for x. The solution set is where the series converges; on that set the sum is $a_1/(1 - f(x))$.</li>
+    </ul>
+  </div>
+
+  <div class="example">
+    <div class="example-title">Worked Example — Domain of Convergence</div>
+    <div class="example-solution">
+      <p>Find all x for which $\;3 + 3(x^2 - 3) + 3(x^2 - 3)^2 + \cdots\;$ converges, and find its sum.</p>
+      <p><strong>Identify the ratio:</strong> $r = x^2 - 3$, $a_1 = 3$.</p>
+      <p><strong>Solve $|r| < 1$:</strong></p>
+      \[
+      |x^2 - 3| < 1 \iff -1 < x^2 - 3 < 1 \iff 2 < x^2 < 4 \iff \sqrt{2} < |x| < 2.
+      \]
+      <p>So $\;x \in (-2,\;-\sqrt 2)\,\cup\,(\sqrt 2,\;2)$.</p>
+      <p><strong>Sum (on the convergence set):</strong></p>
+      \[
+      S = \dfrac{3}{1 - (x^2 - 3)} = \dfrac{3}{4 - x^2}.
+      \]
+    </div>
+  </div>
+
+  <div class="practice-sub">▸ Practice — Topic 3</div>
+
+  <div class="practice-block">
+    <div class="practice-prob">
+      <span class="q-num">3(a)</span> Find the sum: $\;1 + \tfrac12 + \tfrac14 + \tfrac18 + \cdots$.
+    </div>
+    <div class="inline-answer">
+      <div class="inline-answer-label">Answer — Infinite geometric</div>
+      <p>$a_1 = 1,\; r = \tfrac12,\; |r| < 1$, so</p>
+      \[
+      S = \dfrac{1}{1 - \tfrac12} = \;\fbox{$2$}\,.
+      \]
+    </div>
+  </div>
+
+  <div class="practice-block">
+    <div class="practice-prob">
+      <span class="q-num">3(b)</span> Find all x for which $\;5 + \dfrac{5(x+1)}{2} + \dfrac{5(x+1)^2}{4} + \cdots\;$ converges, and write its sum on that set.
+    </div>
+    <div class="inline-answer">
+      <div class="inline-answer-label">Answer — Domain of Convergence</div>
+      <p>The ratio is $r = \dfrac{x+1}{2}$.</p>
+      \[
+      |r| < 1 \iff |x+1| < 2 \iff -3 < x < 1.
+      \]
+      <p>Sum on $(-3, 1)$:</p>
+      \[
+      S = \dfrac{5}{1 - \tfrac{x+1}{2}} = \dfrac{5\cdot 2}{2 - (x+1)} = \;\fbox{$\dfrac{10}{1 - x}$}\,.
+      \]
+    </div>
+  </div>
+
+  <div class="practice-block">
+    <div class="practice-prob">
+      <span class="q-num">3(c)</span> Arithmetic: with $a_1 = 3$ and common difference $d = 4$, find $S_{20}$.
+    </div>
+    <div class="inline-answer">
+      <div class="inline-answer-label">Answer — Arithmetic sum</div>
+      <p>$a_{20} = a_1 + 19d = 3 + 76 = 79$. Then</p>
+      \[
+      S_{20} = \dfrac{(a_1 + a_{20})\cdot 20}{2} = \dfrac{(3 + 79)\cdot 20}{2} = \;\fbox{$820$}\,.
+      \]
+    </div>
+  </div>
+
+  <!-- ============================================================
+       TOPIC 4 — BERNOULLI'S MADNESS
+       ============================================================ -->
+  <div class="part-header page-break">Topic 4 — Bernoulli's Madness</div>
+
+  <div class="concept-box">
+    <div class="title">Power sums · Hockey stick · Telescoping · Linear recurrence</div>
+    <p><strong>Power sums:</strong></p>
+    <ul>
+      <li>$\sum_{k=1}^{n} k^0 \;=\; n$</li>
+      <li>$\sum_{k=1}^{n} k \;=\; \dbinom{n+1}{2} \;=\; \dfrac{n(n+1)}{2}$</li>
+      <li>$\sum_{k=1}^{n} k^2 \;=\; \dfrac{n(n+1)(2n+1)}{6} \;=\; 2\dbinom{n+1}{3} + \dbinom{n+1}{2}$</li>
+      <li>$\sum_{k=1}^{n} k^3 \;=\; \dbinom{n+1}{2}^{\!2} \;=\; \left[\dfrac{n(n+1)}{2}\right]^{\!2}$</li>
+    </ul>
+    <p><strong>Hockey-stick identity</strong> (combinatorial reformulation):</p>
+    \[
+    \sum_{k=0}^{N} k(k+1)(k+2)\cdots(k + j - 1) \;=\; j!\,\dbinom{N + j}{j+1}.
+    \]
+    <p><strong>Telescoping:</strong> rewrite each term as $a_k = f(k) - f(k+1)$; the sum collapses to $f(\text{first}) - f(\text{last}+1)$.</p>
+    <p><strong>Linear recurrence</strong> $T_n = a\,T_{n-1} + b$ with $T_0$ given:</p>
+    \[
+    T_n \;=\; a^n\,T_0 \;+\; b\cdot\dfrac{1 - a^n}{1 - a} \qquad (a \ne 1).
+    \]
+  </div>
+
+  <div class="example">
+    <div class="example-title">Worked Example — $\sum_{k=1}^{50} k^2$, two ways</div>
+    <div class="example-solution">
+      <p><strong>Direct formula:</strong></p>
+      \[
+      \sum_{k=1}^{50} k^2 = \dfrac{50 \cdot 51 \cdot 101}{6} = 42{,}925.
+      \]
+      <p><strong>Hockey-stick check:</strong></p>
+      \[
+      2\dbinom{51}{3} + \dbinom{51}{2}
+      = 2\cdot\dfrac{51\cdot 50\cdot 49}{6} + \dfrac{51\cdot 50}{2}
+      = \dfrac{124{,}950}{3} + 1275
+      = 41{,}650 + 1275
+      = 42{,}925. \;\checkmark
+      \]
+    </div>
+  </div>
+
+  <div class="practice-sub">▸ Practice — Topic 4</div>
+
+  <div class="practice-block">
+    <div class="practice-prob">
+      <span class="q-num">4(a)</span> Closed form: $\;\sum_{k=1}^{N} k(k+1)(k+2)$.
+    </div>
+    <div class="inline-answer">
+      <div class="inline-answer-label">Answer — Hockey stick with j = 3</div>
+      \[
+      \sum_{k=0}^{N} k(k+1)(k+2) \;=\; 3!\,\dbinom{N+3}{4} \;=\; 6\cdot\dfrac{(N+3)(N+2)(N+1)N}{24} \;=\; \;\fbox{$\dfrac{N(N+1)(N+2)(N+3)}{4}$}\,.
+      \]
+      <p>(The k = 0 term is 0, so the sum from k = 1 has the same value.)</p>
+    </div>
+  </div>
+
+  <div class="practice-block">
+    <div class="practice-prob">
+      <span class="q-num">4(b)</span> Telescoping: closed form for $\;\sum_{k=1}^{N} \dfrac{1}{k(k+1)}$.
+    </div>
+    <div class="inline-answer">
+      <div class="inline-answer-label">Answer — Partial-fraction telescope</div>
+      <p>Split: $\;\dfrac{1}{k(k+1)} = \dfrac{1}{k} - \dfrac{1}{k+1}$. Then</p>
+      \[
+      \sum_{k=1}^{N}\!\left(\dfrac{1}{k} - \dfrac{1}{k+1}\right)
+      = \left(1 - \tfrac12\right) + \left(\tfrac12 - \tfrac13\right) + \cdots + \left(\tfrac{1}{N} - \tfrac{1}{N+1}\right)
+      = 1 - \tfrac{1}{N+1}
+      = \;\fbox{$\dfrac{N}{N+1}$}\,.
+      \]
+    </div>
+  </div>
+
+  <div class="practice-block">
+    <div class="practice-prob">
+      <span class="q-num">4(c)</span> Solve $T_n = 2\,T_{n-1} + 3,\;T_0 = 1$. Find $T_5$ and the closed form for $T_n$.
+    </div>
+    <div class="inline-answer">
+      <div class="inline-answer-label">Answer — Linear recurrence (a = 2, b = 3)</div>
+      <p><strong>Closed form:</strong></p>
+      \[
+      T_n = 2^n\,T_0 \;+\; 3\cdot\dfrac{1 - 2^n}{1 - 2}
+      = 2^n + 3(2^n - 1)
+      = 4\cdot 2^n - 3
+      = \;\fbox{$2^{n+2} - 3$}\,.
+      \]
+      <p><strong>Sanity:</strong> $T_0 = 4 - 3 = 1$ ✓; $T_1 = 2(1) + 3 = 5$ and $2^3 - 3 = 5$ ✓.</p>
+      <p><strong>Then:</strong></p>
+      \[
+      T_5 = 2^7 - 3 = 128 - 3 = \;\fbox{$125$}\,.
+      \]
+    </div>
+  </div>
+
+  <!-- ============ FOOTER ============ -->
+  <div class="footer">
+    Newton School Fort Lee · 2175 Lemoine Ave Suite 304 · (201) 252-7252 · kenny@newtonschool.net<br>
+    Created by Newton School 2026-05-13 · © Copyright
+  </div>
+
+</div>
+</body>
+</html>

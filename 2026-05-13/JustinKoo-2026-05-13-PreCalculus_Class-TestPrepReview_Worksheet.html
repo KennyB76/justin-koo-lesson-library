@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Test Prep Worksheet — Induction · Recursion · Series · Bernoulli</title>
+
+<!-- MathJax (tex-svg for PDF stability) -->
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<style>
+/* ============================================================
+   base-print.css (inlined)
+   ============================================================ */
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Century Schoolbook', 'Times New Roman', serif; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+  html, body { background: #fff; }
+  .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+  .problem, .answer-block, .reminder, .parent-note, .example, .word-problem {
+    page-break-inside: avoid; break-inside: avoid;
+  }
+  .part-header, .directions, .problem-header, h1, h2, h3 {
+    page-break-after: avoid; break-after: avoid;
+  }
+  .page-break { page-break-before: always; break-before: page; }
+}
+
+/* ============================================================
+   theme-boy.css (inlined)
+   ============================================================ */
+:root {
+  --color-primary:        #1565c0;
+  --color-primary-dark:   #0d47a1;
+  --color-accent:         #00838f;
+  --color-header-border:  #1565c0;
+  --color-final-answer:   #2e7d32;
+  --color-warning:        #c62828;
+  --color-parent-note:    #283593;
+  --color-tag-bg:         transparent;
+  --color-tag-border:     #1565c0;
+  --color-tag-text:       #1565c0;
+  --color-muted:          #555;
+  --color-rule:           #ccc;
+}
+
+/* ============================================================
+   level-high.css (inlined)
+   ============================================================ */
+body { font-family: 'Source Serif Pro', 'Georgia', 'Times New Roman', serif; font-size: 10.5pt; line-height: 1.55; }
+h1, h2, h3, .part-header { font-family: 'Libre Baskerville', 'Georgia', serif; }
+.header { text-align: center; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid var(--color-header-border); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag, .key-tag {
+  display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px;
+  margin: 5px 3px 7px 3px; font-weight: bold;
+}
+.subject-tag { border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+.key-tag { border: 1.5px solid var(--color-warning); color: var(--color-warning); }
+h1 { font-size: 16pt; margin: 6px 0 8px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 4px; color: var(--color-muted); }
+
+.part-header {
+  font-size: 13pt; font-weight: bold; color: var(--color-primary);
+  margin: 22px 0 6px 0; padding-bottom: 3px;
+  border-bottom: 1.5px solid var(--color-primary);
+}
+.directions { font-size: 10pt; font-style: italic; color: #333; margin-bottom: 12px; line-height: 1.5; }
+.directions strong { color: #000; font-style: normal; }
+
+.problem {
+  margin: 14px 0;
+  font-size: 10.5pt;
+  line-height: 1.65;
+  padding-left: 10px;
+  border-left: 3px solid var(--color-primary);
+}
+.q-num { display: inline-block; min-width: 26px; font-weight: bold; color: var(--color-primary); }
+.work-space {
+  min-height: 180px;
+  margin-left: 24px;
+  margin-top: 8px;
+  border-bottom: 1px dashed #cfd8dc;
+}
+
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid var(--color-rule); margin-top: 20px; padding-top: 6px; }
+
+/* ============================================================
+   editor-widget (parity with lecture note)
+   ============================================================ */
+.reminder {
+  border: 1.5px solid #e65100;
+  border-left-width: 5px;
+  padding: 10px 14px;
+  margin: 14px 0 18px 0;
+  font-size: 10pt;
+  background: transparent;
+}
+.reminder .title { font-weight: bold; color: #e65100; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ========== HEADER ========== -->
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div>
+      <span class="subject-tag">PRE-CALCULUS</span>
+      <span class="key-tag">TEST PREP</span>
+    </div>
+    <h1>Test Prep Worksheet — Induction · Recursion · Series · Bernoulli</h1>
+    <div class="info">
+      <span><strong>Student:</strong> Justin Koo</span>
+      <span><strong>Date:</strong> May 13, 2026</span>
+    </div>
+    <div class="standard">
+      <strong>Standard:</strong> CCSS.MATH.CONTENT.HSF-IF.A.3 (Recursive sequences) ·
+      HSA-SSE.B.4 (Finite geometric series) · AP Calculus BC Topic 10 (Series · Convergence).
+    </div>
+  </div>
+
+  <!-- Reminder -->
+  <div class="reminder">
+    <div class="title">⚡ Test Prep — Mr. Jones</div>
+    Work each problem in full on the lines below. Show every induction step
+    (base · hypothesis · inductive step), every recurrence (state base cases),
+    and every series sum (formula · substitution · simplification).
+    Box your final answer.
+  </div>
+
+  <!-- ============================================================
+       TOPIC 1 — Mathematical Induction
+       ============================================================ -->
+  <div class="part-header">Topic 1 — Mathematical Induction</div>
+  <div class="directions">
+    <strong>Directions:</strong> Use the standard induction format —
+    Base case · Inductive Hypothesis · Inductive Step · Conclusion.
+    For #3, use <em>strong</em> induction.
+  </div>
+
+  <div class="problem">
+    <span class="q-num">1.</span>
+    Prove by induction that
+    \(\displaystyle 1^3 + 2^3 + 3^3 + \cdots + n^3 = \left[\dfrac{n(n+1)}{2}\right]^2\)
+    for all integers \(n \geq 1\).
+    <div class="work-space"></div>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">2.</span>
+    Prove by induction that \(13^n - 5^n\) is divisible by \(8\) for all integers \(n \geq 1\).
+    <div class="work-space"></div>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">3.</span>
+    Prove by <strong>strong induction</strong> that every integer \(n \geq 2\) can be written
+    as a product of (one or more) prime numbers.
+    <div class="work-space"></div>
+  </div>
+
+  <!-- ============================================================
+       TOPIC 2 — Run-of-Heads Recursion
+       ============================================================ -->
+  <div class="part-header page-break">Topic 2 — Run-of-Heads · Recursion</div>
+  <div class="directions">
+    <strong>Directions:</strong> For each recurrence, clearly state the
+    <em>base cases</em>, the <em>recursive relation</em>, and the conditions on \(n\).
+    Reduce all probabilities to lowest terms.
+  </div>
+
+  <div class="problem">
+    <span class="q-num">4.</span>
+    Let \(p(n)\) be the probability that in \(n\) fair coin flips there is
+    <strong>no run of 3 heads in a row</strong>. Set up the recurrence for \(p(n)\)
+    by splitting on how the sequence begins (T, HT, or HHT). State the values
+    \(p(1)\), \(p(2)\), and \(p(3)\).
+    <div class="work-space"></div>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">5.</span>
+    Using the recurrence from #4, compute \(p(5)\) as a fraction in lowest terms.
+    <div class="work-space"></div>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">6.</span>
+    Let \(a(n)\) be the number of binary strings of length \(n\) with
+    <strong>no two consecutive 1's</strong>. Write the recurrence
+    (with base cases) and compute \(a(6)\).
+    <div class="work-space"></div>
+  </div>
+
+  <!-- ============================================================
+       TOPIC 3 — Series · Σ · Domain of Convergence
+       ============================================================ -->
+  <div class="part-header page-break">Topic 3 — Series · Σ · Domain of Convergence</div>
+  <div class="directions">
+    <strong>Directions:</strong> Use the appropriate arithmetic / finite-geometric /
+    infinite-geometric formula. For #8, state the inequality on \(x\) that guarantees
+    \(|r| &lt; 1\) and give the closed-form sum on that domain.
+  </div>
+
+  <div class="problem">
+    <span class="q-num">7.</span>
+    Find the sum \(\displaystyle \sum_{k=1}^{20} (3k - 2)\). (Arithmetic.)
+    <div class="work-space"></div>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">8.</span>
+    Determine the <strong>domain of convergence</strong> (the set of \(x\) for which
+    the series converges) and give the sum in closed form for
+    \[
+      5 \;+\; 5\!\left(\dfrac{x+1}{2}\right) \;+\; 5\!\left(\dfrac{x+1}{2}\right)^{\!2}
+        \;+\; 5\!\left(\dfrac{x+1}{2}\right)^{\!3} \;+\; \cdots
+    \]
+    <div class="work-space"></div>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">9.</span>
+    A geometric series has first term \(a = 6\) and common ratio \(r = \dfrac{2}{3}\).
+    Find \(S_\infty\), and find the smallest \(n\) such that \(S_n\) is within
+    \(0.01\) of \(S_\infty\).
+    <div class="work-space"></div>
+  </div>
+
+  <!-- ============================================================
+       TOPIC 4 — Bernoulli's Madness
+       ============================================================ -->
+  <div class="part-header page-break">Topic 4 — Bernoulli's Madness</div>
+  <div class="directions">
+    <strong>Directions:</strong> Use sums of powers, the <em>hockey stick</em> identity,
+    <em>telescoping</em>, and the closed-form trick for the linear recurrence
+    \(T_n = a\,T_{n-1} + b\). Express each answer in closed form, then evaluate.
+  </div>
+
+  <div class="problem">
+    <span class="q-num">10.</span>
+    Use the <strong>hockey stick identity</strong> to evaluate
+    \(\displaystyle \sum_{k=1}^{N} k(k+1)(k+2)\) in closed form.
+    <div class="work-space"></div>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">11.</span>
+    Use <strong>telescoping</strong> to evaluate
+    \(\displaystyle \sum_{k=1}^{N} \dfrac{1}{k(k+1)}\).
+    <div class="work-space"></div>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">12.</span>
+    Solve the linear recurrence \(T_n = 2\,T_{n-1} + 3\) with \(T_0 = 1\).
+    Find a closed form for \(T_n\) and compute \(T_5\).
+    <div class="work-space"></div>
+  </div>
+
+  <div class="footer">
+    Newton School · Created 2026-05-13 · &copy; Copyright<br>
+    Answer key: see paired lecture note (<em>JustinKoo-2026-05-13-...-LectureNote.pdf</em>).
+  </div>
+
+</div>
+</body>
+</html>

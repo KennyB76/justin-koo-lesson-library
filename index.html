@@ -43,6 +43,28 @@
   .pdf-badge { display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; background: var(--student-soft); color: var(--student-deep); border-radius: 3px; padding: 1px 5px; vertical-align: middle; }
   .notes-badge { display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; background: #e8f5e9; color: #2e7d32; border-radius: 3px; padding: 1px 5px; vertical-align: middle; }
   .ak-badge { display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; background: #fff3e0; color: #e65100; border-radius: 3px; padding: 1px 5px; vertical-align: middle; }
+  .today-badge { display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 700; letter-spacing: 0.05em; background: #1565c0; color: #fff; border-radius: 3px; padding: 1px 6px; vertical-align: middle; }
+
+  /* Date group header */
+  .date-group-header {
+    padding: 10px 0 4px 16px;
+    position: relative;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--student);
+  }
+  .date-group-header::before {
+    content: "";
+    position: absolute;
+    left: -22px; top: 14px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--student-deep);
+    border: 2px solid var(--paper);
+    box-shadow: 0 0 0 2px var(--student-deep);
+  }
 
   /* Activity cards */
   .kenny-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 16px; }
@@ -93,93 +115,69 @@
 <div class="container">
 
   <header class="masthead">
-    <div class="school">Newton School Weekly</div>
+    <div class="school">Newton School</div>
     <h1>Justin Koo</h1>
     <div class="subtitle">Pre-Calculus Workshop</div>
     <div class="info">
-      <span>May 12, 2026</span>
+      <span>Updated May 13, 2026</span>
       <span>&middot;</span>
       <span>Mr. Kenny</span>
       <span>&middot;</span>
-      <span>Pre-Calculus</span>
+      <span>Horace Mann &middot; Grade 10</span>
     </div>
   </header>
 
   <section>
-    <div class="label">Recent Work</div>
-    <h2>This Month</h2>
+    <div class="label">Lesson Archive</div>
+    <h2>All Sessions</h2>
     <ul class="timeline">
 
-      <!-- 5/10 — Induction: Inequalities & Fibonacci -->
+      <!-- ===== 5/13 — TODAY ===== -->
+      <li class="date-group-header">
+        May 13, 2026 &mdash; Test Prep (Mr. Jones PCBCH Induction)
+        <span class="today-badge">TODAY</span>
+      </li>
       <li>
-        <span class="date">5/10</span>
+        <span class="date">5/13</span>
         <a class="popup-link"
-           data-src="2026-05-10/JustinKoo-2026-05-10-PreCalculus_InductionInequalityFibonacci_Homework.pdf"
-           data-fallback="2026-05-10/JustinKoo-2026-05-10-PreCalculus_InductionInequalityFibonacci_Homework.html">
-          Induction: Inequalities &amp; Fibonacci Homework
+           data-src="2026-05-13/JustinKoo-2026-05-13-PreCalculus_Class-Induction_PCBCH-Problems6to12.pdf"
+           data-fallback="2026-05-13/JustinKoo-2026-05-13-PreCalculus_Class-Induction_PCBCH-Problems6to12.html">
+          PCBCH Induction Set &mdash; Problems 6&ndash;12 (solutions inline)
         </a>
+        <span class="notes-badge">Class</span>
         <span class="pdf-badge">PDF</span>
       </li>
       <li>
-        <span class="date">5/10</span>
+        <span class="date">5/13</span>
         <a class="popup-link"
-           data-src="2026-05-10/JustinKoo-2026-05-10-PreCalculus_InductionInequalityFibonacci_AnswerKey.pdf"
-           data-fallback="2026-05-10/JustinKoo-2026-05-10-PreCalculus_InductionInequalityFibonacci_AnswerKey.html">
-          Induction: Inequalities &amp; Fibonacci Answer Key
+           data-src="2026-05-13/JustinKoo-2026-05-13-PreCalculus_Class-TestPrepReview_LectureNote.pdf"
+           data-fallback="2026-05-13/JustinKoo-2026-05-13-PreCalculus_Class-TestPrepReview_LectureNote.html">
+          Test Prep Review &mdash; Induction &middot; Recursion &middot; Series &middot; Bernoulli
         </a>
-        <span class="ak-badge">AK</span>
-        <span class="pdf-badge">PDF</span>
-      </li>
-
-      <!-- 5/10 — Sums Dimension Jump -->
-      <li>
-        <span class="date">5/10</span>
-        <a class="popup-link"
-           data-src="2026-05-10/JustinKoo-2026-05-10-PreCalculus_SumsDimensionJump_Homework.pdf"
-           data-fallback="2026-05-10/JustinKoo-2026-05-10-PreCalculus_SumsDimensionJump_Homework.html">
-          Sums Dimension Jump Homework
-        </a>
+        <span class="notes-badge">Notes</span>
         <span class="pdf-badge">PDF</span>
       </li>
       <li>
-        <span class="date">5/10</span>
+        <span class="date">5/13</span>
         <a class="popup-link"
-           data-src="2026-05-10/JustinKoo-2026-05-10-PreCalculus_SumsDimensionJump_AnswerKey_HW.pdf"
-           data-fallback="2026-05-10/JustinKoo-2026-05-10-PreCalculus_SumsDimensionJump_AnswerKey_HW.html">
-          Sums Dimension Jump Answer Key
+           data-src="2026-05-13/JustinKoo-2026-05-13-PreCalculus_Class-TestPrepReview_Worksheet.pdf"
+           data-fallback="2026-05-13/JustinKoo-2026-05-13-PreCalculus_Class-TestPrepReview_Worksheet.html">
+          Test Prep Worksheet &mdash; 12 Problems (no answers)
         </a>
-        <span class="ak-badge">AK</span>
+        <span class="ak-badge">Worksheet</span>
         <span class="pdf-badge">PDF</span>
       </li>
 
-      <!-- 5/10 — Mathematical Induction (original) -->
-      <li>
-        <span class="date">5/10</span>
-        <a class="popup-link"
-           data-src="2026-05-10/JustinKoo-2026-05-10-PreCalculus_MathematicalInduction_Homework.pdf"
-           data-fallback="2026-05-10/JustinKoo-2026-05-10-PreCalculus_MathematicalInduction_Homework.html">
-          Mathematical Induction Homework
-        </a>
-        <span class="pdf-badge">PDF</span>
+      <!-- ===== 5/10 — Induction · Sums · Inequalities ===== -->
+      <li class="date-group-header">
+        May 10, 2026 &mdash; Mathematical Induction &middot; Sums Dimension Jump &middot; Inequalities
       </li>
-      <li>
-        <span class="date">5/10</span>
-        <a class="popup-link"
-           data-src="2026-05-10/JustinKoo-2026-05-10-PreCalculus_MathematicalInduction_AnswerKey.pdf"
-           data-fallback="2026-05-10/JustinKoo-2026-05-10-PreCalculus_MathematicalInduction_AnswerKey.html">
-          Mathematical Induction Answer Key
-        </a>
-        <span class="ak-badge">AK</span>
-        <span class="pdf-badge">PDF</span>
-      </li>
-
-      <!-- 5/10 — Lecture Notes -->
       <li>
         <span class="date">5/10</span>
         <a class="popup-link"
            data-src="2026-05-10/JustinKoo-2026-05-10-PreCalculus_InductionInequality_Notes.pdf"
            data-fallback="2026-05-10/JustinKoo-2026-05-10-PreCalculus_InductionInequality_Notes.html">
-          Induction: Inequality Proofs — Lecture Notes
+          Induction: Inequality Proofs &mdash; Lecture Notes
         </a>
         <span class="notes-badge">Notes</span>
         <span class="pdf-badge">PDF</span>
@@ -189,38 +187,79 @@
         <a class="popup-link"
            data-src="2026-05-10/JustinKoo-2026-05-10-PreCalculus_SumsDimensionJump_LectureNote.pdf"
            data-fallback="2026-05-10/JustinKoo-2026-05-10-PreCalculus_SumsDimensionJump_LectureNote.html">
-          Sums Dimension Jump — Lecture Note
+          Sums Dimension Jump &mdash; Lecture Note
         </a>
         <span class="notes-badge">Notes</span>
         <span class="pdf-badge">PDF</span>
       </li>
-
-      <!-- 5/3 -->
       <li>
-        <span class="date">5/3</span>
+        <span class="date">5/10</span>
         <a class="popup-link"
-           data-src="2026-05-03/JustinKoo-2026-05-03-PreCalculus_Homework-PartialFractionsAndGeomTelescoping_Worksheet.pdf"
-           data-fallback="2026-05-03/JustinKoo-2026-05-03-PreCalculus_Homework-PartialFractionsAndGeomTelescoping_Worksheet.html">
-          Partial Fractions &amp; Geom Telescoping Homework
+           data-src="2026-05-10/JustinKoo-2026-05-10-PreCalculus_InductionInequalityFibonacci_Homework.pdf"
+           data-fallback="2026-05-10/JustinKoo-2026-05-10-PreCalculus_InductionInequalityFibonacci_Homework.html">
+          Induction: Inequalities &amp; Fibonacci &mdash; Homework
         </a>
         <span class="pdf-badge">PDF</span>
       </li>
       <li>
-        <span class="date">5/3</span>
+        <span class="date">5/10</span>
         <a class="popup-link"
-           data-src="2026-05-03/JustinKoo-2026-05-03-PreCalculus_Homework-PartialFractionsAndGeomTelescoping_AnswerKey.pdf"
-           data-fallback="2026-05-03/JustinKoo-2026-05-03-PreCalculus_Homework-PartialFractionsAndGeomTelescoping_AnswerKey.html">
-          Partial Fractions &amp; Geom Telescoping Answer Key
+           data-src="2026-05-10/JustinKoo-2026-05-10-PreCalculus_InductionInequalityFibonacci_AnswerKey.pdf"
+           data-fallback="2026-05-10/JustinKoo-2026-05-10-PreCalculus_InductionInequalityFibonacci_AnswerKey.html">
+          Induction: Inequalities &amp; Fibonacci &mdash; Answer Key
         </a>
         <span class="ak-badge">AK</span>
         <span class="pdf-badge">PDF</span>
+      </li>
+      <li>
+        <span class="date">5/10</span>
+        <a class="popup-link"
+           data-src="2026-05-10/JustinKoo-2026-05-10-PreCalculus_MathematicalInduction_Homework.pdf"
+           data-fallback="2026-05-10/JustinKoo-2026-05-10-PreCalculus_MathematicalInduction_Homework.html">
+          Mathematical Induction &mdash; Homework
+        </a>
+        <span class="pdf-badge">PDF</span>
+      </li>
+      <li>
+        <span class="date">5/10</span>
+        <a class="popup-link"
+           data-src="2026-05-10/JustinKoo-2026-05-10-PreCalculus_MathematicalInduction_AnswerKey.pdf"
+           data-fallback="2026-05-10/JustinKoo-2026-05-10-PreCalculus_MathematicalInduction_AnswerKey.html">
+          Mathematical Induction &mdash; Answer Key
+        </a>
+        <span class="ak-badge">AK</span>
+        <span class="pdf-badge">PDF</span>
+      </li>
+      <li>
+        <span class="date">5/10</span>
+        <a class="popup-link"
+           data-src="2026-05-10/JustinKoo-2026-05-10-PreCalculus_SumsDimensionJump_Homework.pdf"
+           data-fallback="2026-05-10/JustinKoo-2026-05-10-PreCalculus_SumsDimensionJump_Homework.html">
+          Sums Dimension Jump &mdash; Homework
+        </a>
+        <span class="pdf-badge">PDF</span>
+      </li>
+      <li>
+        <span class="date">5/10</span>
+        <a class="popup-link"
+           data-src="2026-05-10/JustinKoo-2026-05-10-PreCalculus_SumsDimensionJump_AnswerKey_HW.pdf"
+           data-fallback="2026-05-10/JustinKoo-2026-05-10-PreCalculus_SumsDimensionJump_AnswerKey_HW.html">
+          Sums Dimension Jump &mdash; Answer Key
+        </a>
+        <span class="ak-badge">AK</span>
+        <span class="pdf-badge">PDF</span>
+      </li>
+
+      <!-- ===== 5/3 — Power Series · Partial Fractions · Telescoping ===== -->
+      <li class="date-group-header">
+        May 3, 2026 &mdash; Power Series &middot; Partial Fractions &middot; Telescoping
       </li>
       <li>
         <span class="date">5/3</span>
         <a class="popup-link"
            data-src="2026-05-03/JustinKoo-2026-05-03-PreCalculus_PowerSeriesIoCAndTelescoping_Worksheet.pdf"
            data-fallback="2026-05-03/JustinKoo-2026-05-03-PreCalculus_PowerSeriesIoCAndTelescoping_Worksheet.html">
-          Power Series, IoC &amp; Telescoping Homework
+          Power Series, IoC &amp; Telescoping &mdash; Worksheet
         </a>
         <span class="pdf-badge">PDF</span>
       </li>
@@ -229,19 +268,87 @@
         <a class="popup-link"
            data-src="2026-05-03/JustinKoo-2026-05-03-PreCalculus_PowerSeriesIoCAndTelescoping_AnswerKey.pdf"
            data-fallback="2026-05-03/JustinKoo-2026-05-03-PreCalculus_PowerSeriesIoCAndTelescoping_AnswerKey.html">
-          Power Series, IoC &amp; Telescoping Answer Key
+          Power Series, IoC &amp; Telescoping &mdash; Answer Key
+        </a>
+        <span class="ak-badge">AK</span>
+        <span class="pdf-badge">PDF</span>
+      </li>
+      <li>
+        <span class="date">5/3</span>
+        <a class="popup-link"
+           data-src="2026-05-03/JustinKoo-2026-05-03-PreCalculus_Homework-PartialFractionsAndGeomTelescoping_Worksheet.pdf"
+           data-fallback="2026-05-03/JustinKoo-2026-05-03-PreCalculus_Homework-PartialFractionsAndGeomTelescoping_Worksheet.html">
+          Partial Fractions &amp; Geom Telescoping &mdash; Homework
+        </a>
+        <span class="pdf-badge">PDF</span>
+      </li>
+      <li>
+        <span class="date">5/3</span>
+        <a class="popup-link"
+           data-src="2026-05-03/JustinKoo-2026-05-03-PreCalculus_Homework-PartialFractionsAndGeomTelescoping_AnswerKey.pdf"
+           data-fallback="2026-05-03/JustinKoo-2026-05-03-PreCalculus_Homework-PartialFractionsAndGeomTelescoping_AnswerKey.html">
+          Partial Fractions &amp; Geom Telescoping &mdash; Answer Key
         </a>
         <span class="ak-badge">AK</span>
         <span class="pdf-badge">PDF</span>
       </li>
 
-      <!-- 4/26 -->
+      <!-- ===== 4/26 — Recursion · Tilings · Sequences & Series ===== -->
+      <li class="date-group-header">
+        Apr 26, 2026 &mdash; Recursion &middot; Tilings &middot; Sequences &amp; Series Test Prep
+      </li>
+      <li>
+        <span class="date">4/26</span>
+        <a class="popup-link"
+           data-src="2026-04-26/JustinKoo-2026-04-26-PreCalculus_ClassReview-SequencesAndSeries_TestPrep.html"
+           data-fallback="2026-04-26/JustinKoo-2026-04-26-PreCalculus_ClassReview-SequencesAndSeries_TestPrep.html">
+          Sequences &amp; Series &mdash; Class Review &amp; Test Prep
+        </a>
+        <span class="notes-badge">Class</span>
+      </li>
+      <li>
+        <span class="date">4/26</span>
+        <a class="popup-link"
+           data-src="2026-04-26/JustinKoo-2026-04-26-PreCalculus_LegoProblem_Notes.html"
+           data-fallback="2026-04-26/JustinKoo-2026-04-26-PreCalculus_LegoProblem_Notes.html">
+          Lego Problem &mdash; Notes
+        </a>
+        <span class="notes-badge">Notes</span>
+      </li>
+      <li>
+        <span class="date">4/26</span>
+        <a class="popup-link"
+           data-src="2026-04-26/JustinKoo-2026-04-26-PreCalculus_TowersOfHanoi_Notes.html"
+           data-fallback="2026-04-26/JustinKoo-2026-04-26-PreCalculus_TowersOfHanoi_Notes.html">
+          Towers of Hanoi &mdash; Notes
+        </a>
+        <span class="notes-badge">Notes</span>
+      </li>
+      <li>
+        <span class="date">4/26</span>
+        <a class="popup-link"
+           data-src="2026-04-26/JustinKoo-2026-04-26-PreCalculus_Homework-RecursionAndTilings_Worksheet.pdf"
+           data-fallback="2026-04-26/JustinKoo-2026-04-26-PreCalculus_Homework-RecursionAndTilings_Worksheet.html">
+          Recursion &amp; Tilings &mdash; Homework Worksheet
+        </a>
+        <span class="pdf-badge">PDF</span>
+      </li>
+      <li>
+        <span class="date">4/26</span>
+        <a class="popup-link"
+           data-src="2026-04-26/homework/JustinKoo-2026-04-26-PreCalculus_Homework-RecursionAndTilings_AnswerKey.pdf"
+           data-fallback="2026-04-26/JustinKoo-2026-04-26-PreCalculus_Homework-RecursionAndTilings_AnswerKey.html">
+          Recursion &amp; Tilings &mdash; Answer Key
+        </a>
+        <span class="ak-badge">AK</span>
+        <span class="pdf-badge">PDF</span>
+      </li>
       <li>
         <span class="date">4/26</span>
         <a class="popup-link"
            data-src="2026-04-26/JustinKoo-2026-04-26-PreCalculus_Homework-SequencesAndSeriesTest_Worksheet.pdf"
            data-fallback="2026-04-26/JustinKoo-2026-04-26-PreCalculus_Homework-SequencesAndSeriesTest_Worksheet.html">
-          Sequences &amp; Series Test Homework
+          Sequences &amp; Series Test &mdash; Homework Worksheet
         </a>
         <span class="pdf-badge">PDF</span>
       </li>
@@ -250,7 +357,26 @@
         <a class="popup-link"
            data-src="2026-04-26/JustinKoo-2026-04-26-PreCalculus_Homework-SequencesAndSeriesTest_AnswerKey.pdf"
            data-fallback="2026-04-26/JustinKoo-2026-04-26-PreCalculus_Homework-SequencesAndSeriesTest_AnswerKey.html">
-          Sequences &amp; Series Test Answer Key
+          Sequences &amp; Series Test &mdash; Answer Key
+        </a>
+        <span class="ak-badge">AK</span>
+        <span class="pdf-badge">PDF</span>
+      </li>
+      <li>
+        <span class="date">4/26</span>
+        <a class="popup-link"
+           data-src="2026-04-26/JustinKoo-2026-04-26-PreCalculus_Homework-SequencesAndSeriesReview_Worksheet.pdf"
+           data-fallback="2026-04-26/JustinKoo-2026-04-26-PreCalculus_Homework-SequencesAndSeriesReview_Worksheet.html">
+          Sequences &amp; Series Review &mdash; Worksheet
+        </a>
+        <span class="pdf-badge">PDF</span>
+      </li>
+      <li>
+        <span class="date">4/26</span>
+        <a class="popup-link"
+           data-src="2026-04-26/homework/JustinKoo-2026-04-26-PreCalculus_Homework-SequencesAndSeriesReview_AnswerKey.pdf"
+           data-fallback="2026-04-26/JustinKoo-2026-04-26-PreCalculus_Homework-SequencesAndSeriesReview_AnswerKey.html">
+          Sequences &amp; Series Review &mdash; Answer Key
         </a>
         <span class="ak-badge">AK</span>
         <span class="pdf-badge">PDF</span>
@@ -263,7 +389,7 @@
     <div class="label">From Mr. Kenny</div>
     <h2>A note &amp; something just for you</h2>
     <div class="teacher-note">
-      "Justin &mdash; You've been pushing hard through Mathematical Induction, Sums, and now Inequality proofs &mdash; all in one unit. Keep the Wider Scope Tactic in mind: when the direct step feels impossible, find the stronger bound that makes it obvious. That's real mathematical thinking. &mdash; Mr. K"
+      "Justin &mdash; You've pushed hard through Mathematical Induction, Sums, Inequality proofs, and now Test Prep &mdash; all in one unit. Keep the Wider Scope Tactic in mind: when the direct step feels impossible, find the stronger bound that makes it obvious. That's real mathematical thinking. &mdash; Mr. K"
     </div>
 
     <div class="kenny-cards">
@@ -281,7 +407,7 @@
   </section>
 
   <footer>
-    <div>Newton School &middot; Updated weekly</div>
+    <div>Newton School &middot; Updated May 13, 2026</div>
     <div class="copyright">&copy; 2026 &middot; Made with care for Justin Koo</div>
   </footer>
 </div>

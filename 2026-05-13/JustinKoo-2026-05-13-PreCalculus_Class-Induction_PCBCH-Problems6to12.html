@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Induction Practice Set — PCBCH Problems 6 to 12 (Justin Koo · 5/13)</title>
+
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<style>
+/* ============================================================
+   base-print.css (inlined)
+   ============================================================ */
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Century Schoolbook', 'Times New Roman', serif; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+  html, body { background: #fff; }
+  .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+  .problem, .answer-block, .reminder, .parent-note, .example, .word-problem,
+  .statement, .solution-block {
+    page-break-inside: avoid; break-inside: avoid;
+  }
+  .part-header, .directions, .problem-header, h1, h2, h3 {
+    page-break-after: avoid; break-after: avoid;
+  }
+  .page-break { page-break-before: always; break-before: page; }
+}
+
+/* ============================================================
+   theme-boy.css (inlined)
+   ============================================================ */
+:root {
+  --color-primary:        #1565c0;
+  --color-primary-dark:   #0d47a1;
+  --color-accent:         #00838f;
+  --color-header-border:  #1565c0;
+  --color-final-answer:   #2e7d32;
+  --color-warning:        #c62828;
+  --color-parent-note:    #283593;
+  --color-tag-bg:         transparent;
+  --color-tag-border:     #1565c0;
+  --color-tag-text:       #1565c0;
+  --color-muted:          #555;
+  --color-rule:           #ccc;
+}
+
+/* ============================================================
+   level-high.css (inlined)
+   ============================================================ */
+body { font-family: 'Source Serif Pro', 'Georgia', 'Times New Roman', serif; font-size: 10.5pt; line-height: 1.55; }
+h1, h2, h3, .part-header { font-family: 'Libre Baskerville', 'Georgia', serif; }
+.header { text-align: center; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid var(--color-header-border); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag, .key-tag {
+  display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px;
+  margin: 5px 3px 7px 3px; font-weight: bold;
+}
+.subject-tag { border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+.key-tag { border: 1.5px solid var(--color-warning); color: var(--color-warning); }
+h1 { font-size: 16pt; margin: 6px 0 8px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 4px; color: var(--color-muted); }
+
+.part-header {
+  font-size: 13pt; font-weight: bold; color: var(--color-primary);
+  margin: 22px 0 6px 0; padding-bottom: 3px;
+  border-bottom: 1.5px solid var(--color-primary);
+}
+
+.concept-box {
+  border: 1.5px solid var(--color-accent);
+  background: transparent;
+  padding: 10px 14px;
+  margin: 12px 0;
+  font-size: 10pt;
+  border-left-width: 4px;
+}
+.concept-box .title { font-weight: bold; color: var(--color-accent); margin-bottom: 4px; }
+
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid var(--color-rule); margin-top: 20px; padding-top: 6px; }
+
+/* ============================================================
+   editor-widget — problem / statement / solution
+   ============================================================ */
+.problem-number {
+  display: inline-block;
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: bold;
+  font-size: 11pt;
+  padding: 3px 12px;
+  border-radius: 14px;
+  margin-bottom: 8px;
+  letter-spacing: 0.04em;
+}
+.problem-title {
+  display: inline-block;
+  font-weight: bold;
+  font-size: 11.5pt;
+  color: var(--color-primary-dark);
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.statement {
+  background: #f5f5f5;
+  border-left: 4px solid #888;
+  padding: 10px 14px;
+  margin: 8px 0 10px 0;
+  font-size: 10.5pt;
+  line-height: 1.6;
+}
+.statement .label {
+  font-size: 8.5pt;
+  font-weight: bold;
+  color: #555;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.solution-block {
+  border-left: 4px solid var(--color-final-answer);
+  background: #f7fbf7;
+  padding: 10px 14px;
+  margin: 8px 0 14px 0;
+  font-size: 10.5pt;
+  line-height: 1.65;
+}
+.solution-block .label {
+  font-size: 8.5pt;
+  font-weight: bold;
+  color: var(--color-final-answer);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.solution-block .step {
+  margin: 5px 0;
+  padding-left: 6px;
+}
+.solution-block .step b {
+  color: var(--color-primary-dark);
+}
+.qed {
+  display: inline-block;
+  font-weight: bold;
+  color: var(--color-final-answer);
+  margin-left: 6px;
+}
+
+.problem-wrap {
+  margin: 18px 0 22px 0;
+}
+
+.reminder {
+  border: 1.5px solid #e65100;
+  border-left-width: 5px;
+  padding: 10px 14px;
+  margin: 14px 0 18px 0;
+  font-size: 10pt;
+  background: transparent;
+}
+.reminder .title { font-weight: bold; color: #e65100; margin-bottom: 4px; }
+
+.boxed-final {
+  display: inline-block;
+  border: 1.5px solid var(--color-final-answer);
+  color: var(--color-final-answer);
+  font-weight: bold;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 10.5pt;
+  margin: 4px 0;
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ========== HEADER ========== -->
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div>
+      <span class="subject-tag">PRE-CALCULUS</span>
+      <span class="key-tag">TEST PREP</span>
+    </div>
+    <h1>Induction Practice Set — PCBCH Problems 6 to 12</h1>
+    <div class="info">
+      <span><strong>Student:</strong> Justin Koo</span>
+      <span><strong>Date:</strong> May 13, 2026</span>
+    </div>
+    <div class="standard">
+      <strong>Standard:</strong> Mathematical Induction (regular + strong) ·
+      AP Calculus BC / Pre-Calc — Sequences, Recursive Definitions, Number Theory, Combinatorial Identities.
+    </div>
+  </div>
+
+  <!-- Reminder -->
+  <div class="reminder">
+    <div class="title">⚡ How to read this set</div>
+    Every problem is a Mr. Jones <em>induction</em> exercise.
+    Each one shows three steps in the green Solution box:
+    <strong>Base case</strong>, <strong>Inductive Hypothesis (IH)</strong>, and <strong>Inductive Step</strong>.
+    Master the <em>skeleton</em> first — the algebra after that is just bookkeeping.
+  </div>
+
+  <!-- ============================================================
+       #6 — Infinite nested radical < 2
+       ============================================================ -->
+  <div class="problem-wrap">
+    <span class="problem-number">Problem 6</span>
+    <span class="problem-title">Infinite Nested Radical Is Always Less Than 2</span>
+
+    <div class="statement">
+      <div class="label">Statement</div>
+      Prove that every member of the sequence
+      $\sqrt{2},\;\sqrt{2+\sqrt{2}},\;\sqrt{2+\sqrt{2+\sqrt{2}}},\;\ldots$
+      is less than 2.
+    </div>
+
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>Setup.</b> Define recursively: $a_1 = \sqrt{2}$ and $a_{n+1} = \sqrt{2 + a_n}$. We prove $a_n < 2$ for all $n \geq 1$ by induction.</div>
+      <div class="step"><b>Base ($n=1$).</b> $a_1 = \sqrt{2} \approx 1.414 < 2.$ ✓</div>
+      <div class="step"><b>IH.</b> Assume $a_k < 2.$</div>
+      <div class="step"><b>Step.</b> Then
+        $a_{k+1} = \sqrt{2 + a_k} < \sqrt{2 + 2} = \sqrt{4} = 2.$ ✓
+        <br>
+        (Square root is increasing, so $a_k < 2 \Rightarrow 2 + a_k < 4 \Rightarrow \sqrt{2 + a_k} < 2.$)
+      </div>
+      <div class="step"><b>Conclusion.</b> By induction, $a_n < 2$ for every $n \geq 1.$ <span class="qed">∎</span></div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       #7 — Tribonacci-like sequence
+       ============================================================ -->
+  <div class="problem-wrap page-break">
+    <span class="problem-number">Problem 7</span>
+    <span class="problem-title">Tribonacci-like Sequence Grows Slower Than $2^n$</span>
+
+    <div class="statement">
+      <div class="label">Statement</div>
+      Consider $a_n = a_{n-1} + a_{n-2} + a_{n-3}$ with $a_1 = 1,\, a_2 = 2,\, a_3 = 3.$
+      Prove that for all positive integers $n$, $a_n < 2^n.$
+    </div>
+
+    <div class="solution-block">
+      <div class="label">Solution (strong induction)</div>
+      <div class="step"><b>Base ($n = 1, 2, 3$).</b>
+        $a_1 = 1 < 2 = 2^1$, $a_2 = 2 < 4 = 2^2$, $a_3 = 3 < 8 = 2^3.$ ✓
+        <br>
+        (We need three base cases because the recurrence reaches back three steps.)
+      </div>
+      <div class="step"><b>Strong IH.</b> Assume $a_j < 2^j$ for every $1 \leq j \leq k$, where $k \geq 3.$</div>
+      <div class="step"><b>Step.</b> Using the recurrence and IH on the three previous terms:
+        $$a_{k+1} \;=\; a_k + a_{k-1} + a_{k-2} \;<\; 2^k + 2^{k-1} + 2^{k-2}.$$
+        Factor $2^{k-2}$: $\;2^k + 2^{k-1} + 2^{k-2} = 2^{k-2}(4 + 2 + 1) = 7 \cdot 2^{k-2}.$
+        <br>
+        Since $7 < 8$: $\;7 \cdot 2^{k-2} < 8 \cdot 2^{k-2} = 2^{k+1}.$ ✓
+      </div>
+      <div class="step"><b>Conclusion.</b> $a_n < 2^n$ for all $n \geq 1.$ <span class="qed">∎</span></div>
+      <div class="step" style="color: #555; font-size: 9.5pt; margin-top: 8px;">
+        <em>Insight.</em> Each Tribonacci term is the sum of the previous three, and the bound $2^n$ doubles at every step.
+        The factor-7 vs 8 gap is the slack that lets the inequality stay strict.
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       #8 — Postage ≥ 8 with 3¢ and 5¢ stamps
+       ============================================================ -->
+  <div class="problem-wrap">
+    <span class="problem-number">Problem 8</span>
+    <span class="problem-title">Chicken McNugget — Postage $\geq 8$ Cents</span>
+
+    <div class="statement">
+      <div class="label">Statement</div>
+      Prove that using only 3-cent and 5-cent stamps, one can generate any postage $\geq 8$ cents.
+    </div>
+
+    <div class="solution-block">
+      <div class="label">Solution (strong induction)</div>
+      <div class="step"><b>Base cases ($n = 8, 9, 10$).</b>
+        $8 = 3 + 5,\quad 9 = 3 + 3 + 3,\quad 10 = 5 + 5.$ ✓
+        <br>
+        (We need three consecutive base cases because the inductive step jumps back by 3.)
+      </div>
+      <div class="step"><b>Strong IH.</b> Every integer $j$ with $8 \leq j \leq k$ can be formed (for $k \geq 10$).</div>
+      <div class="step"><b>Step.</b> For $k + 1$, write
+        $k + 1 = (k - 2) + 3.$
+        <br>
+        Since $k \geq 10$, we have $k - 2 \geq 8$, so by the strong IH the value $(k - 2)$ cents can be made from 3¢ and 5¢ stamps.
+        Add one 3¢ stamp to get $k + 1.$ ✓
+      </div>
+      <div class="step"><b>Conclusion.</b> Every postage $\geq 8$ cents can be made. <span class="qed">∎</span></div>
+      <div class="step" style="color: #555; font-size: 9.5pt; margin-top: 8px;">
+        <em>Note.</em> The integers that <strong>cannot</strong> be expressed are exactly $\{1, 2, 4, 7\}$.
+        The largest one ($7$) is the <em>Frobenius number</em> for the coin set $\{3, 5\}$:
+        $g(3, 5) = 3 \cdot 5 - 3 - 5 = 7.$
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       #9 — L-tromino tiling
+       ============================================================ -->
+  <div class="problem-wrap page-break">
+    <span class="problem-number">Problem 9</span>
+    <span class="problem-title">L-Tromino Tiling of a $2^n \times 2^n$ Board (One Corner Removed)</span>
+
+    <div class="statement">
+      <div class="label">Statement</div>
+      For every positive integer $n$, prove that a $2^n \times 2^n$ checkerboard with <strong>one</strong> corner square removed can be tiled by rotatable L-shaped 3-square pieces (L-trominoes).
+    </div>
+
+    <div class="solution-block">
+      <div class="label">Solution (induction on $n$)</div>
+      <div class="step"><b>Base ($n = 1$).</b> A $2 \times 2$ board minus one corner has exactly 3 squares — that is precisely one L-tromino. ✓</div>
+      <div class="step"><b>IH.</b> Every $2^k \times 2^k$ board missing one corner square can be tiled with L-trominoes.</div>
+      <div class="step"><b>Step ($n = k+1$).</b>
+        Take a $2^{k+1} \times 2^{k+1}$ board with one corner missing. Split it into <strong>four $2^k \times 2^k$ quadrants</strong>.
+        <ul style="margin: 4px 0 4px 18px;">
+          <li>The missing corner lies in <strong>exactly one</strong> quadrant. Apply the IH directly to that quadrant.</li>
+          <li>For the other three quadrants: place <strong>one</strong> L-tromino at the very center of the big board so it covers the inner corner cell of each of those three quadrants.</li>
+          <li>Now each of those three quadrants effectively has a "missing" cell at its inner corner — so the IH applies to each. ✓</li>
+        </ul>
+      </div>
+      <div class="step"><b>Conclusion.</b> By induction, the tiling exists for every $n \geq 1.$ <span class="qed">∎</span></div>
+      <div class="step" style="color: #555; font-size: 9.5pt; margin-top: 8px;">
+        <em>Picture in your head.</em> The central L-tromino is the <em>"seed"</em> — it converts the problem of "three full quadrants + one missing-corner quadrant" into "four missing-corner quadrants", and then the IH closes the deal.
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       Fibonacci preface (concept box)
+       ============================================================ -->
+  <div class="concept-box">
+    <div class="title">Fibonacci Preface — for Problems 10, 11, 12</div>
+    The Fibonacci sequence is defined by
+    $F_n = F_{n-1} + F_{n-2}\quad$ with $\;F_1 = 1,\; F_2 = 1.$
+    First values: $F_3 = 2,\; F_4 = 3,\; F_5 = 5,\; F_6 = 8,\; F_7 = 13,\; F_8 = 21,\; \ldots$
+  </div>
+
+  <!-- ============================================================
+       #10 — Sum of Fibonacci
+       ============================================================ -->
+  <div class="problem-wrap">
+    <span class="problem-number">Problem 10</span>
+    <span class="problem-title">$F_1 + F_2 + \cdots + F_n = F_{n+2} - 1$</span>
+
+    <div class="statement">
+      <div class="label">Statement</div>
+      Prove that for all positive integers $n$,
+      $F_1 + F_2 + \cdots + F_n = F_{n+2} - 1.$
+    </div>
+
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>Base ($n = 1$).</b>
+        LHS $= F_1 = 1.$ RHS $= F_3 - 1 = 2 - 1 = 1.$ ✓
+      </div>
+      <div class="step"><b>IH.</b> $F_1 + F_2 + \cdots + F_k = F_{k+2} - 1.$</div>
+      <div class="step"><b>Step.</b> Add $F_{k+1}$ to both sides of IH:
+        $$F_1 + \cdots + F_k + F_{k+1} \;=\; (F_{k+2} - 1) + F_{k+1} \;=\; (F_{k+1} + F_{k+2}) - 1 \;=\; F_{k+3} - 1.$$
+        We used the Fibonacci recurrence $F_{k+3} = F_{k+1} + F_{k+2}.$ ✓
+      </div>
+      <div class="step"><b>Conclusion.</b>
+        $\displaystyle\sum_{i=1}^{n} F_i = F_{n+2} - 1$ for all $n \geq 1.$ <span class="qed">∎</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       #11 — Cassini's identity
+       ============================================================ -->
+  <div class="problem-wrap page-break">
+    <span class="problem-number">Problem 11</span>
+    <span class="problem-title">Cassini's Identity — $F_{n-1} F_{n+1} - F_n^2 = (-1)^n$</span>
+
+    <div class="statement">
+      <div class="label">Statement</div>
+      Prove that for all positive integers $n \geq 2,$
+      $F_{n-1}\cdot F_{n+1} - (F_n)^2 = (-1)^n.$
+    </div>
+
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>Base ($n = 2$).</b>
+        $F_1 F_3 - F_2^2 = 1 \cdot 2 - 1^2 = 1 = (-1)^2.$ ✓
+      </div>
+      <div class="step"><b>IH.</b> $F_{k-1}F_{k+1} - F_k^2 = (-1)^k.$</div>
+      <div class="step"><b>Step.</b> Compute $F_k F_{k+2} - F_{k+1}^2:$
+        <ul style="margin: 4px 0 4px 18px;">
+          <li>$F_{k+2} = F_{k+1} + F_k \;\Rightarrow\; F_k F_{k+2} = F_k F_{k+1} + F_k^2.$</li>
+          <li>$F_{k+1}^2 = F_{k+1}(F_k + F_{k-1}) = F_k F_{k+1} + F_{k-1} F_{k+1}.$</li>
+          <li>Subtract:
+            $F_k F_{k+2} - F_{k+1}^2
+            = F_k^2 - F_{k-1} F_{k+1}
+            = -(F_{k-1} F_{k+1} - F_k^2)
+            = -(-1)^k
+            = (-1)^{k+1}.$ ✓
+          </li>
+        </ul>
+      </div>
+      <div class="step"><b>Conclusion.</b> Cassini's identity holds for every $n \geq 2.$ <span class="qed">∎</span></div>
+      <div class="step" style="color: #555; font-size: 9.5pt; margin-top: 8px;">
+        <em>Why the alternating sign?</em> Multiplying by $-1$ at every inductive step flips the parity — that is exactly $(-1)^{k+1} = -(-1)^k.$
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       #12 — Sum of products of consecutive Fibonacci (even length)
+       ============================================================ -->
+  <div class="problem-wrap">
+    <span class="problem-number">Problem 12</span>
+    <span class="problem-title">$\displaystyle\sum_{k=1}^{2n-1} F_k F_{k+1} = F_{2n}^2$</span>
+
+    <div class="statement">
+      <div class="label">Statement</div>
+      Prove that for all positive integers $n,$
+      $F_1 F_2 + F_2 F_3 + F_3 F_4 + \cdots + F_{2n-1} F_{2n} = (F_{2n})^2.$
+    </div>
+
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>Base ($n = 1$).</b>
+        LHS $= F_1 F_2 = 1 \cdot 1 = 1.$ RHS $= F_2^2 = 1.$ ✓
+      </div>
+      <div class="step"><b>IH.</b>
+        $\displaystyle\sum_{k=1}^{2n-1} F_k F_{k+1} = F_{2n}^2.$
+      </div>
+      <div class="step"><b>Step (advance from $n$ to $n+1$ = add the next <em>two</em> terms).</b>
+        $$\sum_{k=1}^{2(n+1)-1} F_k F_{k+1} \;=\; F_{2n}^2 + F_{2n} F_{2n+1} + F_{2n+1} F_{2n+2}.$$
+        Group the first two terms by factoring $F_{2n}$:
+        $$F_{2n}^2 + F_{2n} F_{2n+1} \;=\; F_{2n}(F_{2n} + F_{2n+1}) \;=\; F_{2n} F_{2n+2}.$$
+        Now factor $F_{2n+2}$ from what remains:
+        $$F_{2n} F_{2n+2} + F_{2n+1} F_{2n+2} \;=\; F_{2n+2}(F_{2n} + F_{2n+1}) \;=\; F_{2n+2} \cdot F_{2n+2} \;=\; F_{2n+2}^2.$$
+        ✓ which is $F_{2(n+1)}^2.$
+      </div>
+      <div class="step"><b>Conclusion.</b> The identity holds for every $n \geq 1.$ <span class="qed">∎</span></div>
+      <div class="step" style="color: #555; font-size: 9.5pt; margin-top: 8px;">
+        <em>Two-term jump.</em> Because the index on the LHS is $2n-1$, advancing from $n$ to $n+1$ adds <strong>two</strong> new summands ($F_{2n}F_{2n+1}$ and $F_{2n+1}F_{2n+2}$), not one. The Fibonacci recurrence is then applied <strong>twice</strong> in the algebra.
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Newton School · 2026-05-13 · Paired with PCBCH (Mr. Jones) Induction Handout — May 7 scan.<br>
+    &copy; Copyright Newton School.
+  </div>
+
+</div>
+</body>
+</html>
