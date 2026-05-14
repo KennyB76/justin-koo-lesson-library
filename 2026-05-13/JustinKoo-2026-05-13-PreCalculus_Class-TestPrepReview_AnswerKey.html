@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Test Prep Answer Key — 12 Problems (Justin Koo · 5/13)</title>
+
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<style>
+/* base-print.css (inlined) */
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Century Schoolbook', 'Times New Roman', serif; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+  html, body { background: #fff; }
+  .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+  .problem, .statement, .solution-block, .reminder, .answer-block {
+    page-break-inside: avoid; break-inside: avoid;
+  }
+  .part-header, h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+  .page-break { page-break-before: always; break-before: page; }
+}
+
+/* theme-boy.css */
+:root {
+  --color-primary: #1565c0;
+  --color-primary-dark: #0d47a1;
+  --color-accent: #00838f;
+  --color-header-border: #1565c0;
+  --color-final-answer: #2e7d32;
+  --color-warning: #c62828;
+  --color-muted: #555;
+  --color-rule: #ccc;
+}
+
+/* level-high.css */
+body { font-family: 'Source Serif Pro', 'Georgia', 'Times New Roman', serif; font-size: 10.5pt; line-height: 1.55; }
+h1, h2, h3, .part-header { font-family: 'Libre Baskerville', 'Georgia', serif; }
+.header { text-align: center; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid var(--color-header-border); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag, .key-tag {
+  display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px;
+  margin: 5px 3px 7px 3px; font-weight: bold;
+}
+.subject-tag { border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+.key-tag { border: 1.5px solid var(--color-final-answer); color: var(--color-final-answer); background: #f1f8e9; }
+h1 { font-size: 16pt; margin: 6px 0 8px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 4px; color: var(--color-muted); }
+
+.part-header {
+  font-size: 13pt; font-weight: bold; color: var(--color-primary);
+  margin: 22px 0 6px 0; padding-bottom: 3px;
+  border-bottom: 1.5px solid var(--color-primary);
+}
+
+.reminder {
+  border: 1.5px solid #e65100;
+  border-left-width: 5px;
+  padding: 10px 14px;
+  margin: 14px 0 18px 0;
+  font-size: 10pt;
+  background: transparent;
+}
+.reminder .title { font-weight: bold; color: #e65100; margin-bottom: 4px; }
+
+.problem-number {
+  display: inline-block;
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: bold;
+  font-size: 11pt;
+  padding: 3px 12px;
+  border-radius: 14px;
+  margin-bottom: 8px;
+  letter-spacing: 0.04em;
+}
+.problem-title {
+  display: inline-block;
+  font-weight: bold;
+  font-size: 11.5pt;
+  color: var(--color-primary-dark);
+  margin-left: 8px;
+  vertical-align: middle;
+}
+.concept-tag {
+  display: inline-block;
+  font-size: 8pt;
+  padding: 2px 8px;
+  margin: 0 4px 4px 0;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  border-radius: 10px;
+  letter-spacing: 0.05em;
+}
+
+.statement {
+  background: #f5f5f5;
+  border-left: 4px solid #888;
+  padding: 10px 14px;
+  margin: 8px 0 10px 0;
+  font-size: 10.5pt;
+  line-height: 1.6;
+}
+.statement .label {
+  font-size: 8.5pt; font-weight: bold; color: #555;
+  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px;
+}
+
+.solution-block {
+  border-left: 4px solid var(--color-final-answer);
+  background: #f7fbf7;
+  padding: 10px 14px;
+  margin: 8px 0 14px 0;
+  font-size: 10.5pt;
+  line-height: 1.65;
+}
+.solution-block .label {
+  font-size: 8.5pt; font-weight: bold; color: var(--color-final-answer);
+  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px;
+}
+.solution-block .step { margin: 5px 0; padding-left: 6px; }
+.solution-block .step b { color: var(--color-primary-dark); }
+
+.boxed-final {
+  display: inline-block;
+  border: 1.5px solid var(--color-final-answer);
+  color: var(--color-final-answer);
+  font-weight: bold;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 10.5pt;
+  margin: 4px 0;
+}
+.qed { display: inline-block; font-weight: bold; color: var(--color-final-answer); margin-left: 6px; }
+.problem-wrap { margin: 18px 0 22px 0; }
+.note { color: #555; font-size: 9.5pt; margin-top: 8px; }
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid var(--color-rule); margin-top: 20px; padding-top: 6px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div>
+      <span class="subject-tag">PRE-CALCULUS</span>
+      <span class="key-tag">ANSWER KEY</span>
+    </div>
+    <h1>Test Prep Answer Key — Induction · Recursion · Series · Bernoulli</h1>
+    <div class="info">
+      <span><strong>Student:</strong> Justin Koo</span>
+      <span><strong>Date:</strong> May 13, 2026</span>
+    </div>
+    <div class="standard">
+      Companion answer key to <em>Test Prep Worksheet — 12 Problems (no answers)</em> · 1-to-1 mapped.
+    </div>
+  </div>
+
+  <div class="reminder">
+    <div class="title">⚡ Read after you've attempted</div>
+    Each solution shows the full <strong>Base · IH · Step</strong> skeleton for induction problems
+    and the <strong>setup · simplification · final</strong> chain for the rest. Final answers are boxed in green.
+    Cross-check against your worksheet work.
+  </div>
+
+  <!-- ====================== Topic 1 — Induction ====================== -->
+  <div class="part-header">Topic 1 — Mathematical Induction</div>
+
+  <!-- ===== Problem 1 ===== -->
+  <div class="problem-wrap">
+    <span class="problem-number">Problem 1</span>
+    <span class="problem-title">Sum of cubes — $\sum k^3 = [n(n+1)/2]^2$</span>
+    <div><span class="concept-tag">Induction</span><span class="concept-tag">Sum of cubes</span></div>
+    <div class="statement">
+      <div class="label">Statement</div>
+      Prove by induction that $\displaystyle 1^3 + 2^3 + 3^3 + \cdots + n^3 = \left[\dfrac{n(n+1)}{2}\right]^2$ for all $n \geq 1.$
+    </div>
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>Base ($n=1$).</b> LHS $= 1^3 = 1.$  RHS $= [1\cdot 2/2]^2 = 1^2 = 1.$ ✓</div>
+      <div class="step"><b>IH.</b> $1^3 + \cdots + k^3 = [k(k+1)/2]^2.$</div>
+      <div class="step"><b>Step.</b> Add $(k+1)^3:$
+        $$\sum_{i=1}^{k+1} i^3 = \left[\frac{k(k+1)}{2}\right]^2 + (k+1)^3.$$
+        Factor $(k+1)^2$:
+        $$= (k+1)^2\!\left[\frac{k^2}{4} + (k+1)\right] = (k+1)^2 \cdot \frac{k^2 + 4k + 4}{4} = \frac{(k+1)^2(k+2)^2}{4} = \left[\frac{(k+1)(k+2)}{2}\right]^2. \;\checkmark$$
+      </div>
+      <div class="step"><b>Conclusion.</b> True for all $n \geq 1.$ <span class="qed">∎</span></div>
+    </div>
+  </div>
+
+  <!-- ===== Problem 2 ===== -->
+  <div class="problem-wrap">
+    <span class="problem-number">Problem 2</span>
+    <span class="problem-title">$13^n - 5^n$ is divisible by 8</span>
+    <div><span class="concept-tag">Induction</span><span class="concept-tag">Divisibility</span></div>
+    <div class="statement">
+      <div class="label">Statement</div>
+      Prove by induction that $13^n - 5^n$ is divisible by 8 for all $n \geq 1.$
+    </div>
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>Base ($n=1$).</b> $13 - 5 = 8 = 8\cdot 1.$ ✓</div>
+      <div class="step"><b>IH.</b> $13^k - 5^k = 8m$ for some integer $m.$</div>
+      <div class="step"><b>Step.</b> Rewrite $13^{k+1} - 5^{k+1}$ by injecting a $-13\cdot 5^k + 13\cdot 5^k$ term:
+        $$13^{k+1} - 5^{k+1} = 13(13^k - 5^k) + 5^k(13 - 5) = 13(8m) + 8\cdot 5^k = 8\,(13m + 5^k). \;\checkmark$$
+        Both terms are multiples of 8.
+      </div>
+      <div class="step"><b>Conclusion.</b> $8 \mid 13^n - 5^n$ for all $n \geq 1.$ <span class="qed">∎</span></div>
+    </div>
+  </div>
+
+  <!-- ===== Problem 3 ===== -->
+  <div class="problem-wrap page-break">
+    <span class="problem-number">Problem 3</span>
+    <span class="problem-title">Every $n \geq 2$ = product of primes (strong induction)</span>
+    <div><span class="concept-tag">Strong Induction</span><span class="concept-tag">Number Theory</span></div>
+    <div class="statement">
+      <div class="label">Statement</div>
+      Prove by <strong>strong induction</strong> that every integer $n \geq 2$ can be written as a product of (one or more) prime numbers.
+    </div>
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>Base ($n=2$).</b> $2$ is prime — trivially a "product of one prime." ✓</div>
+      <div class="step"><b>Strong IH.</b> Every integer $j$ with $2 \leq j \leq k$ is expressible as a product of primes.</div>
+      <div class="step"><b>Step ($n = k+1$).</b> Two cases:
+        <ul style="margin: 4px 0 4px 18px;">
+          <li>If $k+1$ is <em>prime</em>: it is itself a product of one prime. ✓</li>
+          <li>If $k+1$ is <em>composite</em>: write $k+1 = a\cdot b$ with $2 \leq a, b \leq k.$ By strong IH, both $a$ and $b$ are products of primes. Concatenate those factorizations → $k+1$ is a product of primes. ✓</li>
+        </ul>
+      </div>
+      <div class="step"><b>Conclusion.</b> Every integer $n \geq 2$ is expressible as a product of primes. <span class="qed">∎</span></div>
+      <div class="note"><em>Insight.</em> This is the <strong>existence</strong> half of the Fundamental Theorem of Arithmetic. (Uniqueness needs a separate argument.)</div>
+    </div>
+  </div>
+
+  <!-- ====================== Topic 2 — Recursion ====================== -->
+  <div class="part-header">Topic 2 — Run-of-Heads · Recursion</div>
+
+  <!-- ===== Problem 4 ===== -->
+  <div class="problem-wrap">
+    <span class="problem-number">Problem 4</span>
+    <span class="problem-title">No-run-of-3-heads recurrence + first values</span>
+    <div><span class="concept-tag">Recurrence</span><span class="concept-tag">Probability</span></div>
+    <div class="statement">
+      <div class="label">Statement</div>
+      Let $p(n)$ = probability that in $n$ fair coin flips there is no run of 3 heads in a row.
+      Set up the recurrence by splitting on how the sequence begins (T, HT, HHT) and state $p(1), p(2), p(3).$
+    </div>
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>Case split on the prefix.</b> Each branch must avoid HHH:
+        <ul style="margin: 4px 0 4px 18px;">
+          <li>Start with <strong>T</strong> (prob $\tfrac{1}{2}$) → remaining $n-1$ flips need no run of 3.</li>
+          <li>Start with <strong>HT</strong> (prob $\tfrac{1}{4}$) → remaining $n-2$ flips need no run of 3.</li>
+          <li>Start with <strong>HHT</strong> (prob $\tfrac{1}{8}$) → remaining $n-3$ flips need no run of 3.</li>
+          <li>Start with <strong>HHH</strong>: already a run of 3 — excluded.</li>
+        </ul>
+      </div>
+      <div class="step"><b>Recurrence:</b>
+        $$\boxed{\;p(n) = \tfrac{1}{2}\,p(n-1) + \tfrac{1}{4}\,p(n-2) + \tfrac{1}{8}\,p(n-3)\;}\quad (n \geq 3).$$
+      </div>
+      <div class="step"><b>Initial values.</b>
+        $p(0) = 1$ (vacuous), &nbsp; $p(1) = 1,$ &nbsp; $p(2) = 1$ (no way to fit HHH yet), &nbsp; $p(3) = 1 - \tfrac{1}{8} = \tfrac{7}{8}$ (only HHH violates).
+        <br><span class="boxed-final">$p(1) = 1,\;\; p(2) = 1,\;\; p(3) = \tfrac{7}{8}$</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Problem 5 ===== -->
+  <div class="problem-wrap">
+    <span class="problem-number">Problem 5</span>
+    <span class="problem-title">Compute $p(5)$ as a fraction in lowest terms</span>
+    <div><span class="concept-tag">Recurrence</span><span class="concept-tag">Probability</span></div>
+    <div class="statement">
+      <div class="label">Statement</div>
+      Using the recurrence from #4, compute $p(5)$ as a fraction in lowest terms.
+    </div>
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>Use $p(n) = \tfrac{1}{2}p(n-1) + \tfrac{1}{4}p(n-2) + \tfrac{1}{8}p(n-3).$</b></div>
+      <div class="step"><b>$p(4)$:</b>
+        $\tfrac{1}{2}\cdot p(3) + \tfrac{1}{4}\cdot p(2) + \tfrac{1}{8}\cdot p(1)
+        = \tfrac{1}{2}\cdot\tfrac{7}{8} + \tfrac{1}{4}\cdot 1 + \tfrac{1}{8}\cdot 1
+        = \tfrac{7}{16} + \tfrac{4}{16} + \tfrac{2}{16} = \tfrac{13}{16}.$
+      </div>
+      <div class="step"><b>$p(5)$:</b>
+        $\tfrac{1}{2}\cdot p(4) + \tfrac{1}{4}\cdot p(3) + \tfrac{1}{8}\cdot p(2)
+        = \tfrac{1}{2}\cdot\tfrac{13}{16} + \tfrac{1}{4}\cdot\tfrac{7}{8} + \tfrac{1}{8}\cdot 1$
+        $= \tfrac{13}{32} + \tfrac{7}{32} + \tfrac{4}{32} = \tfrac{24}{32} = \tfrac{3}{4}.$
+      </div>
+      <div class="step"><span class="boxed-final">$p(5) = \dfrac{3}{4}$</span></div>
+      <div class="note"><em>Sanity check.</em> Among 32 length-5 sequences, $24$ avoid HHH (those with HHH form the 8 sequences HHH??, ?HHH?, ??HHH minus overlaps = 8 — confirms $32 - 8 = 24$).</div>
+    </div>
+  </div>
+
+  <!-- ===== Problem 6 ===== -->
+  <div class="problem-wrap page-break">
+    <span class="problem-number">Problem 6</span>
+    <span class="problem-title">Binary strings of length $n$ with no two consecutive 1's — find $a(6)$</span>
+    <div><span class="concept-tag">Recurrence</span><span class="concept-tag">Fibonacci</span></div>
+    <div class="statement">
+      <div class="label">Statement</div>
+      Let $a(n)$ = number of binary strings of length $n$ with no two consecutive 1's.
+      Write the recurrence (with base cases) and compute $a(6).$
+    </div>
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>Case split on the last digit:</b>
+        <ul style="margin: 4px 0 4px 18px;">
+          <li>Last digit 0 → first $n-1$ digits free of "11" → $a(n-1)$ options.</li>
+          <li>Last digit 1 → second-to-last must be 0 → first $n-2$ digits free of "11" → $a(n-2)$ options.</li>
+        </ul>
+      </div>
+      <div class="step"><b>Recurrence:</b>
+        $\;a(n) = a(n-1) + a(n-2),$ &nbsp; with $a(1) = 2$ (0, 1) and $a(2) = 3$ (00, 01, 10).
+      </div>
+      <div class="step"><b>Compute up to 6:</b>
+        $a(3) = 5,\; a(4) = 8,\; a(5) = 13,\; a(6) = 21.$
+        <br><span class="boxed-final">$a(6) = 21$</span>
+      </div>
+      <div class="note"><em>Fibonacci connection.</em> $a(n) = F_{n+2}.$ Here $a(6) = F_8 = 21.$</div>
+    </div>
+  </div>
+
+  <!-- ====================== Topic 3 — Series ====================== -->
+  <div class="part-header">Topic 3 — Series · Σ · Domain of Convergence</div>
+
+  <!-- ===== Problem 7 ===== -->
+  <div class="problem-wrap">
+    <span class="problem-number">Problem 7</span>
+    <span class="problem-title">Arithmetic sum $\sum_{k=1}^{20}(3k - 2)$</span>
+    <div><span class="concept-tag">Arithmetic Series</span></div>
+    <div class="statement">
+      <div class="label">Statement</div>
+      Find the sum $\displaystyle\sum_{k=1}^{20}(3k - 2).$
+    </div>
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>Linearity.</b>
+        $\displaystyle\sum_{k=1}^{20}(3k - 2) = 3\sum_{k=1}^{20} k - \sum_{k=1}^{20} 2 = 3\cdot\dfrac{20\cdot 21}{2} - 2\cdot 20.$
+      </div>
+      <div class="step">$= 3\cdot 210 - 40 = 630 - 40 = 590.$</div>
+      <div class="step"><span class="boxed-final">$\displaystyle\sum_{k=1}^{20}(3k - 2) = 590$</span></div>
+    </div>
+  </div>
+
+  <!-- ===== Problem 8 ===== -->
+  <div class="problem-wrap">
+    <span class="problem-number">Problem 8</span>
+    <span class="problem-title">Geometric series — domain of convergence + closed form</span>
+    <div><span class="concept-tag">Geometric Series</span><span class="concept-tag">Domain of Convergence</span></div>
+    <div class="statement">
+      <div class="label">Statement</div>
+      Determine the <strong>domain of convergence</strong> and the sum in closed form for
+      $\displaystyle 5 + 5\!\left(\tfrac{x+1}{2}\right) + 5\!\left(\tfrac{x+1}{2}\right)^2 + \cdots$
+    </div>
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>Identify.</b> Geometric with first term $a = 5$ and common ratio $r = \dfrac{x+1}{2}.$</div>
+      <div class="step"><b>Convergence condition.</b> $|r| < 1 \Longleftrightarrow \left|\dfrac{x+1}{2}\right| < 1 \Longleftrightarrow |x+1| < 2 \Longleftrightarrow -3 < x < 1.$</div>
+      <div class="step"><b>Closed-form sum (on that domain).</b>
+        $S = \dfrac{a}{1 - r} = \dfrac{5}{1 - \tfrac{x+1}{2}} = \dfrac{5}{\tfrac{2 - (x+1)}{2}} = \dfrac{5\cdot 2}{1 - x} = \dfrac{10}{1 - x}.$
+      </div>
+      <div class="step">
+        <span class="boxed-final">Domain: $-3 < x < 1$ &nbsp;&middot;&nbsp; Sum: $\dfrac{10}{1 - x}$</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Problem 9 ===== -->
+  <div class="problem-wrap page-break">
+    <span class="problem-number">Problem 9</span>
+    <span class="problem-title">Geometric: $a = 6, r = 2/3$ — $S_\infty$ and the smallest $n$ within $0.01$</span>
+    <div><span class="concept-tag">Geometric Series</span><span class="concept-tag">Convergence Rate</span></div>
+    <div class="statement">
+      <div class="label">Statement</div>
+      A geometric series has first term $a = 6$ and common ratio $r = \tfrac{2}{3}.$
+      Find $S_\infty,$ and find the smallest $n$ such that $S_n$ is within $0.01$ of $S_\infty.$
+    </div>
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>$S_\infty$.</b>
+        $S_\infty = \dfrac{a}{1-r} = \dfrac{6}{1 - 2/3} = \dfrac{6}{1/3} = 18.$
+      </div>
+      <div class="step"><b>Tail size.</b>
+        $S_n = a\dfrac{1 - r^n}{1 - r} = 18\!\left(1 - (2/3)^n\right),$ so
+        $\;|S_\infty - S_n| = 18\,(2/3)^n.$
+      </div>
+      <div class="step"><b>Solve $18\,(2/3)^n < 0.01.$</b>
+        $(2/3)^n < \tfrac{1}{1800} \;\Longleftrightarrow\; n > \dfrac{\ln 1800}{\ln(3/2)} \approx \dfrac{7.4955}{0.4055} \approx 18.49.$
+        So $n = 19.$
+      </div>
+      <div class="step"><b>Verify.</b> $18\,(2/3)^{18} \approx 0.0122 > 0.01;$ &nbsp; $18\,(2/3)^{19} \approx 0.0081 < 0.01.$ ✓</div>
+      <div class="step">
+        <span class="boxed-final">$S_\infty = 18,\;\; n_{\min} = 19$</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================== Topic 4 — Bernoulli ====================== -->
+  <div class="part-header">Topic 4 — Bernoulli's Madness</div>
+
+  <!-- ===== Problem 10 ===== -->
+  <div class="problem-wrap">
+    <span class="problem-number">Problem 10</span>
+    <span class="problem-title">Hockey stick: $\sum k(k+1)(k+2)$ closed form</span>
+    <div><span class="concept-tag">Hockey Stick</span><span class="concept-tag">Continuous Products</span></div>
+    <div class="statement">
+      <div class="label">Statement</div>
+      Use the hockey stick identity to evaluate $\displaystyle\sum_{k=1}^{N} k(k+1)(k+2)$ in closed form.
+    </div>
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>Hockey stick form.</b>
+        $\displaystyle\sum_{k=0}^{N} k(k+1)\cdots(k+j-1) = j!\,\binom{N+j}{j+1}.$ Here $j = 3.$
+      </div>
+      <div class="step">$\displaystyle\sum_{k=1}^{N} k(k+1)(k+2) = 3!\,\binom{N+3}{4} = 6\cdot\dfrac{(N+3)(N+2)(N+1)N}{24} = \dfrac{N(N+1)(N+2)(N+3)}{4}.$</div>
+      <div class="step">
+        <span class="boxed-final">$\displaystyle\sum_{k=1}^{N} k(k+1)(k+2) = \dfrac{N(N+1)(N+2)(N+3)}{4}$</span>
+      </div>
+      <div class="note"><em>Memory trick.</em> $j$ continuous terms in the summand → answer is $(j+1)$ continuous terms divided by $(j+1).$</div>
+    </div>
+  </div>
+
+  <!-- ===== Problem 11 ===== -->
+  <div class="problem-wrap">
+    <span class="problem-number">Problem 11</span>
+    <span class="problem-title">Telescoping: $\sum 1/[k(k+1)]$</span>
+    <div><span class="concept-tag">Telescoping</span><span class="concept-tag">Partial Fractions</span></div>
+    <div class="statement">
+      <div class="label">Statement</div>
+      Use telescoping to evaluate $\displaystyle\sum_{k=1}^{N} \dfrac{1}{k(k+1)}.$
+    </div>
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>Partial fractions.</b>
+        $\dfrac{1}{k(k+1)} = \dfrac{1}{k} - \dfrac{1}{k+1}.$
+      </div>
+      <div class="step"><b>Telescope.</b>
+        $\displaystyle\sum_{k=1}^{N}\!\left(\dfrac{1}{k} - \dfrac{1}{k+1}\right)
+        = \!\left(1 - \tfrac{1}{2}\right) + \!\left(\tfrac{1}{2} - \tfrac{1}{3}\right) + \cdots + \!\left(\tfrac{1}{N} - \tfrac{1}{N+1}\right) = 1 - \dfrac{1}{N+1} = \dfrac{N}{N+1}.$
+      </div>
+      <div class="step">
+        <span class="boxed-final">$\displaystyle\sum_{k=1}^{N}\dfrac{1}{k(k+1)} = \dfrac{N}{N+1}$</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Problem 12 ===== -->
+  <div class="problem-wrap page-break">
+    <span class="problem-number">Problem 12</span>
+    <span class="problem-title">Linear recurrence $T_n = 2T_{n-1} + 3,\; T_0 = 1$ — closed form + $T_5$</span>
+    <div><span class="concept-tag">Linear Recurrence</span><span class="concept-tag">Geometric Series</span></div>
+    <div class="statement">
+      <div class="label">Statement</div>
+      Solve $T_n = 2 T_{n-1} + 3$ with $T_0 = 1.$ Find a closed form for $T_n$ and compute $T_5.$
+    </div>
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>Find a particular (steady) solution.</b> Try constant $T_p = c$: then $c = 2c + 3 \Rightarrow c = -3.$</div>
+      <div class="step"><b>Homogeneous part.</b> $T_h = A\cdot 2^n.$</div>
+      <div class="step"><b>General solution.</b> $T_n = A\cdot 2^n - 3.$</div>
+      <div class="step"><b>Apply initial.</b> $T_0 = 1 \Rightarrow A - 3 = 1 \Rightarrow A = 4.$
+        So $T_n = 4\cdot 2^n - 3 = 2^{n+2} - 3.$
+      </div>
+      <div class="step"><b>Evaluate at $n = 5$.</b> $T_5 = 2^7 - 3 = 128 - 3 = 125.$</div>
+      <div class="step">
+        <span class="boxed-final">$T_n = 2^{n+2} - 3,\;\; T_5 = 125$</span>
+      </div>
+      <div class="note"><em>Verify chain.</em> $T_0=1, T_1=5, T_2=13, T_3=29, T_4=61, T_5=125.$ Each $T_{n+1} = 2T_n + 3$ — checks.</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Newton School · 2026-05-13 · Justin Koo · Pre-Calculus<br>
+    Answer Key paired with <em>Test Prep Worksheet — 12 Problems (no answers)</em> &copy; Copyright Newton School.
+  </div>
+
+</div>
+</body>
+</html>
